@@ -1,9 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Hello world!!</title>
+    <title>Welcome to webs application!!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap-responsive.css" th:href="@{/css/bootstrap-responsive.css}"/>
 </head>
     <body>
-        <div><p>Hello World!</p></div>
+        <div class="container">
+
+            <!-- Main hero unit for a primary marketing message or call to action -->
+            <div class="hero-unit" style="background: url('../static/stock.jpg');background-size: cover;color:white;"
+                 th:style="'background: url(' + @{/stock.jpg} + ');background-size: cover;color:white;'">
+                <h1>This is webs!</h1>
+                <p><strong th:text="${message}"></strong></p>
+                <form class="form-signin" style="max-width: 300px;">
+                    <input type="text" class="input-block-level" placeholder="Username"/>
+                    <input type="password" class="input-block-level" placeholder="Password"/>
+                    <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+                </form>
+            </div>
+            <div class="row">
+                <div class="span4">
+                    <h2>Start</h2>
+                    <p>Any questions?</p>
+                    <a href="#content">
+                        <button class="btn-large btn-success"> Find out more
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
