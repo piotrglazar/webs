@@ -1,4 +1,14 @@
 *.class
+# JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+
+.build
+out
+build
+.gradle
 
 # Package Files #
 *.jar
