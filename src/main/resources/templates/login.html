@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="shards/head :: head">
+    </head>
+    <body>
+        <div class="jumbotron">
+            <div class="container" style="background: url('../static/img/stock.jpg');background-size: cover;color:white;"
+                 th:style="'background: url(' + @{/img/stock.jpg} + ');background-size: cover;color:white;'">
+                <h1>This is webs!</h1>
+                <div th:if="${param.error}">
+                    Invalid username and password.
+                </div>
+                <div th:if="${param.logout}">
+                    You have been logged out.
+                </div>
+                <div><p><strong>Welcome to the brand new online bank!</strong></p></div>
+                <div>
+                    <form class="form-signin" role="form" th:action="@{/login}" method="post">
+                        <input type="text" name="username" class="form-control" placeholder="Username" />
+                        <input type="password" name="password" class="form-control" placeholder="Password" />
+                        <button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Start</h2>
+                    <p>Any questions?</p>
+                    <a href="#content"><button class="btn btn-success">Find out more</button></a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

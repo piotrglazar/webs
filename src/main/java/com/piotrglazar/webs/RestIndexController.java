@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RestIndexController {
 
-    @RequestMapping("/")
+    @RequestMapping("/hello")
     public String index() {
         return "Hello from webs!";
     }
