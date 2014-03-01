@@ -1,5 +1,6 @@
-package com.piotrglazar.webs;
+package com.piotrglazar.webs.model;
 
+import com.piotrglazar.webs.mvc.IndexController;
 import org.junit.Test;
 import org.springframework.ui.Model;
 
@@ -7,10 +8,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-/**
- * @author Piotr Glazar
- * @since 23.02.14
- */
 public class IndexControllerTest {
 
     @Test

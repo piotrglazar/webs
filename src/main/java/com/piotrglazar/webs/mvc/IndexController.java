@@ -1,13 +1,9 @@
-package com.piotrglazar.webs;
+package com.piotrglazar.webs.mvc;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- * @author Piotr Glazar
- * @since 02.02.14
- */
 @Controller
 public class IndexController {
 

@@ -1,13 +1,9 @@
-package com.piotrglazar.webs;
+package com.piotrglazar.webs.config;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-/**
- * @author Piotr Glazar
- * @since 23.02.14
- */
 @Component
 public class MvcConfig extends WebMvcConfigurerAdapter {
 

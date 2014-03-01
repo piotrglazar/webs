@@ -1,5 +1,6 @@
-package com.piotrglazar.webs;
+package com.piotrglazar.webs.model;
 
+import com.piotrglazar.webs.AbstractContextTest;
 import com.piotrglazar.webs.commons.Utils;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,22 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * @author Piotr Glazar
- * @since 24.02.14
- */
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(classes = {ServiceRunner.class})
-public class WebSecurityConfigContexTest {
-
-    @Autowired
-    private FilterChainProxy springSecurityFilterChain;
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    private MockMvc mockMvc;
+public class WebSecurityConfigurationContextTest extends AbstractContextTest {
 
     @Before
     public void setup() {

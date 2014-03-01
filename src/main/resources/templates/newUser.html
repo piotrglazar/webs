@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="shards/head :: head">
+</head>
+<body>
+<div class="jumbotron">
+    <div class="container" style="background: url('../static/img/stock.jpg');background-size: cover;color:white;"
+         th:style="'background: url(' + @{/img/stock.jpg} + ');background-size: cover;color:white;'">
+        <h1>This is webs!</h1>
+        <div><p><strong>Please register using the form!</strong></p></div>
+        <div>
+            <form class="form-signin" role="form" th:action="@{/newUser}" method="post" th:object="${registerForm}">
+                <fieldset>
+                    <div class="form-group">
+                        <input type="text" id="username" name="username" th:field="*{username}" class="form-control" placeholder="Username" th:errorclass="input-error"/>
+                        <p th:if="${#fields.hasErrors('username')}" id="usernameError" class="has-error">
+                            <span th:errors="*{username}" class="form-control-feedback">Username errors</span>
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" name="password" th:field="*{password}" class="form-control" placeholder="Password" th:errorclass="input-error"/>
+                        <p th:if="${#fields.hasErrors('password')}" id="passwordError" class="has-error">
+                            <span th:errors="*{password}" class="form-control-feedback">Password errors</span>
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="repeatPassword" name="repeatPassword" th:field="*{repeatPassword}" class="form-control" placeholder="Repeat password" th:errorclass="input-error"/>
+                        <p th:if="${#fields.hasErrors('repeatPassword')}" id="repeatPasswordError" class="has-error">
+                            <span th:errors="*{repeatPassword}" class="form-control-feedback">Password errors</span>
+                        </p>
+                    </div>
+                    <button class="btn btn-lg btn-success btn-block" type="submit">Register</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

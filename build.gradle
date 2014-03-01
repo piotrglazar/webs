@@ -4,7 +4,7 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.0.RC3")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.0.RC4")
     }
 }
 
@@ -34,16 +34,28 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator")
     // end::actuator[]
     // tag::thymeleaf[]
-    compile("org.thymeleaf:thymeleaf-spring4")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     // end::thymeleaf[]
     // tag::security[]
     compile("org.springframework.boot:spring-boot-starter-security")
     // end::security[]
+    // tag::data[]
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.hsqldb:hsqldb:2.3.2")
+    // end:data[]
+    // tag::guava[]
+    compile("com.google.guava:guava:16.0.1")
+    // end::guava[]
+    // tag::validation[]
+    compile("javax.validation:validation-api:1.1.0.Final")
+    compile("org.hibernate:hibernate-validator:5.0.3.Final")
+    // end::validation[]
 
     testCompile("junit:junit")
     testCompile("org.mockito:mockito-all:1.9.5")
     testCompile("org.assertj:assertj-core:1.5.0")
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("com.googlecode.catch-exception:catch-exception:1.2.0")
 }
 
 task wrapper(type: Wrapper) {
