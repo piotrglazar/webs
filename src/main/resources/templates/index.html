@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Welcome to webs application!!</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
-    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap-responsive.css" th:href="@{/css/bootstrap-responsive.css}"/>
-</head>
+    <head th:replace="shards/head :: head">
+    </head>
     <body>
-        <div class="container">
-
-            <!-- Main hero unit for a primary marketing message or call to action -->
-            <div class="hero-unit" style="background: url('../static/stock.jpg');background-size: cover;color:white;"
-                 th:style="'background: url(' + @{/stock.jpg} + ');background-size: cover;color:white;'">
-                <h1>This is webs!</h1>
-                <p><strong th:text="${message}"></strong></p>
-                <form class="form-signin" style="max-width: 300px;">
-                    <input type="text" class="input-block-level" placeholder="Username"/>
-                    <input type="password" class="input-block-level" placeholder="Password"/>
-                    <button class="btn btn-large btn-primary" type="submit">Sign in</button>
-                </form>
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Webs</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <form th:action="@{/logout}" method="post" class="navbar-form navbar-right" role="form">
+                        <button type="submit" class="btn btn-success">Sign out</button>
+                    </form>
+                </div><!--/.navbar-collapse -->
             </div>
-            <div class="row">
-                <div class="span4">
-                    <h2>Start</h2>
-                    <p>Any questions?</p>
-                    <a href="#content">
-                        <button class="btn-large btn-success"> Find out more
-                        </button>
-                    </a>
+        </div>
+        <div class="container">
+            <div class="hero-unit">
+                <h1>Secured content!</h1>
+                <div><p th:text="${message}"></p></div>
+                <div>
+                    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+                    <p>This will be your main page</p>
                 </div>
             </div>
         </div>

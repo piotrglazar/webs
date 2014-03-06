@@ -36,8 +36,14 @@ dependencies {
     // tag::thymeleaf[]
     compile("org.thymeleaf:thymeleaf-spring4")
     // end::thymeleaf[]
+    // tag::security[]
+    compile("org.springframework.boot:spring-boot-starter-security")
+    // end::security[]
 
     testCompile("junit:junit")
+    testCompile("org.mockito:mockito-all:1.9.5")
+    testCompile("org.assertj:assertj-core:1.5.0")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
 task wrapper(type: Wrapper) {
