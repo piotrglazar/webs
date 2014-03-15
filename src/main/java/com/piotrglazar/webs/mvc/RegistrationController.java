@@ -13,18 +13,21 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/newUser")
-public class RegistrationController {
+class RegistrationController {
 
     private final UserProvider userProvider;
 
+    private final RegisterFormValidator validator;
+
     @Autowired
-    public RegistrationController(final UserProvider userProvider) {
+    public RegistrationController(final UserProvider userProvider, final RegisterFormValidator validator) {
         this.userProvider = userProvider;
+        this.validator = validator;
     }
 
     @InitBinder
     public void initBinder(final DataBinder dataBinder) {
-        dataBinder.addValidators(new RegisterFormValidator(userProvider));
+        dataBinder.addValidators(validator);
     }
 
     @RequestMapping(method = RequestMethod.GET)

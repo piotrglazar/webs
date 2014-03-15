@@ -1,28 +1,23 @@
 package com.piotrglazar.webs;
 
-import com.piotrglazar.webs.config.DatabaseConfiguration;
 import com.piotrglazar.webs.config.Settings;
-import org.springframework.beans.BeanUtils;
+import org.hsqldb.jdbc.JDBCDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
-import org.springframework.util.ClassUtils;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
-import java.sql.Driver;
 
 @Configuration
 @Profile("test")
 public class DatabaseTestConfiguration {
 
     @Bean
-    public DataSource dataSource() throws ClassNotFoundException {
-        final Class<? extends Driver> driver = (Class<? extends Driver>)
-                ClassUtils.forName("org.hsqldb.jdbcDriver", DatabaseConfiguration.class.getClassLoader());
-        return new SimpleDriverDataSource(BeanUtils.instantiateClass(driver), "jdbc:hsqldb:file:/home/webs/test", "sa", "");
+    public DataSource dataSource() {
+        return new SimpleDriverDataSource(new JDBCDriver(), "jdbc:hsqldb:file:/home/webs/test", "sa", "");
     }
 
     @Bean

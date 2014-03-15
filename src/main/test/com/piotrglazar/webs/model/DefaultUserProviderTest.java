@@ -25,13 +25,14 @@ public class DefaultUserProviderTest {
 
     @Test
     public void shouldCreateUser() {
-        // given
-
         // when
-        defaultUserProvider.createUser("username", "password");
+        final WebsUser user = defaultUserProvider.createUser("username", "password");
 
         // then
         verify(websUserRepository).save(any(WebsUser.class));
+        assertThat(user.getUsername()).isEqualTo("username");
+        // password must be encrypted, not plain text
+        assertThat(user.getPassword()).isNotEqualTo("password");
     }
 
     @Test
@@ -49,8 +50,6 @@ public class DefaultUserProviderTest {
 
     @Test
     public void shouldReturnNullWhenThereIsNoUserForGivenName() {
-        // given
-
         // when
         final WebsUser foundUser = defaultUserProvider.findUser("non existing user");
 

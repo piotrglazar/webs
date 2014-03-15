@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -34,12 +34,11 @@ class WebsUserDetailsService implements UserDetailsService {
         }
         final List<GrantedAuthority> authorities = getGrantedAuthorities(websUser);
 
-        final User springUser = new User(websUser.getUsername(), websUser.getPassword(), authorities);
-        return springUser;
+        return new User(websUser.getUsername(), websUser.getPassword(), authorities);
     }
 
     private List<GrantedAuthority> getGrantedAuthorities(final WebsUser websUser) {
-        final List<GrantedAuthority> authorities = new LinkedList<>();
+        final List<GrantedAuthority> authorities = new ArrayList<>(websUser.getRoles().size());
         for (final String role : websUser.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(role));
         }

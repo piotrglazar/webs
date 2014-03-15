@@ -15,7 +15,7 @@ public class Account {
 
     private String number;
 
-    private BigDecimal money;
+    private BigDecimal ballance;
 
     public Long getId() {
         return id;
@@ -29,11 +29,11 @@ public class Account {
         this.number = number;
     }
 
-    public BigDecimal getMoney() {
-        return money;
+    public BigDecimal getBallance() {
+        return ballance;
     }
 
-    public void setMoney(final BigDecimal money) {
-        this.money = money;
+    public void setBallance(final BigDecimal ballance) {
+        this.ballance = ballance;
     }
 }

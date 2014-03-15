@@ -4,9 +4,7 @@ import com.google.common.collect.Sets;
 import com.piotrglazar.webs.UserProvider;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import static com.googlecode.catchexception.CatchException.catchException;
@@ -35,7 +33,7 @@ public class WebsUserDetailsServiceTest {
         catchException(websUserDetailsService).loadUserByUsername("non existing user");
 
         // then
-        assertThat(caughtException()).isInstanceOf(UsernameNotFoundException.class);
+        assertThat((Throwable) caughtException()).isInstanceOf(UsernameNotFoundException.class);
     }
 
     @Test

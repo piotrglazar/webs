@@ -19,9 +19,10 @@ class DefaultUserProvider implements UserProvider {
     }
 
     @Override
-    public void createUser(final String username, final String password) {
+    public WebsUser createUser(final String username, final String password) {
         final WebsUser websUser = new WebsUser(username, passwordEncoder.encode(password), Sets.newHashSet("USER"));
         websUserRepository.save(websUser);
+        return websUser;
     }
 
     @Override

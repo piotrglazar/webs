@@ -1,7 +1,7 @@
 package com.piotrglazar.webs.config;
 
 import com.piotrglazar.webs.UserProvider;
-import org.springframework.beans.BeanUtils;
+import org.hsqldb.jdbc.JDBCDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,11 +12,9 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.util.ClassUtils;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
-import java.sql.Driver;
 
 @Configuration
 @EnableJpaRepositories
@@ -24,10 +22,8 @@ import java.sql.Driver;
 public class DatabaseConfiguration {
 
     @Bean
-    public DataSource dataSource() throws ClassNotFoundException {
-        final Class<? extends Driver> driver = (Class<? extends Driver>)
-                ClassUtils.forName("org.hsqldb.jdbcDriver", DatabaseConfiguration.class.getClassLoader());
-        return new SimpleDriverDataSource(BeanUtils.instantiateClass(driver), "jdbc:hsqldb:file:/home/webs/production", "sa", "");
+    public DataSource dataSource(){
+        return new SimpleDriverDataSource(new JDBCDriver(), "jdbc:hsqldb:file:/home/webs/production", "sa", "");
     }
 
     @Bean
