@@ -1,5 +1,6 @@
-package com.piotrglazar.webs.model;
+package com.piotrglazar.webs.mvc;
 
+import com.piotrglazar.webs.config.MvcConfig;
 import com.piotrglazar.webs.mvc.IndexController;
 import org.junit.Test;
 import org.springframework.ui.Model;
@@ -22,5 +23,6 @@ public class IndexControllerTest {
         // then
         assertThat(view).isEqualTo("index");
         verify(model).addAttribute("message", "Welcome to the brand-new online bank!");
+        verify(model).addAttribute(MvcConfig.PAGE_NAME_ATTRIBUTE, "index");
     }
 }

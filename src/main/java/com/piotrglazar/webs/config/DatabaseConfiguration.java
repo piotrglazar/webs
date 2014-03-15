@@ -1,6 +1,10 @@
 package com.piotrglazar.webs.config;
 
 import com.piotrglazar.webs.UserProvider;
+import com.piotrglazar.webs.model.Account;
+import com.piotrglazar.webs.model.Currency;
+import com.piotrglazar.webs.model.SavingsAccount;
+import com.piotrglazar.webs.model.WebsUser;
 import org.hsqldb.jdbc.JDBCDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +19,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 
 @Configuration
 @EnableJpaRepositories
@@ -63,7 +68,17 @@ public class DatabaseConfiguration {
         @PostConstruct
         public void setupInitialData() {
             if (userProvider.findUser(Settings.USERNAME) == null) {
-                userProvider.createUser(Settings.USERNAME, Settings.PASSWORD);
+                WebsUser websUser = userProvider.createUser(Settings.USERNAME, Settings.PASSWORD);
+
+                final Account firstAccount = SavingsAccount.builder().number("abc123").balance(BigDecimal.TEN)
+                        .currency(Currency.PLN).interest(BigDecimal.valueOf(5.5)).build();
+                websUser.getAccounts().add(firstAccount);
+                websUser = userProvider.update(websUser);
+
+                final Account secondAccount = SavingsAccount.builder().number("def456").balance(new BigDecimal("22.22"))
+                        .currency(Currency.PLN).interest(BigDecimal.valueOf(4.5)).build();
+                websUser.getAccounts().add(secondAccount);
+                userProvider.update(websUser);
             }
         }
     }
