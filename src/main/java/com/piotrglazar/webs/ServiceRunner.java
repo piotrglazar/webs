@@ -7,10 +7,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 
-/**
- * @author Piotr Glazar
- * @since 02.02.14
- */
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
