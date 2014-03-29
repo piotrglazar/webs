@@ -2,16 +2,11 @@ package com.piotrglazar.webs.mvc;
 
 import com.piotrglazar.webs.AbstractContextTest;
 import com.piotrglazar.webs.config.Settings;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import javax.xml.xpath.XPathExpressionException;
 
 import static com.piotrglazar.webs.commons.Utils.addCsrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -39,6 +34,7 @@ public class RegistrationControllerContextTest extends AbstractContextTest {
         mockMvc.perform(addCsrf(post("/newUser")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("username", "non existing user")
+                .param("email", "p@p.pl")
                 .param("password", "pass")
                 .param("repeatPassword", "pass")))
 
@@ -54,6 +50,7 @@ public class RegistrationControllerContextTest extends AbstractContextTest {
         mockMvc.perform(addCsrf(post("/newUser"))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("username", Settings.USERNAME)
+                .param("email", "p@p.pl")
                 .param("password", "pass")
                 .param("repeatPassword", "pass"))
 
@@ -68,6 +65,7 @@ public class RegistrationControllerContextTest extends AbstractContextTest {
         mockMvc.perform(addCsrf(post("/newUser"))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("username", "user")
+                .param("email", "p@p.pl")
                 .param("password", "pass")
                 .param("repeatPassword", "pass2"))
 
@@ -75,5 +73,20 @@ public class RegistrationControllerContextTest extends AbstractContextTest {
             .andExpect(status().isOk())
             .andExpect(xpath("//p[@id = 'passwordError']").exists())
             .andExpect(xpath("//p[@id = 'repeatPasswordError']").exists());
+    }
+
+    @Test
+    public void shouldShowErrorWhenEmailIsInvalid() throws Exception {
+        // when
+        mockMvc.perform(addCsrf(post("/newUser"))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("username", "user")
+                .param("email", "wrongemail")
+                .param("password", "pass")
+                .param("repeatPassword", "pass"))
+
+        // then
+            .andExpect(status().isOk())
+            .andExpect(xpath("//p[@id = 'emailError']").exists());
     }
 }

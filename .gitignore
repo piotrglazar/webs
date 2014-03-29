@@ -16,3 +16,5 @@ build
 *.jar
 *.war
 *.ear
+
+mail.properties

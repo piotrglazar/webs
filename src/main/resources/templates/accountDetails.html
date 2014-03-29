@@ -13,6 +13,7 @@
             <p><span>Interest rate: </span><span th:text="${accountDetails.interest}"></span>%</p>
         </div>
     </div>
+    <div class="container"><a href="#" th:href="@{/accountsTransfer/} + ${accountDetails.id} + '/'">Transfer money</a></div>
 </div>
 </body>
 </html>

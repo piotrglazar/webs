@@ -7,6 +7,7 @@ import java.util.Set;
 public class WebsUserBuilder {
     private String username;
     private String password;
+    private String email;
     private Set<String> roles = Sets.newHashSet("USER");
     private Set<Account> accounts = Sets.newHashSet();
 
@@ -25,12 +26,17 @@ public class WebsUserBuilder {
         return this;
     }
 
+    public WebsUserBuilder email(final String email) {
+        this.email = email;
+        return this;
+    }
+
     public WebsUserBuilder accounts(final Set<Account> accounts) {
         this.accounts = accounts;
         return this;
     }
 
     public WebsUser build() {
-        return new WebsUser(username, password, roles, accounts);
+        return new WebsUser(username, password, roles, accounts, email);
     }
 }

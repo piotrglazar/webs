@@ -38,6 +38,17 @@ class DefaultAccountProvider implements AccountProvider {
         }
     }
 
+    @Override
+    public AccountDto getAccount(final String accountNumber) {
+        final Account account = accountRepository.findByNumber(accountNumber);
+
+        if (account != null) {
+            return new AccountDto(account);
+        } else {
+            return null;
+        }
+    }
+
     private Optional<Account> getUserSavingsAccount(final List<Account> accounts, final Long accountId) {
         return accounts
                 .stream()

@@ -1,6 +1,7 @@
 package com.piotrglazar.webs.mvc;
 
 import com.piotrglazar.webs.UserProvider;
+import com.piotrglazar.webs.mvc.validators.RegisterFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
