@@ -9,4 +9,6 @@ public interface UserProvider {
     WebsUser findUser(String username);
 
     WebsUser update(WebsUser websUser);
+
+    WebsUser findUserByEmail(String email);
 }

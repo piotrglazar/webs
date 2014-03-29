@@ -11,4 +11,6 @@ public interface AccountProvider {
     List<AccountDto> getUserAccounts(String username);
 
     Optional<SavingsAccountDto> getUserSavingsAccount(String username, Long accountId);
+
+    AccountDto getAccount(String accountNumber);
 }

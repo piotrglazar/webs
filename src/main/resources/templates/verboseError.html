@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="shards/head :: head">
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <p class="lead">Sorry, an error occurred</p>
+        <p th:text="${message}"></p>
+        <p><a class="btn btn-lg btn-success" th:href="@{/}" role="button">Go to main page</a></p>
+    </div>
+</div>
+</body>
+</html>

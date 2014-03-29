@@ -36,4 +36,9 @@ class DefaultUserProvider implements UserProvider {
     public WebsUser update(final WebsUser websUser) {
         return websUserRepository.saveAndFlush(websUser);
     }
+
+    @Override
+    public WebsUser findUserByEmail(final String email) {
+        return websUserRepository.findByEmail(email);
+    }
 }

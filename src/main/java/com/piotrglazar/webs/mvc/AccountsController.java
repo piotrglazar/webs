@@ -1,7 +1,7 @@
 package com.piotrglazar.webs.mvc;
 
 import com.piotrglazar.webs.AccountProvider;
-import com.piotrglazar.webs.config.MvcConfig;
+import com.piotrglazar.webs.config.MvcConfiguration;
 import com.piotrglazar.webs.dto.AccountDto;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class AccountsController {
     public String accounts(final Model model) {
         final List<AccountDto> accountDtos = accountProvider.getUserAccounts(getUsername());
         model.addAttribute("accounts", accountDtos);
-        model.addAttribute(MvcConfig.PAGE_NAME_ATTRIBUTE, "accounts");
+        model.addAttribute(MvcConfiguration.PAGE_NAME_ATTRIBUTE, "accounts");
         return "accounts";
     }
 
@@ -39,7 +39,7 @@ public class AccountsController {
     }
 
     @RequestMapping("/accounts/{accountId}/")
-    public String accountDetails(@PathVariable("accountId") final Long accountId,final Model model) {
+    public String accountDetails(@PathVariable("accountId") final Long accountId, final Model model) {
         final Optional<SavingsAccountDto> account = accountProvider.getUserSavingsAccount(getUsername(), accountId);
         if (account.isPresent()) {
             model.addAttribute("accountDetails", account.get());

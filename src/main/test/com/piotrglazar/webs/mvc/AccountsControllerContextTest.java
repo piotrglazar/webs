@@ -3,18 +3,10 @@ package com.piotrglazar.webs.mvc;
 import com.piotrglazar.webs.AbstractContextTest;
 import com.piotrglazar.webs.AccountProvider;
 import com.piotrglazar.webs.commons.Utils;
-import com.piotrglazar.webs.dto.AccountDto;
-import com.piotrglazar.webs.dto.SavingsAccountDto;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpSession;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.util.List;
-import java.util.ListIterator;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -63,6 +55,7 @@ public class AccountsControllerContextTest extends AbstractContextTest {
         mockMvc.perform(get(String.format("/accounts/%s/", notExistingAccountId)).session(authenticate))
 
         // then
+            .andExpect(status().is(HttpStatus.FOUND.value()))
             .andExpect(redirectedUrl("/accounts"));
     }
 }

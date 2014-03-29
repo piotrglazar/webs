@@ -68,18 +68,27 @@ public class DatabaseConfiguration {
         @PostConstruct
         public void setupInitialData() {
             if (userProvider.findUser(Settings.USERNAME) == null) {
-                WebsUser websUser = userProvider.createUser(Settings.USERNAME, Settings.PASSWORD);
-
-                final Account firstAccount = SavingsAccount.builder().number("abc123").balance(BigDecimal.TEN)
-                        .currency(Currency.PLN).interest(BigDecimal.valueOf(5.5)).build();
-                websUser.getAccounts().add(firstAccount);
-                websUser = userProvider.update(websUser);
-
-                final Account secondAccount = SavingsAccount.builder().number("def456").balance(new BigDecimal("22.22"))
-                        .currency(Currency.PLN).interest(BigDecimal.valueOf(4.5)).build();
-                websUser.getAccounts().add(secondAccount);
-                userProvider.update(websUser);
+                addUserWithAccounts(Settings.USERNAME, "piotr.glazar@gmail.com", "abc123", "def456");
             }
+
+            if (userProvider.findUser(Settings.USERNAME2) == null) {
+                addUserWithAccounts(Settings.USERNAME2, "pglazar@wp.pl", "ghi123", "jkl456");
+            }
+        }
+
+        private void addUserWithAccounts(String username, String email, String firstAccountNo, String secondAccountNo) {
+            WebsUser websUser = userProvider.createUser(username, Settings.PASSWORD);
+            websUser.setEmail(email);
+
+            final Account firstAccount = SavingsAccount.builder().number(firstAccountNo).balance(BigDecimal.TEN)
+                    .currency(Currency.PLN).interest(BigDecimal.valueOf(5.5)).build();
+            websUser.getAccounts().add(firstAccount);
+            websUser = userProvider.update(websUser);
+
+            final Account secondAccount = SavingsAccount.builder().number(secondAccountNo).balance(new BigDecimal("22.22"))
+                    .currency(Currency.PLN).interest(BigDecimal.valueOf(4.5)).build();
+            websUser.getAccounts().add(secondAccount);
+            userProvider.update(websUser);
         }
     }
 }

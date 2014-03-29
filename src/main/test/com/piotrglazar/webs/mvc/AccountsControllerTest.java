@@ -3,7 +3,7 @@ package com.piotrglazar.webs.mvc;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.piotrglazar.webs.AccountProvider;
-import com.piotrglazar.webs.config.MvcConfig;
+import com.piotrglazar.webs.config.MvcConfiguration;
 import com.piotrglazar.webs.dto.AccountDto;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
 import com.piotrglazar.webs.model.Account;
@@ -62,7 +62,7 @@ public class AccountsControllerTest {
 
         // then
         verify(model).addAttribute("accounts", accounts);
-        verify(model).addAttribute(MvcConfig.PAGE_NAME_ATTRIBUTE, "accounts");
+        verify(model).addAttribute(MvcConfiguration.PAGE_NAME_ATTRIBUTE, "accounts");
     }
 
     @Test
@@ -75,7 +75,7 @@ public class AccountsControllerTest {
 
         // then
         verify(model).addAttribute(eq("accounts"), any(List.class));
-        verify(model).addAttribute(MvcConfig.PAGE_NAME_ATTRIBUTE, "accounts");
+        verify(model).addAttribute(MvcConfiguration.PAGE_NAME_ATTRIBUTE, "accounts");
     }
 
     @Test

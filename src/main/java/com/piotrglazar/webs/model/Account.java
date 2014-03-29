@@ -87,4 +87,12 @@ public abstract class Account {
     public void setId(final long id) {
         this.id = id;
     }
+
+    public void addBalance(final BigDecimal amount) {
+        this.balance = balance.add(amount);
+    }
+
+    public void subtractBalance(final BigDecimal amount) {
+        this.balance = balance.subtract(amount);
+    }
 }
