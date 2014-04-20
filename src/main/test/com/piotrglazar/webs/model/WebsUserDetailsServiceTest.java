@@ -39,7 +39,7 @@ public class WebsUserDetailsServiceTest {
     @Test
     public void shouldConvertWebsUserToSpringUser() {
         // given
-        final WebsUser user = new WebsUser("username", "password", Sets.newHashSet("role"));
+        final WebsUser user = WebsUser.builder().username("username").password("password").roles(Sets.newHashSet("role")).build();
         given(userProvider.findUser("username")).willReturn(user);
 
         // when

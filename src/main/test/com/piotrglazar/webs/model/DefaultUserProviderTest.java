@@ -1,6 +1,5 @@
 package com.piotrglazar.webs.model;
 
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,7 +37,7 @@ public class DefaultUserProviderTest {
     @Test
     public void shouldFindExistingUser() {
         // given
-        final WebsUser user = new WebsUser("username", "password", Sets.newHashSet("role"));
+        final WebsUser user = WebsUser.builder().username("username").password("password").build();
         given(websUserRepository.findByUsername("username")).willReturn(user);
 
         // when

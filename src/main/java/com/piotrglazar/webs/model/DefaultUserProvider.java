@@ -1,6 +1,5 @@
 package com.piotrglazar.webs.model;
 
-import com.google.common.collect.Sets;
 import com.piotrglazar.webs.UserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +19,10 @@ class DefaultUserProvider implements UserProvider {
 
     @Override
     public WebsUser createUser(final String username, final String password) {
-        final WebsUser websUser = new WebsUser(username, passwordEncoder.encode(password), Sets.newHashSet("USER"));
+        final WebsUser websUser = WebsUser.builder()
+                                    .username(username)
+                                    .password(passwordEncoder.encode(password))
+                                    .build();
         websUserRepository.save(websUser);
         return websUser;
     }
@@ -28,5 +30,10 @@ class DefaultUserProvider implements UserProvider {
     @Override
     public WebsUser findUser(final String username) {
         return websUserRepository.findByUsername(username);
+    }
+
+    @Override
+    public WebsUser update(final WebsUser websUser) {
+        return websUserRepository.saveAndFlush(websUser);
     }
 }

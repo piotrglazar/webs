@@ -1,4 +1,4 @@
-package com.piotrglazar.webs.model;
+package com.piotrglazar.webs.mvc;
 
 import com.piotrglazar.webs.AbstractContextTest;
 import com.piotrglazar.webs.config.Settings;
@@ -25,8 +25,6 @@ public class RegistrationControllerContextTest extends AbstractContextTest {
 
     @Test
     public void shouldShowRegistrationForm() throws Exception {
-        // given
-
         // when
         mockMvc.perform(get("/newUser"))
 
@@ -37,8 +35,6 @@ public class RegistrationControllerContextTest extends AbstractContextTest {
 
     @Test
     public void shouldRedirectToLoginPageAfterSuccessfulRegistration() throws Exception {
-        // given
-
         // when
         mockMvc.perform(addCsrf(post("/newUser")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -53,10 +49,8 @@ public class RegistrationControllerContextTest extends AbstractContextTest {
 
     @Test
     public void shouldShowErrorWhenUsernameAlreadyTaken() throws Exception {
-        // given
         // we assume here that there is user Settings.USERNAME
 
-        // when
         mockMvc.perform(addCsrf(post("/newUser"))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("username", Settings.USERNAME)
@@ -70,8 +64,6 @@ public class RegistrationControllerContextTest extends AbstractContextTest {
 
     @Test
     public void shouldShowErrorWhenPasswordAndRepeatPasswordDoNotMatch() throws Exception {
-        // given
-
         // when
         mockMvc.perform(addCsrf(post("/newUser"))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)

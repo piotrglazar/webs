@@ -1,6 +1,5 @@
 package com.piotrglazar.webs.mvc;
 
-import com.google.common.collect.Sets;
 import com.piotrglazar.webs.UserProvider;
 import com.piotrglazar.webs.model.WebsUser;
 import org.junit.Test;
@@ -30,7 +29,7 @@ public class RegisterFormUsernameFieldValidatorTest {
         // given
         final RegisterForm registerForm = new RegisterForm();
         registerForm.setUsername("user");
-        given(userProvider.findUser("user")).willReturn(new WebsUser("user", "password", Sets.<String>newHashSet()));
+        given(userProvider.findUser("user")).willReturn(WebsUser.builder().username("user").build());
 
         // when
         validator.validate(registerForm, errors);

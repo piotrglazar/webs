@@ -2,16 +2,22 @@ package com.piotrglazar.webs.model;
 
 import com.google.common.base.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.Set;
 
 @Entity
-public class WebsUser {
+@Table(indexes = @Index(unique = true, columnList = "username"))
+public final class WebsUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,14 +30,19 @@ public class WebsUser {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> roles;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "WEBSUSER_ID", referencedColumnName = "ID")
+    private Set<Account> accounts;
+
     public WebsUser() {
 
     }
 
-    public WebsUser(final String username, final String password, final Set<String> roles) {
+    public WebsUser(final String username, final String password, final Set<String> roles, final Set<Account> accounts) {
         this.username = username;
         this.password = password;
         this.roles = roles;
+        this.accounts = accounts;
     }
 
     @Override
@@ -77,5 +88,17 @@ public class WebsUser {
 
     public void setRoles(final Set<String> roles) {
         this.roles = roles;
+    }
+
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(final Set<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public static WebsUserBuilder builder() {
+        return new WebsUserBuilder();
     }
 }

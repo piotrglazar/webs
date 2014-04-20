@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="shards/head :: head">
+</head>
+<body>
+<div th:replace="shards/navigation :: navigation"></div>
+<div class="jumbotron">
+    <div class="container">
+        <div>
+            <h1 th:inline="text">[[${#httpServletRequest.remoteUser}]] account details!</h1>
+            <p><span>Account number: </span><span th:text="${accountDetails.number}"></span></p>
+            <p><span>Balance: </span><span th:text="${accountDetails.balance}"></span> <span th:text="${accountDetails.currency}"></span></p>
+            <p><span>Interest rate: </span><span th:text="${accountDetails.interest}"></span>%</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -7,4 +7,6 @@ public interface UserProvider {
     WebsUser createUser(String username, String password);
 
     WebsUser findUser(String username);
+
+    WebsUser update(WebsUser websUser);
 }
