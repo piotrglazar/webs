@@ -41,11 +41,11 @@ public class DatabaseTestConfiguration {
 
         @PostConstruct
         public void setupInitialData() {
-            if (userProvider.findUser(Settings.USERNAME) == null) {
+            if (userProvider.findUserByUsername(Settings.USERNAME) == null) {
                 addUserWithAccounts(Settings.USERNAME, "piotr.glazar@gmail.com", "abc123", "def456");
             }
 
-            if (userProvider.findUser(Settings.USERNAME2) == null) {
+            if (userProvider.findUserByUsername(Settings.USERNAME2) == null) {
                 addUserWithAccounts(Settings.USERNAME2, "pglazar@wp.pl", "ghi123", "jkl456");
             }
         }

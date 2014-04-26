@@ -34,7 +34,7 @@ public class RegisterFormUsernameFieldValidatorTest {
     public void shouldRejectAlreadyTakenUsername() {
         // given
         registerForm.setUsername("user");
-        given(userProvider.findUser("user")).willReturn(WebsUser.builder().username("user").build());
+        given(userProvider.findUserByUsername("user")).willReturn(WebsUser.builder().username("user").build());
 
         // when
         validator.validate(registerForm, errors);

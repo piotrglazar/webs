@@ -1,0 +1,7 @@
+$user sends money
+
+from account $fromAccount
+
+Amount: $amount
+
+to account $toAccount

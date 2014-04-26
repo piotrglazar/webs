@@ -27,7 +27,7 @@ class AccountMoneyTransferValidator implements MoneyTransferValidator {
             existingAccounts = false;
         }
 
-        if (existingAccounts && fromAccount.getId() == toAccount.getId()) {
+        if (existingAccounts && fromAccount.getId().equals(toAccount.getId())) {
             errorGatherer.add("Cannot transfer money from account to itself");
         }
     }

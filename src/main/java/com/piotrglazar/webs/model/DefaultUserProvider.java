@@ -28,8 +28,18 @@ class DefaultUserProvider implements UserProvider {
     }
 
     @Override
-    public WebsUser findUser(final String username) {
+    public WebsUser findUserByUsername(final String username) {
         return websUserRepository.findByUsername(username);
+    }
+
+    @Override
+    public WebsUser getUserByUsername(final String username) {
+        final WebsUser websUser = findUserByUsername(username);
+
+        if (websUser == null) {
+            throw new WebsUserNotFoundException(username);
+        }
+        return websUser;
     }
 
     @Override
