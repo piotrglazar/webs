@@ -36,7 +36,7 @@ public class AccountMoneyTransfer {
         mailSender.sendMoneyTransferMessage(moneyTransferParams);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.REPEATABLE_READ)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     private void doTransferMoney(final MoneyTransferParams moneyTransferParams) {
         final Account fromAccount = accountRepository.findOne(moneyTransferParams.getFromAccount());
         final Account toAccount = accountRepository.findOne(moneyTransferParams.getToAccount());

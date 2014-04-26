@@ -1,5 +1,6 @@
 package com.piotrglazar.webs.business;
 
+import com.piotrglazar.webs.WebsTemplates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.MailSender;
@@ -14,10 +15,13 @@ public class BusinessMailSender {
 
     private final SimpleMailMessage moneyTransferMessage;
 
+    private final WebsTemplates websTemplates;
+
     @Autowired
-    public BusinessMailSender(final MailSender mailSender,
+    public BusinessMailSender(final MailSender mailSender, final WebsTemplates websTemplates,
                               @Qualifier("moneyTransferMessage") final SimpleMailMessage moneyTransferMessage) {
         this.mailSender = mailSender;
+        this.websTemplates = websTemplates;
         this.moneyTransferMessage = moneyTransferMessage;
     }
 
@@ -33,20 +37,7 @@ public class BusinessMailSender {
     }
 
     private String mailMessageText(final MoneyTransferParams moneyTransferParams) {
-        final StringBuilder builder = new StringBuilder();
-
-        builder.append("Sending money\n");
-        builder.append("Amount: ");
-        builder.append(moneyTransferParams.getAmount());
-        builder.append("\n");
-        builder.append("From: ");
-        builder.append(moneyTransferParams.getUsername());
-        builder.append(" ");
-        builder.append(moneyTransferParams.getFromAccount());
-        builder.append("\n");
-        builder.append("To: ");
-        builder.append(moneyTransferParams.getToAccount());
-
-        return builder.toString();
+        return websTemplates.mailMessage(moneyTransferParams.getUsername(), moneyTransferParams.getFromAccount(),
+                moneyTransferParams.getToAccount(), moneyTransferParams.getAmount());
     }
 }

@@ -27,7 +27,7 @@ class WebsUserDetailsService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        final WebsUser websUser = userProvider.findUser(username);
+        final WebsUser websUser = userProvider.findUserByUsername(username);
 
         if (websUser == null) {
             throw new UsernameNotFoundException("There is no user ".concat(username));

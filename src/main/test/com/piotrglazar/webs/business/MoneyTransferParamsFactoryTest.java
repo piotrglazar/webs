@@ -1,9 +1,9 @@
 package com.piotrglazar.webs.business;
 
+import com.piotrglazar.webs.UserProvider;
 import com.piotrglazar.webs.model.Account;
 import com.piotrglazar.webs.model.AccountRepository;
 import com.piotrglazar.webs.model.WebsUser;
-import com.piotrglazar.webs.model.WebsUserRepository;
 import com.piotrglazar.webs.mvc.TransferForm;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.mock;
 public class MoneyTransferParamsFactoryTest {
 
     @Mock
-    private WebsUserRepository userRepository;
+    private UserProvider userProvider;
 
     @Mock
     private AccountRepository accountRepository;
@@ -36,7 +36,7 @@ public class MoneyTransferParamsFactoryTest {
         user.setEmail("email");
         given(account.getId()).willReturn(2L);
         given(accountRepository.findByNumber("abc")).willReturn(account);
-        given(userRepository.findByUsername("user")).willReturn(user);
+        given(userProvider.getUserByUsername("user")).willReturn(user);
 
         // when
         final MoneyTransferParams params = factory.create("user", transferForm);

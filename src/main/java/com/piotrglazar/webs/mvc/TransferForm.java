@@ -1,8 +1,8 @@
 package com.piotrglazar.webs.mvc;
 
 import com.piotrglazar.webs.mvc.validators.PositiveNumber;
-import com.piotrglazar.webs.mvc.validators.PositiveNumberLessThan100;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
 public class TransferForm {
 
@@ -15,7 +15,7 @@ public class TransferForm {
     @PositiveNumber
     private long integralPart;
 
-    @PositiveNumberLessThan100
+    @Range(min = 0, max = 99, message = "Please provide a number between 0 and 99 inclusively")
     private long fractionalPart;
 
     public long getAccountId() {

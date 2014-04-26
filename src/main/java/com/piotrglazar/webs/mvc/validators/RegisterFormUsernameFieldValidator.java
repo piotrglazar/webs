@@ -20,7 +20,7 @@ class RegisterFormUsernameFieldValidator implements RegisterFormFieldValidator {
 
     @Override
     public void validate(final RegisterForm form, final Errors errors) {
-        final WebsUser user = userProvider.findUser(form.getUsername());
+        final WebsUser user = userProvider.findUserByUsername(form.getUsername());
         if (user != null) {
             errors.rejectValue("username", "registerForm.username", "username is already in use");
         }
