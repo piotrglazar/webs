@@ -41,7 +41,7 @@ public class DefaultUserProviderTest {
         given(websUserRepository.findByUsername("username")).willReturn(user);
 
         // when
-        final WebsUser foundUser = defaultUserProvider.findUser("username");
+        final WebsUser foundUser = defaultUserProvider.findUserByUsername("username");
 
         // then
         assertThat(foundUser).isEqualTo(user);
@@ -50,7 +50,7 @@ public class DefaultUserProviderTest {
     @Test
     public void shouldReturnNullWhenThereIsNoUserForGivenName() {
         // when
-        final WebsUser foundUser = defaultUserProvider.findUser("non existing user");
+        final WebsUser foundUser = defaultUserProvider.findUserByUsername("non existing user");
 
         // then
         assertThat(foundUser).isNull();

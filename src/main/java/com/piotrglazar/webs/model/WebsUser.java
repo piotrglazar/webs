@@ -1,6 +1,8 @@
 package com.piotrglazar.webs.model;
 
 import com.google.common.base.Objects;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
@@ -16,15 +18,23 @@ import javax.persistence.Table;
 import java.util.Set;
 
 @Entity
-@Table(indexes = @Index(unique = true, columnList = "username"))
+@Table(indexes = {
+        @Index(unique = true, columnList = "username"),
+        @Index(unique = true, columnList = "email")
+})
 public final class WebsUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
     private String username;
 
+    @Email
+    private String email;
+
+    @NotBlank
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -38,11 +48,12 @@ public final class WebsUser {
 
     }
 
-    public WebsUser(final String username, final String password, final Set<String> roles, final Set<Account> accounts) {
+    public WebsUser(String username, String password, Set<String> roles, Set<Account> accounts, String email) {
         this.username = username;
         this.password = password;
         this.roles = roles;
         this.accounts = accounts;
+        this.email = email;
     }
 
     @Override
@@ -92,6 +103,14 @@ public final class WebsUser {
 
     public Set<Account> getAccounts() {
         return accounts;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(final String email) {
+        this.email = email;
     }
 
     public void setAccounts(final Set<Account> accounts) {

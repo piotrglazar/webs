@@ -10,7 +10,7 @@ import org.springframework.validation.Errors;
 import java.util.List;
 
 @Component
-class RegisterFormValidatorChain implements ValidatorChain<RegisterForm, Errors>{
+class RegisterFormValidatorChain implements ValidatorChain<RegisterForm, Errors> {
 
     private final List<RegisterFormFieldValidator> validators;
 

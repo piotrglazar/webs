@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="shards/head :: head">
+</head>
+<body>
+<div th:replace="shards/navigation :: navigation"></div>
+<div class="jumbotron">
+    <div class="container">
+        <div>
+            <form role="form" th:action="@{/accountsTransfer} + '/' + ${transferForm.accountId} + '/'" method="post" th:object="${transferForm}">
+                <fieldset>
+                    <div class="form-group">
+                        <input type="hidden" th:field="*{accountId}"/>
+                        <input type="text" id="accountNumber" name="accountNumber" th:field="*{accountNumber}" class="form-control" placeholder="Account number" th:errorclass="input-error"/>
+                        <p th:if="${#fields.hasErrors('accountNumber')}" id="accountNumberError" class="has-error">
+                            <span th:errors="*{accountNumber}" class="form-control-feedback">accountNumber errors</span>
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <p th:if="${#fields.hasErrors('integralPart')}" id="integralPartError" class="has-error">
+                            <span th:errors="*{integralPart}" class="form-control-feedback">integralPart errors</span>
+                        </p>
+                        <input type="number" id="integralPart" name="integralPart" th:field="*{integralPart}" placeholder="0" th:errorclass="input-error"/>
+                        <span>.</span>
+                        <input type="number" id="fractionalPart" name="fractionalPart" th:field="*{fractionalPart}" placeholder="0" th:errorclass="input-error"/>
+                        <p th:if="${#fields.hasErrors('fractionalPart')}" id="fractionalPartError" class="has-error">
+                            <span th:errors="*{fractionalPart}" class="form-control-feedback">fractionalPart errors</span>
+                        </p>
+                    </div>
+                    <button class="btn btn-lg btn-success btn-block" type="submit">Send money</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

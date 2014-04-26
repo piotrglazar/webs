@@ -41,22 +41,34 @@ dependencies {
     // end::security[]
     // tag::data[]
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile("org.hsqldb:hsqldb:2.3.2")
+    compile("org.hsqldb:hsqldb")
     // end:data[]
     // tag::guava[]
     compile("com.google.guava:guava:16.0.1")
     // end::guava[]
     // tag::validation[]
-    compile("javax.validation:validation-api:1.1.0.Final")
-    compile("org.hibernate:hibernate-validator:5.0.3.Final")
+    compile("javax.validation:validation-api")
+    compile("org.hibernate:hibernate-validator")
     // end::validation[]
+    // tag::context-support[]
+    compile("org.springframework:spring-context-support")
+    // end::context-support[]
+    // tag::mail[]
+    compile("javax.mail:mail:1.4.7")
+    // end::mail[]
+    // tag::log[]
+    compile("org.slf4j:slf4j-api")
+    // end::log[]
+    // tag::velocity[]
+    compile("org.apache.velocity:velocity:1.7")
+    // end::velocity[]
 
     testCompile("junit:junit")
     testCompile("org.mockito:mockito-all:1.9.5")
-    testCompile("org.assertj:assertj-core:1.5.0")
+    testCompile("org.assertj:assertj-core:1.6.0")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("com.googlecode.catch-exception:catch-exception:1.2.0")
-    testCompile("nl.jqno.equalsverifier:equalsverifier:1.3.1")
+    testCompile("nl.jqno.equalsverifier:equalsverifier:1.4.1")
 }
 
 task wrapper(type: Wrapper) {
