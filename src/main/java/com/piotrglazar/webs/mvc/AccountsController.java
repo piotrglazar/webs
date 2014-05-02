@@ -4,12 +4,18 @@ import com.piotrglazar.webs.AccountProvider;
 import com.piotrglazar.webs.config.MvcConfiguration;
 import com.piotrglazar.webs.dto.AccountDto;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
+import com.piotrglazar.webs.model.AccountType;
+import com.piotrglazar.webs.model.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,5 +53,25 @@ public class AccountsController {
         } else {
             return "redirect:/accounts";
         }
+    }
+
+    @RequestMapping(value = "/newAccount/", method = RequestMethod.GET)
+    public ModelAndView newAccount(final AccountCreationForm newAccountForm) {
+        final ModelAndView modelAndView = new ModelAndView("newAccount");
+        modelAndView.addObject("newAccountForm", newAccountForm);
+        modelAndView.addObject("allAccountTypes", AccountType.values());
+        modelAndView.addObject("allCurrencies", Currency.values());
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/newAccount/", method = RequestMethod.POST)
+    public String addAccount(@Valid final AccountCreationForm form, final BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "newAccount";
+        }
+
+        accountProvider.newAccount(getUsername(), form.getType(), form.getCurrency());
+
+        return "redirect:/accounts";
     }
 }

@@ -8,20 +8,39 @@
     <div class="container">
         <div>
             <h1 th:inline="text">[[${#httpServletRequest.remoteUser}]] accounts!</h1>
-            <table class="table table-striped">
+            <div>
+                <a class="btn btn-primary" th:href="@{/newAccount/}">New account</a>
+            </div>
+            <table class="table table-striped" id="accountTable">
                 <thead>
                 <tr>
+                    <th></th>
                     <th>Account number</th>
-                    <th>Balance</th>
                     <th>Currency</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="account : ${accounts}">
-                    <td><a th:href="@{/accounts/} + ${account.id} + '/'" th:text="${account.number}"></a></td>
-                    <td th:text="${account.balance}"></td>
-                    <td th:text="${account.currency}"></td>
-                </tr>
+                <th:block th:each="account : ${accounts}">
+                    <tr>
+                        <td><a class="glyphicon glyphicon-chevron-down accordion-toggle" data-parent="#accountTable" data-toggle="collapse" th:href="'#detailsRow'+${accountStat.index}" title="Show details"/></td>
+                        <td><a th:href="@{/accounts/} + ${account.id} + '/'" th:text="${account.number}"></a></td>
+                        <td th:text="${account.currency}"></td>
+                    </tr>
+
+                    <tr th:id="'detailsRow'+${accountStat.index}" class="panel-collapse collapse">
+                        <td colspan="3">
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><a th:href="@{/accountsTransfer/} + ${account.id} + '/'">Transfer money</a></div>
+                                <div class="panel-body">
+                                    <p th:text="'Balance: ' + ${account.balance} + ${account.currency}"></p>
+                                </div>
+                                <div class="panel-body" th:if="${account instanceof T(com.piotrglazar.webs.dto.SavingsAccountDto)}">
+                                    <p th:text="'Interest: ' + ${account.interest} + '%'"></p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </th:block>
                 </tbody>
             </table>
         </div>
