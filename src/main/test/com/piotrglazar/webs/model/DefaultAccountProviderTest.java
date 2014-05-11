@@ -1,6 +1,9 @@
 package com.piotrglazar.webs.model;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import com.piotrglazar.webs.UniqueIdGenerator;
+import com.piotrglazar.webs.UserProvider;
 import com.piotrglazar.webs.dto.AccountDto;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
 import org.junit.Test;
@@ -10,18 +13,28 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import static com.googlecode.catchexception.CatchException.catchException;
+import static com.googlecode.catchexception.CatchException.caughtException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultAccountProviderTest {
 
     @Mock
     private AccountRepository accountRepository;
+
+    @Mock
+    private UniqueIdGenerator generator;
+
+    @Mock
+    private UserProvider userProvider;
 
     @InjectMocks
     private DefaultAccountProvider accountProvider;
@@ -58,17 +71,16 @@ public class DefaultAccountProviderTest {
 
     @Test
     public void shouldConvertAllTypesOfAccountsToDto() {
+        // only savings account exists for now
         // given
         final SavingsAccount savingsAccount = SavingsAccount.builder().number("abc").interest(BigDecimal.ONE).build();
-        final Account newTypeAccount = mock(Account.class);
-        given(newTypeAccount.getNumber()).willReturn("def");
-        given(accountRepository.findByUsername("user")).willReturn(Lists.newArrayList(savingsAccount, newTypeAccount));
+        given(accountRepository.findByUsername("user")).willReturn(Lists.newArrayList(savingsAccount));
 
         // when
         final List<AccountDto> dtos = accountProvider.getUserAccounts("user");
 
         // then
-        assertThat(dtos).hasSize(2).extracting("number").containsOnly("abc", "def");
+        assertThat(dtos).hasSize(1).extracting("number").containsOnly("abc");
     }
 
     @Test
@@ -81,5 +93,38 @@ public class DefaultAccountProviderTest {
 
         // then
         assertThat(dtos).isEmpty();
+    }
+
+    @Test
+    public void shouldFailWhileCreatingNewAccountForNonExistingUser() {
+        // given
+        given(userProvider.getUserByUsername("user")).willThrow(new WebsUserNotFoundException("user"));
+
+        // when
+        catchException(accountProvider).newAccount("user", AccountType.SAVINGS, Currency.GBP);
+
+        // then
+        assertThat((Exception) caughtException()).isInstanceOf(WebsUserNotFoundException.class);
+    }
+
+    @Test
+    public void shouldTryToFindUniqueAccountNumber() {
+        // given
+        HashSet<Account> accounts = Sets.newHashSet();
+        WebsUser user = WebsUser.builder().accounts(accounts).build();
+        Account account = mock(Account.class);
+        given(userProvider.getUserByUsername("user")).willReturn(user);
+        given(generator.generate()).willReturn("a", "b");
+        given(accountRepository.findByNumber("a")).willReturn(account);
+
+        // when
+        accountProvider.newAccount("user", AccountType.SAVINGS, Currency.GBP);
+
+        // then
+        assertThat(accounts).hasSize(1);
+        SavingsAccount savedAccount = (SavingsAccount) accounts.iterator().next();
+        assertThat(savedAccount.getNumber()).isEqualTo("b");
+        assertThat(savedAccount.getBalance()).isEqualByComparingTo("0");
+        assertThat(savedAccount.getCurrency()).isEqualTo(Currency.GBP);
     }
 }

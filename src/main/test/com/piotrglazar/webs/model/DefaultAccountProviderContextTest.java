@@ -2,6 +2,7 @@ package com.piotrglazar.webs.model;
 
 import com.google.common.collect.Sets;
 import com.piotrglazar.webs.AbstractContextTest;
+import com.piotrglazar.webs.config.Settings;
 import com.piotrglazar.webs.dto.AccountDto;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
 import org.junit.Test;
@@ -20,6 +21,9 @@ public class DefaultAccountProviderContextTest extends AbstractContextTest {
 
     @Autowired
     private WebsUserRepository websUserRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Test
     public void shouldFindUserAccountAndConvertItToDto() {
@@ -50,5 +54,19 @@ public class DefaultAccountProviderContextTest extends AbstractContextTest {
         assertThat(accountDto.isPresent());
         assertThat(accountDto.get().getBalance()).isEqualByComparingTo("10.00");
         assertThat(accountDto.get().getInterest()).isEqualByComparingTo("1.00");
+    }
+
+    @Test
+    public void shouldCreateNewAccount() {
+        // given
+
+        // when
+        String accountNumber = defaultAccountProvider.newAccount(Settings.USERNAME, AccountType.SAVINGS, Currency.GBP);
+
+        // then
+        final Account account = accountRepository.findByNumber(accountNumber);
+        assertThat(account.getCurrency()).isEqualTo(Currency.GBP);
+        assertThat(account.getBalance()).isEqualByComparingTo("0");
+        assertThat(defaultAccountProvider.getUserSavingsAccount(Settings.USERNAME, account.getId()).isPresent()).isTrue();
     }
 }

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="shards/head :: head">
+</head>
+<body>
+<div th:replace="shards/navigation :: navigation"></div>
+<div class="jumbotron">
+    <div class="container">
+        <div><p><strong>Create new account!</strong></p></div>
+        <div>
+            <form role="form" th:action="@{/newAccount/}" method="post" th:object="${newAccountForm}">
+                <fieldset>
+                    <select th:field="*{type}">
+                        <option th:each="type : ${allAccountTypes}"
+                                th:value="${type}"
+                                th:text="${type}">Savings</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <select th:field="*{currency}">
+                        <option th:each="currency : ${allCurrencies}"
+                                th:value="${currency}"
+                                th:text="${currency}">PLN</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <button class="btn btn-lg btn-success btn-block" type="submit">Create</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
