@@ -1,26 +1,28 @@
 package com.piotrglazar.webs.model;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 public class DefaultUserProviderTest {
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    @Mock
     private WebsUserRepository websUserRepository;
 
+    @InjectMocks
     private DefaultUserProvider defaultUserProvider;
-
-    @Before
-    public void setup() {
-        websUserRepository = mock(WebsUserRepository.class);
-        defaultUserProvider = new DefaultUserProvider(websUserRepository, mock(PasswordEncoder.class));
-    }
 
     @Test
     public void shouldCreateUser() {

@@ -120,4 +120,8 @@ public final class WebsUser {
     public static WebsUserBuilder builder() {
         return new WebsUserBuilder();
     }
+
+    public void setId(final Long id) {
+        this.id = id;
+    }
 }

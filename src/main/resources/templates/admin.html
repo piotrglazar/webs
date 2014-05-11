@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="shards/head :: head">
+</head>
+<body>
+<div th:replace="shards/navigation :: navigation"></div>
+<div class="jumbotron">
+    <div class="container">
+        <div>
+            <h1 th:inline="text">[[${#httpServletRequest.remoteUser}]] Admin panel!</h1>
+            <table class="table table-striped" id="accountTable">
+                <thead>
+                <tr>
+                    <th class="text-center">Sending User Id</th>
+                    <th class="text-center">Sending Account Id</th>
+                    <th class="text-center">Receiving Account Id</th>
+                    <th class="text-center">Amount</th>
+                    <th class="text-center">Success</th>
+                    <th class="text-center">Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="moneyTransferAudit : ${moneyTransferAudits}">
+                    <tr>
+                        <td th:text="${moneyTransferAudit.sendingUserId}" class="text-center">Sending User Id</td>
+                        <td th:text="${moneyTransferAudit.sendingAccountId}" class="text-center">Sending Account Id</td>
+                        <td th:text="${moneyTransferAudit.receivingAccountId}" class="text-center">Receiving Account Id</td>
+                        <td th:text="${moneyTransferAudit.amount}" class="text-center">Amount</td>
+                        <td th:text="${moneyTransferAudit.success}" class="text-center">Success</td>
+                        <td th:text="${moneyTransferAudit.date}" class="text-center">Date</td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

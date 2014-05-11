@@ -6,8 +6,6 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import javax.xml.xpath.XPathExpressionException;
-
 import static com.piotrglazar.webs.commons.Utils.addCsrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

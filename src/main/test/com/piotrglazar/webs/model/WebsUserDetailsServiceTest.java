@@ -2,8 +2,11 @@ package com.piotrglazar.webs.model;
 
 import com.google.common.collect.Sets;
 import com.piotrglazar.webs.UserProvider;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -11,19 +14,15 @@ import static com.googlecode.catchexception.CatchException.catchException;
 import static com.googlecode.catchexception.CatchException.caughtException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
+@RunWith(MockitoJUnitRunner.class)
 public class WebsUserDetailsServiceTest {
 
+    @Mock
     private UserProvider userProvider;
 
+    @InjectMocks
     private WebsUserDetailsService websUserDetailsService;
-
-    @Before
-    public void setup() {
-        userProvider = mock(UserProvider.class);
-        websUserDetailsService = new WebsUserDetailsService(userProvider);
-    }
 
     @Test
     public void shouldThrowExceptionWhenNoSuchUserExist() {

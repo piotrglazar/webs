@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import java.util.Set;
 
 public class WebsUserBuilder {
+    private Long id;
     private String username;
     private String password;
     private String email;
@@ -36,7 +37,14 @@ public class WebsUserBuilder {
         return this;
     }
 
+    public WebsUserBuilder id(final Long id) {
+        this.id = id;
+        return this;
+    }
+
     public WebsUser build() {
-        return new WebsUser(username, password, roles, accounts, email);
+        final WebsUser websUser = new WebsUser(username, password, roles, accounts, email);
+        websUser.setId(id);
+        return websUser;
     }
 }

@@ -14,7 +14,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {ServiceRunner.class})
+@ContextConfiguration(classes = {Webs.class})
 @ActiveProfiles("test")
 public abstract class AbstractContextTest {
 
