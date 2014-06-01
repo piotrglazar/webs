@@ -1,8 +1,7 @@
 package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.Validator;
+import com.piotrglazar.webs.util.ErrorGatherer;
 
-import java.util.List;
-
-public interface MoneyTransferValidator extends Validator<MoneyTransferDetails, List<String>> {
+public interface MoneyTransferValidator extends Validator<MoneyTransferDetails, ErrorGatherer> {
 }

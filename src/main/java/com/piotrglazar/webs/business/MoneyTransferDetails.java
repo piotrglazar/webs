@@ -2,6 +2,8 @@ package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.model.Account;
 
+import java.math.BigDecimal;
+
 public class MoneyTransferDetails {
 
     private final Account accountTo;
@@ -27,5 +29,9 @@ public class MoneyTransferDetails {
 
     public MoneyTransferParams getParams() {
         return params;
+    }
+
+    public BigDecimal getMoneyTransferAmount() {
+        return params.getAmount();
     }
 }

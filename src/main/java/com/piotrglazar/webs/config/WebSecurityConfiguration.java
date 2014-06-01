@@ -1,5 +1,7 @@
 package com.piotrglazar.webs.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,9 +11,13 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.lang.invoke.MethodHandles;
+
 @Configuration
 @EnableWebMvcSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -30,6 +36,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
              .logout()
+                .addLogoutHandler((request, response, authentication) ->
+                        LOG.info("User {} has just logged out", (authentication != null) ? authentication.getName() : "-"))
                 .permitAll();
     }
 

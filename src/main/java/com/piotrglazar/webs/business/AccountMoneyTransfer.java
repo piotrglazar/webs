@@ -1,8 +1,9 @@
 package com.piotrglazar.webs.business;
 
-import com.google.common.base.Joiner;
 import com.piotrglazar.webs.model.Account;
 import com.piotrglazar.webs.model.AccountRepository;
+import com.piotrglazar.webs.util.ErrorGatherer;
+import com.piotrglazar.webs.util.OperationLogging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
@@ -30,6 +31,7 @@ public class AccountMoneyTransfer {
         this.validatorChain = validatorChain;
     }
 
+    @OperationLogging(operation = "transferMoney")
     public void transferMoney(final MoneyTransferParams moneyTransferParams) {
         doTransferMoney(moneyTransferParams);
 
@@ -40,7 +42,7 @@ public class AccountMoneyTransfer {
     private void doTransferMoney(final MoneyTransferParams moneyTransferParams) {
         final Account fromAccount = accountRepository.findOne(moneyTransferParams.getFromAccount());
         final Account toAccount = accountRepository.findOne(moneyTransferParams.getToAccount());
-        final List<String> errors = new LinkedList<>();
+        final ErrorGatherer errors = new ErrorGatherer();
 
         validatorChain.validateAll(new MoneyTransferDetails(toAccount, fromAccount, moneyTransferParams), errors);
 
@@ -52,7 +54,7 @@ public class AccountMoneyTransfer {
             accountRepository.save(fromAccount);
             accountRepository.save(toAccount);
         } else {
-            throw new MoneyTransferException(Joiner.on('\n').join(errors));
+            throw new MoneyTransferException(errors);
         }
     }
 }

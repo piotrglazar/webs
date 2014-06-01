@@ -1,0 +1,16 @@
+<configuration>
+
+    <appender name="MAIN" class="ch.qos.logback.core.FileAppender">
+        <file>webs.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%date %level %logger{10} %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="MAIN"/>
+    </root>
+
+</configuration>
+

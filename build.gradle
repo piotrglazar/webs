@@ -1,15 +1,14 @@
 buildscript {
     repositories {
         maven { url "http://repo.spring.io/libs-snapshot" }
-        mavenLocal()
+        mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.0.RC4")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.2.RELEASE")
     }
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
@@ -62,6 +61,9 @@ dependencies {
     // tag::velocity[]
     compile("org.apache.velocity:velocity:1.7")
     // end::velocity[]
+    // tag::logback[]
+    compile("ch.qos.logback:logback-classic:1.1.2")
+    // end::logback[]
 
     testCompile("junit:junit")
     testCompile("org.mockito:mockito-all:1.9.5")
@@ -82,5 +84,4 @@ idea {
     }
 }
 
-sourceCompatibility=1.8
-targetCompatibility=1.8
+sourceCompatibility = 1.8

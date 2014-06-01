@@ -20,7 +20,7 @@ public class AccountMoneyTransferValidatorTest extends MoneyTransferValidatorTes
         validator.validate(moneyTransferDetails, errors);
 
         // then
-        assertThat(errors).isEmpty();
+        assertThat(errors.isEmpty()).isTrue();
     }
 
     @Test
@@ -32,7 +32,7 @@ public class AccountMoneyTransferValidatorTest extends MoneyTransferValidatorTes
         validator.validate(moneyTransferDetails, errors);
 
         // then
-        assertThat(errors).isNotEmpty();
+        assertThat(errors.isEmpty()).isFalse();
     }
 
     @Test
@@ -44,7 +44,7 @@ public class AccountMoneyTransferValidatorTest extends MoneyTransferValidatorTes
         validator.validate(moneyTransferDetails, errors);
 
         // then
-        assertThat(errors).isNotEmpty();
+        assertThat(errors.isEmpty()).isFalse();
     }
 
     @Test
@@ -58,6 +58,6 @@ public class AccountMoneyTransferValidatorTest extends MoneyTransferValidatorTes
         validator.validate(moneyTransferDetails, errors);
 
         // then
-        assertThat(errors).isNotEmpty();
+        assertThat(errors.isEmpty()).isFalse();
     }
 }

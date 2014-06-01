@@ -19,7 +19,7 @@ public class CurrencyMoneyTransferValidatorTest extends MoneyTransferValidatorTe
         validator.validate(moneyTransferDetails, errors);
 
         // then
-        assertThat(errors).isEmpty();
+        assertThat(errors.isEmpty()).isTrue();
     }
 
     @Test
@@ -33,6 +33,6 @@ public class CurrencyMoneyTransferValidatorTest extends MoneyTransferValidatorTe
         validator.validate(moneyTransferDetails, errors);
 
         // then
-        assertThat(errors).isNotEmpty();
+        assertThat(errors.isEmpty()).isFalse();
     }
 }

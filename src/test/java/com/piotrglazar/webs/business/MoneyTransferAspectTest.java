@@ -22,6 +22,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("unchecked")
 public class MoneyTransferAspectTest {
 
     @Mock

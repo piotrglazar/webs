@@ -1,5 +1,7 @@
 package com.piotrglazar.webs.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
@@ -11,11 +13,14 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Properties;
 
 @Configuration
 @Profile("default")
 public class MailConfiguration {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Value("#{mailProperties['webs.mail.host']}")
     private String mailHost;
@@ -34,6 +39,8 @@ public class MailConfiguration {
         final String propertiesFileName = "mail.properties";
         final ClassPathResource mailPropertyFileLocation = new ClassPathResource(propertiesFileName);
 
+        LOG.info("Loading properties from {}", mailPropertyFileLocation);
+
         final PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
         propertiesFactoryBean.setIgnoreResourceNotFound(true);
         propertiesFactoryBean.setLocation(mailPropertyFileLocation);
@@ -44,8 +51,10 @@ public class MailConfiguration {
     @Bean
     public MailSender mailSender() {
         if (mailPort == -1) {
+            LOG.info("Using fake mail sender");
             return fakeMailSender();
         } else {
+            LOG.info("Using spring mail sender");
             return springMailSender();
         }
     }
