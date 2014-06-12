@@ -27,7 +27,17 @@ public class Utils {
         return authenticate(mockMvc, Settings.USERNAME, Settings.PASSWORD);
     }
 
-    private static MockHttpSession authenticate(final MockMvc mockMvc, final String username, final String password) {
+    public static void logout(final MockMvc mockMvc) {
+        try {
+            // try logout and ignore the result, maybe there is no user to be logged out
+            mockMvc.perform(addCsrf(post("/logout"))).andReturn().getResponse().getStatus();
+            authenticatedSession = null;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to log out", e);
+        }
+    }
+
+    public static MockHttpSession authenticate(final MockMvc mockMvc, final String username, final String password) {
         try {
             return getSession(mockMvc.perform(postRequest(username, password)));
         } catch (final Exception e) {

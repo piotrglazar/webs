@@ -21,6 +21,8 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 
+import static com.piotrglazar.webs.config.Settings.ADMIN_ROLE_DB;
+
 @Configuration
 @EnableJpaRepositories
 @Profile("default")
@@ -68,15 +70,15 @@ public class DatabaseConfiguration {
         @PostConstruct
         public void setupInitialData() {
             if (userProvider.findUserByUsername(Settings.USERNAME) == null) {
-                addUserWithAccounts(Settings.USERNAME, "piotr.glazar@gmail.com", "abc123", "def456");
+                addUserWithAccounts(Settings.USERNAME, "piotr.glazar@gmail.com", "abc123", "def456", true);
             }
 
             if (userProvider.findUserByUsername(Settings.USERNAME2) == null) {
-                addUserWithAccounts(Settings.USERNAME2, "pglazar@wp.pl", "ghi123", "jkl456");
+                addUserWithAccounts(Settings.USERNAME2, "pglazar@wp.pl", "ghi123", "jkl456", false);
             }
         }
 
-        private void addUserWithAccounts(String username, String email, String firstAccountNo, String secondAccountNo) {
+        private void addUserWithAccounts(String username, String email, String firstAccountNo, String secondAccountNo, boolean admin) {
             WebsUser websUser = userProvider.createUser(username, Settings.PASSWORD);
             websUser.setEmail(email);
 
@@ -88,7 +90,12 @@ public class DatabaseConfiguration {
             final Account secondAccount = SavingsAccount.builder().number(secondAccountNo).balance(new BigDecimal("22.22"))
                     .currency(Currency.PLN).interest(BigDecimal.valueOf(4.5)).build();
             websUser.getAccounts().add(secondAccount);
-            userProvider.update(websUser);
+            websUser = userProvider.update(websUser);
+
+            if (admin) {
+                websUser.getRoles().add(ADMIN_ROLE_DB);
+                userProvider.update(websUser);
+            }
         }
     }
 }

@@ -44,7 +44,7 @@ dependencies {
     compile("org.hsqldb:hsqldb")
     // end:data[]
     // tag::guava[]
-    compile("com.google.guava:guava:16.0.1")
+    compile("com.google.guava:guava:17.0")
     // end::guava[]
     // tag::validation[]
     compile("javax.validation:validation-api")
@@ -72,7 +72,7 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.11'
+    gradleVersion = '1.12'
 }
 
 idea {
