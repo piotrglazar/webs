@@ -1,20 +1,40 @@
 package com.piotrglazar.webs.mvc;
 
+import com.google.common.collect.Lists;
+import com.piotrglazar.webs.business.UiNewsProvider;
 import com.piotrglazar.webs.config.MvcConfiguration;
+import com.piotrglazar.webs.dto.NewsDto;
+import com.piotrglazar.webs.model.WebsNews;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.ui.Model;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 public class IndexControllerTest {
 
+    @Mock
+    private Model model;
+
+    @Mock
+    private UiNewsProvider uiNewsProvider;
+
+    @InjectMocks
+    private IndexController controller;
+
     @Test
-    public void shouldServeWelcomeMessage() {
+    public void shouldShowNewsAndWelcomeMessage() {
         // given
-        final Model model = mock(Model.class);
-        final IndexController controller = new IndexController();
+        final List<NewsDto> news = Lists.newArrayList(new NewsDto(WebsNews.builder().build()));
+        given(uiNewsProvider.getNews()).willReturn(news);
 
         // when
         final String view = controller.index(model);
@@ -23,5 +43,6 @@ public class IndexControllerTest {
         assertThat(view).isEqualTo("index");
         verify(model).addAttribute("message", "Welcome to the brand-new online bank!");
         verify(model).addAttribute(MvcConfiguration.PAGE_NAME_ATTRIBUTE, "index");
+        verify(model).addAttribute("websNews", news);
     }
 }

@@ -55,7 +55,7 @@ public class AccountsController {
         }
     }
 
-    @RequestMapping(value = "/newAccount/", method = RequestMethod.GET)
+    @RequestMapping(value = "/newAccount", method = RequestMethod.GET)
     public ModelAndView newAccount(final AccountCreationForm newAccountForm) {
         final ModelAndView modelAndView = new ModelAndView("newAccount");
         modelAndView.addObject("newAccountForm", newAccountForm);
@@ -64,7 +64,7 @@ public class AccountsController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/newAccount/", method = RequestMethod.POST)
+    @RequestMapping(value = "/newAccount", method = RequestMethod.POST)
     public String addAccount(@Valid final AccountCreationForm form, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "newAccount";

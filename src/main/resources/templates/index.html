@@ -4,14 +4,34 @@
     </head>
     <body>
         <div th:replace="shards/navigation :: navigation"></div>
-        <div class="jumbotron">
-            <div class="container">
-                <div>
-                    <h1 th:inline="text" th:text="${message}"></h1>
-                </div>
-                <div>
-                    <p th:inline="text">Dear [[${#httpServletRequest.remoteUser}]] you will see news from Webs here!</p>
-                </div>
+
+        <div id="websCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <th:block th:each="news : ${websNews}">
+                    <li data-target="#websCarousel" data-slide-to="${newsStat.index}" th:class="${newsStat.index == 0 ? ' active' : ''}"></li>
+                </th:block>
+            </ol>
+            <div class="carousel-inner">
+                <th:block th:each="news : ${websNews}">
+                    <div th:class="'item' + ${newsStat.index == 0 ? ' active' : ''}">
+                        <img th:src="@{/js/holder.js} + '/900x500/auto/' + ${news.imgContent}" th:alt="'Slide' + ${newsStat.index}"/>
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <h1 th:text="${news.headline}">Example headline.</h1>
+                                <p th:text="${news.body}">Example body</p>
+                                <p><a class="btn btn-lg btn-primary" th:href="${news.url}" th:text="${news.urlText}" role="button">Example text</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+            <a class="left carousel-control" href="#websCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+            <a class="right carousel-control" href="#websCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+        </div><!-- /.carousel -->
+        <div class="container">
+            <div class="jumbotron">
+                <h1 id="welcomeMessage" th:text="${message}">Welcome message</h1>
             </div>
         </div>
     </body>
