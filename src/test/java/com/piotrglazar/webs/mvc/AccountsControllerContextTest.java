@@ -70,7 +70,7 @@ public class AccountsControllerContextTest extends AbstractContextTest {
         final MockHttpSession authenticate = Utils.authenticate(mockMvc);
 
         // when
-        mockMvc.perform(addCsrf(post("/newAccount/").session(authenticate))
+        mockMvc.perform(addCsrf(post("/newAccount").session(authenticate))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("type", AccountType.SAVINGS.name())
                 .param("currency", Currency.GBP.name()))
@@ -86,7 +86,7 @@ public class AccountsControllerContextTest extends AbstractContextTest {
         final MockHttpSession authenticate = Utils.authenticate(mockMvc);
 
         // when
-        mockMvc.perform(get("/newAccount/").session(authenticate))
+        mockMvc.perform(get("/newAccount").session(authenticate))
 
         // then
             .andExpect(status().isOk())
