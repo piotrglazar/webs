@@ -2,6 +2,7 @@ package com.piotrglazar.webs.mvc;
 
 import com.piotrglazar.webs.MoneyTransferAuditProvider;
 import com.piotrglazar.webs.dto.MoneyTransferAuditDto;
+import com.piotrglazar.webs.util.OperationLogging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ public class AdminController {
     }
 
     @RequestMapping("/admin")
+    @OperationLogging(operation = "admin main page")
     public String showMoneyTransferAudit(final Model model) {
         final List<MoneyTransferAuditDto> dtos = auditProvider.findAll();
         model.addAttribute("moneyTransferAudits", dtos);

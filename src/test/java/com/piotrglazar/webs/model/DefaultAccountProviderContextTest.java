@@ -2,6 +2,7 @@ package com.piotrglazar.webs.model;
 
 import com.google.common.collect.Sets;
 import com.piotrglazar.webs.AbstractContextTest;
+import com.piotrglazar.webs.AccountProvider;
 import com.piotrglazar.webs.config.Settings;
 import com.piotrglazar.webs.dto.AccountDto;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
@@ -16,8 +17,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class DefaultAccountProviderContextTest extends AbstractContextTest {
 
+    // due to @OperationLogging(operation = "newAccount") we have to autowire by interface
     @Autowired
-    private DefaultAccountProvider defaultAccountProvider;
+    private AccountProvider defaultAccountProvider;
 
     @Autowired
     private WebsUserRepository websUserRepository;

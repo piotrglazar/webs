@@ -7,6 +7,7 @@ import com.piotrglazar.webs.WebsRuntimeException;
 import com.piotrglazar.webs.dto.AccountDto;
 import com.piotrglazar.webs.dto.AccountDtoFactory;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
+import com.piotrglazar.webs.util.OperationLogging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -66,6 +67,7 @@ class DefaultAccountProvider implements AccountProvider {
     }
 
     @Override
+    @OperationLogging(operation = "newAccount")
     public String newAccount(final String username, final AccountType type, final Currency currency) {
         if (type == AccountType.SAVINGS) {
             return createSavingsAccount(username, currency);

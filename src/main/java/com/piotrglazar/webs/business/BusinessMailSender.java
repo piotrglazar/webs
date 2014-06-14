@@ -1,6 +1,7 @@
 package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.WebsTemplates;
+import com.piotrglazar.webs.util.OperationLogging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.MailSender;
@@ -26,6 +27,7 @@ public class BusinessMailSender {
     }
 
     @Async
+    @OperationLogging(operation = "moneyTransferMessage")
     public void sendMoneyTransferMessage(final MoneyTransferParams moneyTransferParams) {
         final SimpleMailMessage message = new SimpleMailMessage(moneyTransferMessage);
         final String messageText = mailMessageText(moneyTransferParams);

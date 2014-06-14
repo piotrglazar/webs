@@ -1,6 +1,7 @@
 package com.piotrglazar.webs.model;
 
 import com.piotrglazar.webs.UserProvider;
+import com.piotrglazar.webs.util.OperationLogging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ class DefaultUserProvider implements UserProvider {
     }
 
     @Override
+    @OperationLogging(operation = "createUser")
     public WebsUser createUser(final String username, final String password) {
         final WebsUser websUser = WebsUser.builder()
                                     .username(username)

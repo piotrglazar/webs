@@ -21,7 +21,7 @@ public class AccountBalanceMoneyTransferValidatorTest extends MoneyTransferValid
         validator.validate(moneyTransferDetails, errors);
 
         // then
-        assertThat(errors).isNotEmpty();
+        assertThat(errors.isEmpty()).isFalse();
     }
 
     @Test
@@ -33,6 +33,6 @@ public class AccountBalanceMoneyTransferValidatorTest extends MoneyTransferValid
         validator.validate(moneyTransferDetails, errors);
 
         // then
-        assertThat(errors).isEmpty();
+        assertThat(errors.isEmpty()).isTrue();
     }
 }

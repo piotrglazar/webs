@@ -5,13 +5,9 @@ import java.math.BigDecimal;
 public class MoneyTransferParams {
 
     private final String username;
-
     private final String email;
-
     private final Long fromAccount;
-
     private final Long toAccount;
-
     private final BigDecimal amount;
 
     public MoneyTransferParams(String username, String email, Long fromAccount, Long toAccount, BigDecimal amount) {

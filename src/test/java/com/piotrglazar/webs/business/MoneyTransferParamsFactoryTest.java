@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.math.BigDecimal;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -24,11 +26,14 @@ public class MoneyTransferParamsFactoryTest {
     @Mock
     private AccountRepository accountRepository;
 
+    @Mock
+    private MoneyAmountBuilder moneyAmountBuilder;
+
     @InjectMocks
     private MoneyTransferParamsFactory factory;
 
     @Test
-    public void shouldProperlyConstructBigDecimalFromIntegralAndFractionalPart() {
+    public void shouldConstructMoneyTransferParams() {
         // given
         final TransferForm transferForm = transferFormWith("abc", 123, 45);
         final Account account = mock(Account.class);
@@ -37,6 +42,7 @@ public class MoneyTransferParamsFactoryTest {
         given(account.getId()).willReturn(2L);
         given(accountRepository.findByNumber("abc")).willReturn(account);
         given(userProvider.getUserByUsername("user")).willReturn(user);
+        given(moneyAmountBuilder.fromIntegralAndFractionalParts(123, 45)).willReturn(new BigDecimal("123.45"));
 
         // when
         final MoneyTransferParams params = factory.create("user", transferForm);
