@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.List;
 
 @Component
 class DefaultWebsNewsProvider implements WebsNewsProvider {
@@ -24,5 +25,16 @@ class DefaultWebsNewsProvider implements WebsNewsProvider {
     @Override
     public void addNews(final WebsNews websNews) {
         websNewsRepository.saveAndFlush(websNews);
+    }
+
+    @Override
+    public void removeAll(final Class<? extends WebsNews> newsType) {
+        websNewsRepository.deleteAllNews(newsType.getSimpleName());
+    }
+
+    @Override
+    public void saveAll(final List<? extends WebsNews> news) {
+        websNewsRepository.save(news);
+        websNewsRepository.flush();
     }
 }

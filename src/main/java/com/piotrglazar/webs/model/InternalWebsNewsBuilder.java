@@ -1,38 +1,38 @@
 package com.piotrglazar.webs.model;
 
-public class WebsNewsBuilder {
+public class InternalWebsNewsBuilder {
     private String headline = "";
     private String body = "";
     private String url = "";
     private String urlText = "";
     private String imgContent = "";
 
-    public WebsNewsBuilder headline(final String headline) {
+    public InternalWebsNewsBuilder headline(final String headline) {
         this.headline = headline;
         return this;
     }
 
-    public WebsNewsBuilder body(final String body) {
+    public InternalWebsNewsBuilder body(final String body) {
         this.body = body;
         return this;
     }
 
-    public WebsNewsBuilder url(final String url) {
+    public InternalWebsNewsBuilder url(final String url) {
         this.url = url;
         return this;
     }
 
-    public WebsNewsBuilder urlText(final String urlText) {
+    public InternalWebsNewsBuilder urlText(final String urlText) {
         this.urlText = urlText;
         return this;
     }
 
-    public WebsNewsBuilder imgContent(final String imgContent) {
+    public InternalWebsNewsBuilder imgContent(final String imgContent) {
         this.imgContent = imgContent;
         return this;
     }
 
-    public WebsNews build() {
-        return new WebsNews(headline, body, url, urlText, imgContent);
+    public InternalWebsNews build() {
+        return new InternalWebsNews(headline, body, url, urlText, imgContent);
     }
 }

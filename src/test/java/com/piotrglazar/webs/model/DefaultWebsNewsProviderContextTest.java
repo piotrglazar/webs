@@ -1,11 +1,13 @@
 package com.piotrglazar.webs.model;
 
+import com.google.common.collect.Lists;
 import com.piotrglazar.webs.AbstractContextTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,7 +36,7 @@ public class DefaultWebsNewsProviderContextTest extends AbstractContextTest {
     @Test
     public void shouldSaveNews() {
         // given
-        final WebsNews news = WebsNews.builder().headline("head").build();
+        final WebsNews news = InternalWebsNews.builder().headline("head").build();
 
         // when
         provider.addNews(news);
@@ -45,5 +47,32 @@ public class DefaultWebsNewsProviderContextTest extends AbstractContextTest {
 
         // cleanup
         newsRepository.delete(news);
+    }
+
+    @Test
+    public void shouldDeleteAllNewsOfGivenType() {
+        // given
+        final TestWebsNews news = new TestWebsNews();
+        newsRepository.save(news);
+
+        // when
+        provider.removeAll(TestWebsNews.class);
+
+        // then
+        assertThat(newsRepository.findOne(news.getId())).isNull();
+    }
+
+    @Test
+    public void shouldSaveAllNewsAtOnce() {
+        // given
+        final List<TestWebsNews> news = Lists.newArrayList(new TestWebsNews(), new TestWebsNews());
+
+        // when
+        provider.saveAll(news);
+
+        // then
+        for (TestWebsNews testNews : news) {
+            assertThat(newsRepository.findOne(testNews.getId())).isNotNull();
+        }
     }
 }
