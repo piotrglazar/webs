@@ -3,7 +3,6 @@ package com.piotrglazar.webs;
 import com.piotrglazar.webs.model.WebsNews;
 
 import java.util.Collection;
-import java.util.List;
 
 public interface WebsNewsProvider {
 
@@ -13,5 +12,5 @@ public interface WebsNewsProvider {
 
     void removeAll(Class<? extends WebsNews> newsType);
 
-    void saveAll(List<? extends WebsNews> news);
+    void saveAll(Collection<? extends WebsNews> news);
 }

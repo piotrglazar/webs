@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.invoke.MethodHandles;
-import java.util.List;
+import java.util.Collection;
 
 @Component
-public class DefaultNewsImportingStrategy implements NewsImportingStrategy {
+class DefaultNewsImportingStrategy implements NewsImportingStrategy {
 
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -24,12 +24,12 @@ public class DefaultNewsImportingStrategy implements NewsImportingStrategy {
     }
 
     @Override
-    public void saveNews(final NewsImporter newsImporter, final List<? extends WebsNews> news) {
+    public void saveNews(final NewsImporter newsImporter, final Collection<? extends WebsNews> news) {
         Preconditions.checkArgument(!news.isEmpty(), "No news to save.");
 
         websNewsProvider.removeAll(newsImporter.provides());
         websNewsProvider.saveAll(news);
 
-        LOG.info("NewsImporter {} saved {}", newsImporter, news);
+        LOG.debug("NewsImporter {} saved {}", newsImporter, news);
     }
 }

@@ -51,13 +51,13 @@ public class NewsImportersTest {
         verify(newsImportingStrategy).saveNews(firstNewsImporter, news);
     }
 
-    @Test(expected = NoSuchNewsImporterException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void shouldFailWhenNegativeNewsImporterIndexProvided() {
         // expected
         newsImporters.fetchNews(-1);
     }
 
-    @Test(expected = NoSuchNewsImporterException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void shouldFailWhenTooBigNewsImporterIndexProvided() {
         // when
         newsImporters.fetchNews(3);

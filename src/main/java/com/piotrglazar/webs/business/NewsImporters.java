@@ -42,7 +42,8 @@ public class NewsImporters {
         if (newsImporterIndex >= 0 && newsImporterIndex < newsImporters.size()) {
             return newsImporters.get(newsImporterIndex);
         } else {
-            throw new NoSuchNewsImporterException(newsImporterIndex, newsImporters.size());
+            throw new ArrayIndexOutOfBoundsException(String.format("Illegal news importer index %s, current size is %s", newsImporterIndex,
+                    newsImporters.size()));
         }
     }
 }
