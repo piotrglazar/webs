@@ -23,47 +23,42 @@ repositories {
 }
 
 dependencies {
-    // tag::jetty[]
+    // jetty
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "spring-boot-starter-tomcat"
     }
     compile("org.springframework.boot:spring-boot-starter-jetty")
-    // end::jetty[]
-    // tag::actuator[]
+    // actuator
     compile("org.springframework.boot:spring-boot-starter-actuator")
-    // end::actuator[]
-    // tag::thymeleaf[]
+    // thymeleaf
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    // end::thymeleaf[]
-    // tag::security[]
+    // security
     compile("org.springframework.boot:spring-boot-starter-security")
-    // end::security[]
-    // tag::data[]
+    // data
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.hsqldb:hsqldb")
-    // end:data[]
-    // tag::guava[]
+    // guava
     compile("com.google.guava:guava:17.0")
-    // end::guava[]
-    // tag::validation[]
+    // validation
     compile("javax.validation:validation-api")
     compile("org.hibernate:hibernate-validator")
-    // end::validation[]
-    // tag::context-support[]
+    // context-support
     compile("org.springframework:spring-context-support")
-    // end::context-support[]
-    // tag::mail[]
+    // mail
     compile("javax.mail:mail:1.4.7")
-    // end::mail[]
-    // tag::log[]
+    // log
     compile("org.slf4j:slf4j-api")
-    // end::log[]
-    // tag::velocity[]
+    // velocity
     compile("org.apache.velocity:velocity:1.7")
-    // end::velocity[]
-    // tag::logback[]
+    // logback
     compile("ch.qos.logback:logback-classic:1.1.2")
-    // end::logback[]
+    // rest
+    compile("javax.ws.rs:javax.ws.rs-api:2.0")
+    compile("org.glassfish.jersey.core:jersey-client:2.9.1")
+    // html parsing
+    compile("org.jsoup:jsoup:1.7.3")
+
+
 
     testCompile("junit:junit")
     testCompile("org.mockito:mockito-all:1.9.5")

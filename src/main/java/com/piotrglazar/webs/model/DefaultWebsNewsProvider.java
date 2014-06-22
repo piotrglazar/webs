@@ -25,4 +25,15 @@ class DefaultWebsNewsProvider implements WebsNewsProvider {
     public void addNews(final WebsNews websNews) {
         websNewsRepository.saveAndFlush(websNews);
     }
+
+    @Override
+    public void removeAll(final Class<? extends WebsNews> newsType) {
+        websNewsRepository.deleteAllNews(newsType.getSimpleName());
+    }
+
+    @Override
+    public void saveAll(final Collection<? extends WebsNews> news) {
+        websNewsRepository.save(news);
+        websNewsRepository.flush();
+    }
 }

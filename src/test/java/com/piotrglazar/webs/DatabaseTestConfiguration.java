@@ -1,8 +1,10 @@
 package com.piotrglazar.webs;
 
+import com.google.common.collect.ImmutableMap;
 import com.piotrglazar.webs.config.Settings;
 import com.piotrglazar.webs.model.Account;
 import com.piotrglazar.webs.model.Currency;
+import com.piotrglazar.webs.model.InternalWebsNews;
 import com.piotrglazar.webs.model.SavingsAccount;
 import com.piotrglazar.webs.model.WebsNews;
 import com.piotrglazar.webs.model.WebsUser;
@@ -12,6 +14,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.Database;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -24,6 +30,27 @@ public class DatabaseTestConfiguration {
     @Bean
     public DataSource dataSource() {
         return new SimpleDriverDataSource(new JDBCDriver(), "jdbc:hsqldb:file:/home/webs/test", "sa", "");
+    }
+
+    @Bean
+    @Autowired
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(final DataSource dataSource,
+                                                                       final JpaVendorAdapter jpaVendorAdapter) {
+        final LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
+        bean.setDataSource(dataSource);
+        bean.setJpaVendorAdapter(jpaVendorAdapter);
+        bean.setPackagesToScan("com.piotrglazar.webs");
+        bean.setJpaPropertyMap(ImmutableMap.of("hibernate.hbm2ddl.auto", "create"));
+        return bean;
+    }
+
+    @Bean
+    public JpaVendorAdapter jpaVendorAdapter() {
+        final HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+        jpaVendorAdapter.setShowSql(true);
+        jpaVendorAdapter.setGenerateDdl(true);
+        jpaVendorAdapter.setDatabase(Database.HSQL);
+        return jpaVendorAdapter;
     }
 
     @Bean
@@ -64,7 +91,7 @@ public class DatabaseTestConfiguration {
         }
 
         private WebsNews newAccountFeatureNews() {
-            return WebsNews.builder()
+            return InternalWebsNews.builder()
                     .headline("Create new account!")
                     .body("Do you need new account to organise your money in a better way? You can do that with just one click - "
                             + "just choose currency and it's done")
@@ -75,7 +102,7 @@ public class DatabaseTestConfiguration {
         }
 
         private WebsNews accountsFeatureNews() {
-            return WebsNews.builder()
+            return InternalWebsNews.builder()
                     .headline("Browse your accounts!")
                     .body("Webs is a modern bank. As a result you can explore all of its features online - you can do everything with just "
                             + "one click. It has never been easier to keep an eye of your money")

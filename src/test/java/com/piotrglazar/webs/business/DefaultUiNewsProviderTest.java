@@ -3,7 +3,7 @@ package com.piotrglazar.webs.business;
 import com.google.common.collect.Lists;
 import com.piotrglazar.webs.WebsNewsProvider;
 import com.piotrglazar.webs.dto.NewsDto;
-import com.piotrglazar.webs.model.WebsNews;
+import com.piotrglazar.webs.model.InternalWebsNews;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -27,7 +27,7 @@ public class DefaultUiNewsProviderTest {
     @Test
     public void shouldConvertNewsToNewsDto() {
         // given
-        given(websNewsProvider.getNews()).willReturn(Lists.newArrayList(new WebsNews("head", "body", "url", "urlText", "imgContent")));
+        given(websNewsProvider.getNews()).willReturn(Lists.newArrayList(new InternalWebsNews("head", "body", "url", "urlText", "imgContent")));
 
         // when
         final Collection<NewsDto> uiNews = uiNewsProvider.getNews();

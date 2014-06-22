@@ -8,7 +8,15 @@
     <div class="container">
         <div>
             <h1 th:inline="text">[[${#httpServletRequest.remoteUser}]] Admin panel!</h1>
-            <table class="table table-striped" id="accountTable">
+            <div class="col-md-10" th:if="${uiMessage}">
+                <div class="alert alert-dismissable alert-success">
+                    <button type="button" class="btn-close" data-dismiss="alert" aria-hidden="true">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <span th:text="${uiMessage}"></span>
+                </div>
+            </div>
+            <table class="table table-striped" id="moneyTransferAuditTable">
                 <thead>
                 <tr>
                     <th class="text-center">Sending User Id</th>
@@ -29,6 +37,20 @@
                         <td th:text="${moneyTransferAudit.success}" class="text-center">Success</td>
                         <td th:text="${moneyTransferAudit.date}" class="text-center">Date</td>
                     </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table class="table-striped" id="newsImporterTable">
+                <thead>
+                <tr>
+                    <th class="text-center">News importer</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="newsImporterName : ${newsImporters}">
+                    <td class="text-center"><a th:text="${newsImporterName}" th:href="@{/admin/importNews/} + ${newsImporterNameStat.index} + '/'">News importer class</a></td>
                 </th:block>
                 </tbody>
             </table>

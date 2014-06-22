@@ -4,6 +4,7 @@ import com.piotrglazar.webs.UserProvider;
 import com.piotrglazar.webs.WebsNewsProvider;
 import com.piotrglazar.webs.model.Account;
 import com.piotrglazar.webs.model.Currency;
+import com.piotrglazar.webs.model.InternalWebsNews;
 import com.piotrglazar.webs.model.SavingsAccount;
 import com.piotrglazar.webs.model.WebsNews;
 import com.piotrglazar.webs.model.WebsUser;
@@ -99,7 +100,7 @@ public class DatabaseConfiguration {
         }
 
         private WebsNews upcomingFeatureLanguagePacks() {
-            return WebsNews.builder()
+            return InternalWebsNews.builder()
                     .headline("Upcoming feature - I18N in Webs!")
                     .body("We are aware that our customers are the best businessman around the world. We believe that using online bank"
                             + "in their mother tongue will enhance user experience")
@@ -110,7 +111,7 @@ public class DatabaseConfiguration {
         }
 
         private WebsNews upcomingFeatureAccountInterest() {
-            return WebsNews.builder()
+            return InternalWebsNews.builder()
                     .headline("Upcoming feature - account interest rate!")
                     .body("Webs is the most trustworthy bank online. We are aiming at best interest rate around the world. It will be "
                             + "calculated daily so that you can benefit most from your accounts")
@@ -121,7 +122,7 @@ public class DatabaseConfiguration {
         }
 
         private WebsNews upcomingFeatureWorldwideFinancialNews() {
-            return WebsNews.builder()
+            return InternalWebsNews.builder()
                     .headline("Upcoming feature - Worldwide financial news!")
                     .body("We would like you to keep your finger of financial news. That's why you will see here most recent and "
                             + "reliable news about finance and economy")
@@ -132,7 +133,7 @@ public class DatabaseConfiguration {
         }
 
         private WebsNews newAccountFeatureNews() {
-            return WebsNews.builder()
+            return InternalWebsNews.builder()
                     .headline("Create new account!")
                     .body("Do you need new account to organise your money in a better way? You can do that with just one click - "
                             + "just choose currency and it's done")
@@ -143,7 +144,7 @@ public class DatabaseConfiguration {
         }
 
         private WebsNews accountsFeatureNews() {
-            return WebsNews.builder()
+            return InternalWebsNews.builder()
                     .headline("Browse your accounts!")
                     .body("Webs is a modern bank. As a result you can explore all of its features online - you can do everything with just "
                             + "one click. It has never been easier to keep an eye of your money")

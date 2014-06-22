@@ -9,4 +9,8 @@ public interface WebsNewsProvider {
     Collection<WebsNews> getNews();
 
     void addNews(WebsNews news);
+
+    void removeAll(Class<? extends WebsNews> newsType);
+
+    void saveAll(Collection<? extends WebsNews> news);
 }

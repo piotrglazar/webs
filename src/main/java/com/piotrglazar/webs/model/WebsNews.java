@@ -2,13 +2,17 @@ package com.piotrglazar.webs.model;
 
 import com.google.common.base.Objects;
 
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 
 @Entity
-public final class WebsNews {
+@Inheritance
+@DiscriminatorColumn(name = "NEWS_SOURCE")
+public abstract class WebsNews {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,7 +41,7 @@ public final class WebsNews {
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public final boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -47,7 +51,7 @@ public final class WebsNews {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hashCode(id);
     }
 
@@ -91,11 +95,17 @@ public final class WebsNews {
         this.imgContent = imgContent;
     }
 
-    public static WebsNewsBuilder builder() {
-        return new WebsNewsBuilder();
-    }
-
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("headline", headline)
+                .add("body", body)
+                .add("url", url)
+                .add("urlText", urlText)
+                .toString();
     }
 }
