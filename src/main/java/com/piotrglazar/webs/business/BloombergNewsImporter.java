@@ -1,6 +1,7 @@
 package com.piotrglazar.webs.business;
 
 import com.google.common.collect.Lists;
+import com.piotrglazar.webs.WebsTemplates;
 import com.piotrglazar.webs.model.BloombergNews;
 import com.piotrglazar.webs.util.WebsiteReader;
 import com.piotrglazar.webs.util.WebsiteReaderFactory;
@@ -19,9 +20,14 @@ public class BloombergNewsImporter implements NewsImporter {
     public static final String BLOOMBERG = "http://www.bloomberg.com/";
 
     private final WebsiteReader bloomberg;
+    private final BloombergNewsBodyFactory bloombergNewsBodyFactory;
+    private final WebsTemplates websTemplates;
 
     @Autowired
-    public BloombergNewsImporter(final WebsiteReaderFactory factory) {
+    public BloombergNewsImporter(WebsiteReaderFactory factory, BloombergNewsBodyFactory bloombergNewsBodyFactory,
+                                 WebsTemplates websTemplates) {
+        this.bloombergNewsBodyFactory = bloombergNewsBodyFactory;
+        this.websTemplates = websTemplates;
         this.bloomberg = factory.websiteReader(BLOOMBERG);
     }
 
@@ -32,11 +38,12 @@ public class BloombergNewsImporter implements NewsImporter {
     protected String extractTickers(final String pageContent) {
         final Document document = Jsoup.parse(pageContent);
         final Elements tickers = document.select("#markets_snapshot > section > ul.tab.tickers > li");
-        return tickers.stream()
-                .map(e -> e.select(".name > a").text() + " " +
-                        e.select(".day_change span").stream().map(elt -> elt.text()).collect(Collectors.joining(" ")) + " " +
-                        e.select(".price").text())
-                .collect(Collectors.joining("\n"));
+        final List<BloombergNewsBody> bloombergNewsBodyBodies = tickers.stream()
+                .map(e -> bloombergNewsBodyFactory.createNews(e.select(".name > a").text(),
+                        e.select(".day_change span").stream().map(elt -> elt.text()).collect(Collectors.joining(" ")),
+                        e.select(".price").text()))
+                .collect(Collectors.<BloombergNewsBody>toList());
+        return websTemplates.bloombergNewsBody(bloombergNewsBodyBodies);
     }
 
     @Override

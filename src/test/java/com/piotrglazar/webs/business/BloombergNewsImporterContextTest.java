@@ -22,6 +22,6 @@ public class BloombergNewsImporterContextTest extends AbstractContextTest {
         // then
         assertThat(news).hasSize(1);
         // five indices from stock exchange and others
-        assertThat(news.get(0).getBody().split("\n")).hasSize(5);
+        assertThat(news.get(0).getBody().split("\n")).hasSize(15);
     }
 }
