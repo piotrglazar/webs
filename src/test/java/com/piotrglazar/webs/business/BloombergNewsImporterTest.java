@@ -1,11 +1,13 @@
 package com.piotrglazar.webs.business;
 
+import com.piotrglazar.webs.WebsTemplates;
 import com.piotrglazar.webs.model.BloombergNews;
 import com.piotrglazar.webs.util.WebsiteReader;
 import com.piotrglazar.webs.util.WebsiteReaderFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -19,10 +21,17 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BloombergNewsImporterTest {
+
+    @Mock
+    private WebsTemplates websTemplates;
+
+    private BloombergNewsBodyFactory bloombergNewsBodyFactory = new BloombergNewsBodyFactory();
 
     @Mock
     private WebsiteReaderFactory websiteReaderFactory;
@@ -42,28 +51,39 @@ public class BloombergNewsImporterTest {
         given(websiteReaderFactory.websiteReader(anyString())).willReturn(websiteReader);
         given(websiteReader.get()).willReturn(webPage());
 
-        bloombergNewsImporter = new BloombergNewsImporter(websiteReaderFactory);
+        bloombergNewsImporter = new BloombergNewsImporter(websiteReaderFactory, bloombergNewsBodyFactory, websTemplates);
     }
 
     @Test
     public void shouldFetchNewsFromBloombergPage() throws URISyntaxException, IOException {
         // given
         final String pageContent = webPage();
+        given(websTemplates.bloombergNewsBody(anyList())).willReturn("bloombergNewsBody");
 
         // when
         final String tickers = bloombergNewsImporter.extractTickers(pageContent);
-        final String[] rawTickers = tickers.split("\n");
 
         // then
-        assertThat(rawTickers).containsExactly("DJIA +29.41 +0.18% 16,810.42",
-                "S&P 500 +5.77 +0.30% 1,943.55",
-                "FTSE 100 +12.13 +0.18% 6,766.77",
-                "Nikkei 225 +43 +0.29% 14,976",
-                "Crude Oil (WTI) -0.71 -0.66% 106.19");
+        assertThat(tickers).isEqualTo("bloombergNewsBody");
+        final ArgumentCaptor<List> bloombergNewsBody = ArgumentCaptor.forClass(List.class);
+        verify(websTemplates).bloombergNewsBody(bloombergNewsBody.capture());
+        assertThatWebsNewsBodyContains(bloombergNewsBody.getValue());
+    }
+
+    private void assertThatWebsNewsBodyContains(final List<BloombergNewsBody> bloombergNewsBody) {
+        assertThat(bloombergNewsBody).hasSize(5);
+        assertThat(bloombergNewsBody.get(0)).isEqualTo(new BloombergNewsBody("DJIA", "+29.41 +0.18%", true, "16,810.42"));
+        assertThat(bloombergNewsBody.get(1)).isEqualTo(new BloombergNewsBody("S&P 500", "+5.77 +0.30%", true, "1,943.55"));
+        assertThat(bloombergNewsBody.get(2)).isEqualTo(new BloombergNewsBody("FTSE 100", "+12.13 +0.18%", true, "6,766.77"));
+        assertThat(bloombergNewsBody.get(3)).isEqualTo(new BloombergNewsBody("Nikkei 225", "+43 +0.29%", true, "14,976"));
+        assertThat(bloombergNewsBody.get(4)).isEqualTo(new BloombergNewsBody("Crude Oil (WTI)", "-0.71 -0.66%", false, "106.19"));
     }
 
     @Test
     public void shouldCreateBloomberNewsFromBloombergPage() {
+        // given
+        given(websTemplates.bloombergNewsBody(anyList())).willReturn("bloombergNewsBody");
+
         // when
         final List<BloombergNews> news = bloombergNewsImporter.fetchNews();
 
@@ -72,10 +92,6 @@ public class BloombergNewsImporterTest {
         final BloombergNews bloombergNews = news.get(0);
         assertThat(bloombergNews.getHeadline()).isEqualTo("Latest news from Bloomberg");
         assertThat(bloombergNews.getUrl()).isEqualTo(BloombergNewsImporter.BLOOMBERG);
-        assertThat(bloombergNews.getBody()).contains("DJIA +29.41 +0.18% 16,810.42",
-                "S&P 500 +5.77 +0.30% 1,943.55",
-                "FTSE 100 +12.13 +0.18% 6,766.77",
-                "Nikkei 225 +43 +0.29% 14,976",
-                "Crude Oil (WTI) -0.71 -0.66% 106.19");
+        assertThat(bloombergNews.getBody()).contains("bloombergNewsBody");
     }
 }

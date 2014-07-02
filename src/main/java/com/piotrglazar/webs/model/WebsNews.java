@@ -2,6 +2,7 @@ package com.piotrglazar.webs.model;
 
 import com.google.common.base.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ public abstract class WebsNews {
 
     private String headline;
 
+    @Column(length = 1000)
     private String body;
 
     private String url;

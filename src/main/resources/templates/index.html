@@ -19,7 +19,7 @@
                         <div class="container">
                             <div class="carousel-caption">
                                 <h1 th:text="${news.headline}">Example headline.</h1>
-                                <p th:text="${news.body}">Example body</p>
+                                <p th:utext="${news.body}">Example body</p>
                                 <p><a class="btn btn-lg btn-primary" th:href="${news.url}" th:text="${news.urlText}" role="button">Example text</a></p>
                             </div>
                         </div>

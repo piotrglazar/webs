@@ -32,7 +32,7 @@ import static com.piotrglazar.webs.config.Settings.ADMIN_ROLE_DB;
 public class DatabaseConfiguration {
 
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         return new SimpleDriverDataSource(new JDBCDriver(), "jdbc:hsqldb:file:/home/webs/production", "sa", "");
     }
 
