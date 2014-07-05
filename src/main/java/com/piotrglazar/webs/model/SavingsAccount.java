@@ -11,6 +11,11 @@ public final class SavingsAccount extends Account {
     public SavingsAccount() {
     }
 
+    @Override
+    public AccountType accountType() {
+        return AccountType.SAVINGS;
+    }
+
     public SavingsAccount(final String number, final Currency currency, final BigDecimal balance, final BigDecimal interest) {
         super(number, currency, balance);
         this.interest = interest;

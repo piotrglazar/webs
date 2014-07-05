@@ -1,6 +1,7 @@
 package com.piotrglazar.webs.mvc;
 
 import com.piotrglazar.webs.MoneyTransferAuditProvider;
+import com.piotrglazar.webs.business.InterestAccruer;
 import com.piotrglazar.webs.business.NewsImporters;
 import com.piotrglazar.webs.dto.MoneyTransferAuditDto;
 import com.piotrglazar.webs.util.OperationLogging;
@@ -16,13 +17,14 @@ import java.util.List;
 public class AdminController {
 
     private final MoneyTransferAuditProvider auditProvider;
-
     private final NewsImporters newsImporters;
+    private final InterestAccruer interestAccruer;
 
     @Autowired
-    public AdminController(final MoneyTransferAuditProvider auditProvider, final NewsImporters newsImporters) {
+    public AdminController(MoneyTransferAuditProvider auditProvider,  NewsImporters newsImporters, InterestAccruer interestAccruer) {
         this.auditProvider = auditProvider;
         this.newsImporters = newsImporters;
+        this.interestAccruer = interestAccruer;
     }
 
     @RequestMapping("/admin")
@@ -39,6 +41,14 @@ public class AdminController {
     public String importNews(@PathVariable("newsImporterIndex") final int newsImporterIndex, final Model model) {
         newsImporters.fetchNews(newsImporterIndex);
         model.addAttribute("uiMessage", "News successfully imported");
+        return showMoneyTransferAudit(model);
+    }
+
+    @RequestMapping("/admin/interest")
+    @OperationLogging(operation = "admin accrue interest")
+    public String accrueInterest(final Model model) {
+        interestAccruer.accrueInterest();
+        model.addAttribute("uiMessage", "Interest accrued successfully");
         return showMoneyTransferAudit(model);
     }
 }

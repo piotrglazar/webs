@@ -2,6 +2,7 @@ package com.piotrglazar.webs.mvc;
 
 import com.google.common.collect.Lists;
 import com.piotrglazar.webs.MoneyTransferAuditProvider;
+import com.piotrglazar.webs.business.InterestAccruer;
 import com.piotrglazar.webs.business.NewsImporters;
 import com.piotrglazar.webs.dto.MoneyTransferAuditDto;
 import com.piotrglazar.webs.model.MoneyTransferAudit;
@@ -24,6 +25,9 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AdminControllerTest {
+
+    @Mock
+    private InterestAccruer interestAccruer;
 
     @Mock
     private NewsImporters newsImporters;
@@ -73,6 +77,28 @@ public class AdminControllerTest {
 
         // then
         verify(newsImporters).fetchNews(0);
+    }
+
+    @Test
+    public void shouldAccrueInterest() {
+        // when
+        controller.accrueInterest(model);
+
+        // then
+        verify(interestAccruer).accrueInterest();
+    }
+
+    @Test
+    public void shouldRedirectToItselfAfterAccruingInterest() {
+        // when
+        final String view = controller.accrueInterest(model);
+
+        // then
+        assertThat(view).contains("admin");
+        assertThat(model.addAttribute(eq("moneyTransferAudits"), anyObject()));
+        assertThat(model.addAttribute(eq("newsImporters"), anyObject()));
+        // successful message is shown
+        assertThat(model.addAttribute("uiMessage", "Interest accrued successfully"));
     }
 
     private List<MoneyTransferAuditDto> someMoneyTransferAuditDtos() {

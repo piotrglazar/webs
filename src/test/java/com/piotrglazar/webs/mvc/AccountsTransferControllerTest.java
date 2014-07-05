@@ -96,7 +96,7 @@ public class AccountsTransferControllerTest extends AbstractContextTest {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("accountId", "1")
                 .param("accountNumber", "def456")
-                .param("integralPart", "1000")
+                .param("integralPart", "100000")
                 .param("fractionalPart", "0")))
 
         // then
