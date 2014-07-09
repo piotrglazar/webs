@@ -88,11 +88,14 @@ public abstract class Account {
         this.id = id;
     }
 
-    public void addBalance(final BigDecimal amount) {
+    public Account addBalance(final BigDecimal amount) {
         this.balance = balance.add(amount);
+        return this;
     }
 
     public void subtractBalance(final BigDecimal amount) {
         this.balance = balance.subtract(amount);
     }
+
+    public abstract AccountType accountType();
 }

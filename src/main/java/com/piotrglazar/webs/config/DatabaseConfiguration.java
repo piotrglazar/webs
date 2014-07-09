@@ -158,12 +158,12 @@ public class DatabaseConfiguration {
             WebsUser websUser = userProvider.createUser(username, Settings.PASSWORD);
             websUser.setEmail(email);
 
-            final Account firstAccount = SavingsAccount.builder().number(firstAccountNo).balance(BigDecimal.TEN)
+            final Account firstAccount = SavingsAccount.builder().number(firstAccountNo).balance(new BigDecimal(2500))
                     .currency(Currency.PLN).interest(BigDecimal.valueOf(5.5)).build();
             websUser.getAccounts().add(firstAccount);
             websUser = userProvider.update(websUser);
 
-            final Account secondAccount = SavingsAccount.builder().number(secondAccountNo).balance(new BigDecimal("22.22"))
+            final Account secondAccount = SavingsAccount.builder().number(secondAccountNo).balance(new BigDecimal(8000))
                     .currency(Currency.PLN).interest(BigDecimal.valueOf(4.5)).build();
             websUser.getAccounts().add(secondAccount);
             websUser = userProvider.update(websUser);

@@ -27,7 +27,7 @@ class DefaultAccountProvider implements AccountProvider {
 
     private final UniqueIdGenerator generator;
 
-    @Value("${savingsaccount.interest:0}")
+    @Value("#{businessProperties['savingsaccount.interest']?:0}")
     private BigDecimal interest;
 
     @Autowired

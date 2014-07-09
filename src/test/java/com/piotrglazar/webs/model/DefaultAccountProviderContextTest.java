@@ -30,7 +30,7 @@ public class DefaultAccountProviderContextTest extends AbstractContextTest {
     @Test
     public void shouldFindUserAccountAndConvertItToDto() {
         // given
-        final Account account = SavingsAccount.builder().number("abc").balance(BigDecimal.TEN).build();
+        final Account account = SavingsAccount.builder().number("abc").balance(BigDecimal.TEN).interest(BigDecimal.ONE).build();
         final WebsUser websUser = WebsUser.builder().username("userxyz").password("pass").accounts(Sets.newHashSet(account)).build();
         websUserRepository.save(websUser);
 
