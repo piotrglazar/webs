@@ -38,12 +38,14 @@ public class DatabaseConfiguration {
 
     @Bean
     @Autowired
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(final DataSource dataSource,
-                                                                       final JpaVendorAdapter jpaVendorAdapter) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource,
+                                                                       JpaVendorAdapter jpaVendorAdapter,
+                                                                       IsolationSupportHibernateJpaDialect dialect) {
         final LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
         bean.setDataSource(dataSource);
         bean.setJpaVendorAdapter(jpaVendorAdapter);
         bean.setPackagesToScan("com.piotrglazar.webs");
+        bean.setJpaDialect(dialect);
         return bean;
     }
 

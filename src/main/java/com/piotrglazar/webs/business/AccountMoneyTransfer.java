@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.LinkedList;
-import java.util.List;
 
 @Component
 public class AccountMoneyTransfer {
@@ -32,13 +30,13 @@ public class AccountMoneyTransfer {
     }
 
     @OperationLogging(operation = "transferMoney")
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void transferMoney(final MoneyTransferParams moneyTransferParams) {
         doTransferMoney(moneyTransferParams);
 
         mailSender.sendMoneyTransferMessage(moneyTransferParams);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     private void doTransferMoney(final MoneyTransferParams moneyTransferParams) {
         final Account fromAccount = accountRepository.findOne(moneyTransferParams.getFromAccount());
         final Account toAccount = accountRepository.findOne(moneyTransferParams.getToAccount());

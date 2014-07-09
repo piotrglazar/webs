@@ -1,6 +1,7 @@
 package com.piotrglazar.webs;
 
 import com.google.common.collect.ImmutableMap;
+import com.piotrglazar.webs.config.IsolationSupportHibernateJpaDialect;
 import com.piotrglazar.webs.config.Settings;
 import com.piotrglazar.webs.model.Account;
 import com.piotrglazar.webs.model.Currency;
@@ -34,13 +35,14 @@ public class DatabaseTestConfiguration {
 
     @Bean
     @Autowired
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(final DataSource dataSource,
-                                                                       final JpaVendorAdapter jpaVendorAdapter) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter,
+                                                                       IsolationSupportHibernateJpaDialect dialect) {
         final LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
         bean.setDataSource(dataSource);
         bean.setJpaVendorAdapter(jpaVendorAdapter);
         bean.setPackagesToScan("com.piotrglazar.webs");
         bean.setJpaPropertyMap(ImmutableMap.of("hibernate.hbm2ddl.auto", "create"));
+        bean.setJpaDialect(dialect);
         return bean;
     }
 

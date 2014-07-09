@@ -41,15 +41,11 @@ public class InterestAccruer {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
-    private void doAccrueInterest() {
+    public void accrueInterest() {
         final List<Account> accounts = accountRepository.findAll();
         final List<Account> processedAccounts = accounts.stream()
                 .map(a -> a.addBalance(interestCalculatorsCache.get(a.accountType()).calculateInterest(a)))
                 .collect(Collectors.toList());
         accountRepository.save(processedAccounts);
-    }
-
-    public void accrueInterest() {
-        doAccrueInterest();
     }
 }
