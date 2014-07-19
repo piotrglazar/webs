@@ -17,7 +17,7 @@
         <ul class="nav navbar-nav">
             <li th:class="${pageName == 'index'} ? 'active' : ''"><a th:href="@{/index}" href="/index">Index</a></li>
             <li th:class="${pageName == 'accounts'} ? 'active' : ''"><a th:href="@{/accounts}" href="/accounts">Accounts</a></li>
-            <li th:class="${pageName == 'contact'} ? 'active' : ''"><a href="/contact">Contact</a></li>
+            <li th:class="${pageName == 'contact'} ? 'active' : ''"><a href="#">Contact</a></li>
             <li th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}"><a th:href="@{/admin}" href="/admin">Admin</a></li>
         </ul>
         <div class="navbar-collapse collapse">

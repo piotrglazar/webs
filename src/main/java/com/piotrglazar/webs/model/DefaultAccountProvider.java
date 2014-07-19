@@ -62,7 +62,7 @@ class DefaultAccountProvider implements AccountProvider {
         if (account != null) {
             return new AccountDto(account);
         } else {
-            throw new WebsAccountNotFoundException(accountNumber);
+            return null;
         }
     }
 

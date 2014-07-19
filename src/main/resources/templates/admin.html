@@ -35,7 +35,7 @@
                         <td th:text="${moneyTransferAudit.receivingAccountId}" class="text-center">Receiving Account Id</td>
                         <td th:text="${moneyTransferAudit.amount}" class="text-center">Amount</td>
                         <td th:text="${moneyTransferAudit.success}" class="text-center">Success</td>
-                        <td th:text="${moneyTransferAudit.date}" class="text-center">Date</td>
+                        <td th:text="${{moneyTransferAudit.date}}" class="text-center">Date</td>
                     </tr>
                 </th:block>
                 </tbody>

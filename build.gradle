@@ -4,13 +4,15 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.3.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.4.RELEASE")
+        classpath group: 'org.zeroturnaround', name: 'gradle-jrebel-plugin', version: '1.1.2'
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply plugin: 'rebel'
 
 jar {
     baseName = 'webs'
@@ -68,6 +70,8 @@ dependencies {
     testCompile("nl.jqno.equalsverifier:equalsverifier:1.4.1")
     testCompile("pl.pragmatists:JUnitParams:1.0.2")
 }
+
+bootRun.dependsOn(generateRebel)
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.0'

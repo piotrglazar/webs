@@ -64,8 +64,8 @@ public class AccountsTransferControllerTest extends AbstractContextTest {
 
         // then
             .andExpect(status().isOk())
-            .andExpect(xpath("//p[@id = 'integralPartError']").exists())
-            .andExpect(xpath("//p[@id = 'fractionalPartError']").exists());
+            .andExpect(xpath("//label[@id = 'integralPartError']").exists())
+            .andExpect(xpath("//label[@id = 'fractionalPartError']").exists());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class AccountsTransferControllerTest extends AbstractContextTest {
 
         // then
             .andExpect(status().isOk())
-            .andExpect(xpath("//p[@id = 'fractionalPartError']").exists());
+            .andExpect(xpath("//label[@id = 'fractionalPartError']").exists());
     }
 
     @Test
