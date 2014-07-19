@@ -6,34 +6,30 @@
 <div class="jumbotron">
     <div class="container" style="background: url('../static/img/stock.jpg');background-size: cover;color:white;"
          th:style="'background: url(' + @{/img/stock.jpg} + ');background-size: cover;color:white;'">
-        <h1>This is webs!</h1>
+        <h1>Welcome to webs!</h1>
         <div><p><strong>Please register using the form!</strong></p></div>
         <div>
             <form class="form-signin" role="form" th:action="@{/newUser}" method="post" th:object="${registerForm}">
                 <fieldset>
-                    <div class="form-group">
+                    <div th:class="${#fields.hasErrors('username')}? 'has-error form-group has-feedback' : form-group">
+                        <label class="control-label" th:if="${#fields.hasErrors('username')}" id="usernameError" th:errors="*{username}">Username errors</label>
                         <input type="text" id="username" name="username" th:field="*{username}" class="form-control" placeholder="Username" th:errorclass="input-error"/>
-                        <p th:if="${#fields.hasErrors('username')}" id="usernameError" class="has-error">
-                            <span th:errors="*{username}" class="form-control-feedback">Username errors</span>
-                        </p>
+                        <span th:if="${#fields.hasErrors('username')}" class="glyphicon glyphicon-remove form-control-feedback"></span>
                     </div>
-                    <div class="form-group">
+                    <div th:class="${#fields.hasErrors('email')}? 'has-error form-group has-feedback' : form-group">
+                        <label class="control-label" th:if="${#fields.hasErrors('email')}" id="emailError" th:errors="*{email}">Email errors</label>
                         <input type="text" id="email" name="email" th:field="*{email}" class="form-control" placeholder="Email" th:errorclass="input-error"/>
-                        <p th:if="${#fields.hasErrors('email')}" id="emailError" class="has-error">
-                            <span th:errors="*{email}" class="form-control-feedback">Email errors</span>
-                        </p>
+                        <span th:if="${#fields.hasErrors('email')}" class="glyphicon glyphicon-remove form-control-feedback"></span>
                     </div>
-                    <div class="form-group">
+                    <div th:class="${#fields.hasErrors('password')}? 'has-error form-group has-feedback' : form-group">
+                        <label class="control-label" th:if="${#fields.hasErrors('password')}" id="passwordError" th:errors="*{password}">Password errors</label>
                         <input type="password" id="password" name="password" th:field="*{password}" class="form-control" placeholder="Password" th:errorclass="input-error"/>
-                        <p th:if="${#fields.hasErrors('password')}" id="passwordError" class="has-error">
-                            <span th:errors="*{password}" class="form-control-feedback">Password errors</span>
-                        </p>
+                        <span th:if="${#fields.hasErrors('password')}" class="glyphicon glyphicon-remove form-control-feedback"></span>
                     </div>
-                    <div class="form-group">
+                    <div th:class="${#fields.hasErrors('repeatPassword')}? 'has-error form-group has-feedback' : form-group">
+                        <label class="control-label" th:if="${#fields.hasErrors('repeatPassword')}" id="repeatPasswordError" th:errors="*{repeatPassword}">Password errors</label>
                         <input type="password" id="repeatPassword" name="repeatPassword" th:field="*{repeatPassword}" class="form-control" placeholder="Repeat password" th:errorclass="input-error"/>
-                        <p th:if="${#fields.hasErrors('repeatPassword')}" id="repeatPasswordError" class="has-error">
-                            <span th:errors="*{repeatPassword}" class="form-control-feedback">Password errors</span>
-                        </p>
+                        <span th:if="${#fields.hasErrors('repeatPassword')}" class="glyphicon glyphicon-remove form-control-feedback"></span>
                     </div>
                     <button class="btn btn-lg btn-success btn-block" type="submit">Register</button>
                 </fieldset>

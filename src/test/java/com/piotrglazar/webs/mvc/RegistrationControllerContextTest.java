@@ -54,7 +54,7 @@ public class RegistrationControllerContextTest extends AbstractContextTest {
 
         // then
             .andExpect(status().isOk())
-            .andExpect(xpath("//p[@id = 'usernameError']").exists());
+            .andExpect(xpath("//label[@id = 'usernameError']").exists());
     }
 
     @Test
@@ -69,8 +69,8 @@ public class RegistrationControllerContextTest extends AbstractContextTest {
 
         // then
             .andExpect(status().isOk())
-            .andExpect(xpath("//p[@id = 'passwordError']").exists())
-            .andExpect(xpath("//p[@id = 'repeatPasswordError']").exists());
+            .andExpect(xpath("//label[@id = 'passwordError']").exists())
+            .andExpect(xpath("//label[@id = 'repeatPasswordError']").exists());
     }
 
     @Test
@@ -85,6 +85,6 @@ public class RegistrationControllerContextTest extends AbstractContextTest {
 
         // then
             .andExpect(status().isOk())
-            .andExpect(xpath("//p[@id = 'emailError']").exists());
+            .andExpect(xpath("//label[@id = 'emailError']").exists());
     }
 }

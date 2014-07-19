@@ -14,6 +14,7 @@ public class RegisterForm {
     @NotBlank(message = "repeated password must not be empty")
     private String repeatPassword;
 
+    @NotBlank(message = "please provide an email")
     @Email(message = "please provide valid email")
     private String email;
 
