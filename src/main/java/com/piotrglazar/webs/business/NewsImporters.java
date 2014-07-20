@@ -46,4 +46,10 @@ public class NewsImporters {
                     newsImporters.size()));
         }
     }
+
+    public void fetchAllNews() {
+        for (int i = 0; i < newsImporters.size(); ++i) {
+            fetchNews(i);
+        }
+    }
 }
