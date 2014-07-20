@@ -17,4 +17,8 @@ build
 *.war
 *.ear
 
+# Mail properties - username, password etc.
 mail.properties
+
+# Test database
+db/test*
