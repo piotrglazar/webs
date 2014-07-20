@@ -10,12 +10,17 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Inheritance;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
 @Inheritance
 @DiscriminatorColumn(name = "ACCOUNT_TYPE")
+@Table(indexes = {
+        @Index(unique = true, columnList = "number")
+})
 public abstract class Account {
 
     @Id

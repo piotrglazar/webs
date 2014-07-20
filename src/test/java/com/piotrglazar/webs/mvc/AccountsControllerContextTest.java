@@ -3,6 +3,8 @@ package com.piotrglazar.webs.mvc;
 import com.piotrglazar.webs.AbstractContextTest;
 import com.piotrglazar.webs.AccountProvider;
 import com.piotrglazar.webs.commons.Utils;
+import com.piotrglazar.webs.model.Account;
+import com.piotrglazar.webs.model.AccountRepository;
 import com.piotrglazar.webs.model.AccountType;
 import com.piotrglazar.webs.model.Currency;
 import org.junit.Test;
@@ -10,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.piotrglazar.webs.commons.Utils.addCsrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -21,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AccountsControllerContextTest extends AbstractContextTest {
 
     @Autowired
-    private AccountProvider provider;
+    private AccountRepository accountRepository;
 
     @Test
     public void shouldDisplayUserAccounts() throws Exception {
@@ -66,6 +71,9 @@ public class AccountsControllerContextTest extends AbstractContextTest {
 
     @Test
     public void shouldCreateAccount() throws Exception {
+        // before
+        List<String> validAccountNumbers = getAccountNumbersAlreadyInDb();
+
         // given
         final MockHttpSession authenticate = Utils.authenticate(mockMvc);
 
@@ -78,6 +86,19 @@ public class AccountsControllerContextTest extends AbstractContextTest {
         // then
             .andExpect(status().is(HttpStatus.FOUND.value()))
             .andExpect(redirectedUrl("/accounts"));
+
+        // cleanup
+        removeAccountsOtherThan(validAccountNumbers);
+    }
+
+    private void removeAccountsOtherThan(final List<String> validAccountNumbers) {
+        accountRepository.findAll().stream()
+                .filter(a -> !validAccountNumbers.contains(a.getNumber()))
+                .forEach(accountRepository::delete);
+    }
+
+    private List<String> getAccountNumbersAlreadyInDb() {
+        return accountRepository.findAll().stream().map(Account::getNumber).collect(Collectors.toList());
     }
 
     @Test
