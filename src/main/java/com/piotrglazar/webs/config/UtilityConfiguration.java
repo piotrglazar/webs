@@ -27,4 +27,8 @@ public class UtilityConfiguration {
         bean.setResourceLoaderPath("classpath:velocity");
         return bean;
     }
+
+    public static String getCurrentDirectory() {
+        return System.getProperty("user.dir");
+    }
 }

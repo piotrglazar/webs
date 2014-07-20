@@ -3,6 +3,7 @@ package com.piotrglazar.webs;
 import com.google.common.collect.ImmutableMap;
 import com.piotrglazar.webs.config.IsolationSupportHibernateJpaDialect;
 import com.piotrglazar.webs.config.Settings;
+import com.piotrglazar.webs.config.UtilityConfiguration;
 import com.piotrglazar.webs.model.Account;
 import com.piotrglazar.webs.model.Currency;
 import com.piotrglazar.webs.model.InternalWebsNews;
@@ -10,6 +11,8 @@ import com.piotrglazar.webs.model.SavingsAccount;
 import com.piotrglazar.webs.model.WebsNews;
 import com.piotrglazar.webs.model.WebsUser;
 import org.hsqldb.jdbc.JDBCDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,15 +25,20 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+import java.lang.invoke.MethodHandles;
 import java.math.BigDecimal;
 
 @Configuration
 @Profile("test")
 public class DatabaseTestConfiguration {
 
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     @Bean
     public DataSource dataSource() {
-        return new SimpleDriverDataSource(new JDBCDriver(), "jdbc:hsqldb:file:/home/webs/test", "sa", "");
+        final String currentDirectory = UtilityConfiguration.getCurrentDirectory();
+        LOG.info("Creating test database in {}/db/test", currentDirectory);
+        return new SimpleDriverDataSource(new JDBCDriver(), "jdbc:hsqldb:file:" + currentDirectory + "/db/test", "sa", "");
     }
 
     @Bean
