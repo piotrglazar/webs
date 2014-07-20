@@ -55,6 +55,7 @@ public class BloombergNewsImporterTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void shouldFetchNewsFromBloombergPage() throws URISyntaxException, IOException {
         // given
         final String pageContent = webPage();

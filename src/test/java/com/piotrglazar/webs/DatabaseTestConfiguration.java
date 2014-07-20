@@ -1,5 +1,6 @@
 package com.piotrglazar.webs;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.piotrglazar.webs.config.IsolationSupportHibernateJpaDialect;
 import com.piotrglazar.webs.config.Settings;
@@ -31,6 +32,9 @@ import java.math.BigDecimal;
 @Configuration
 @Profile("test")
 public class DatabaseTestConfiguration {
+
+    public static final ImmutableList<BigDecimal> ACCOUNT_BALANCES = ImmutableList.of(new BigDecimal(1000), new BigDecimal(4000));
+    public static final ImmutableList<BigDecimal> ACCOUNT_INTERESTS = ImmutableList.of(new BigDecimal("5.5"), new BigDecimal("4.5"));
 
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -126,13 +130,13 @@ public class DatabaseTestConfiguration {
             WebsUser websUser = userProvider.createUser(username, Settings.PASSWORD);
             websUser.setEmail(email);
 
-            final Account firstAccount = SavingsAccount.builder().number(firstAccountNo).balance(new BigDecimal(1000))
-                    .currency(Currency.PLN).interest(BigDecimal.valueOf(5.5)).build();
+            final Account firstAccount = SavingsAccount.builder().number(firstAccountNo).balance(ACCOUNT_BALANCES.get(0))
+                    .currency(Currency.PLN).interest(ACCOUNT_INTERESTS.get(0)).build();
             websUser.getAccounts().add(firstAccount);
             websUser = userProvider.update(websUser);
 
-            final Account secondAccount = SavingsAccount.builder().number(secondAccountNo).balance(new BigDecimal(4000))
-                    .currency(Currency.PLN).interest(BigDecimal.valueOf(4.5)).build();
+            final Account secondAccount = SavingsAccount.builder().number(secondAccountNo).balance(ACCOUNT_BALANCES.get(1))
+                    .currency(Currency.PLN).interest(ACCOUNT_INTERESTS.get(1)).build();
             websUser.getAccounts().add(secondAccount);
             websUser = userProvider.update(websUser);
 

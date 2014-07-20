@@ -40,6 +40,9 @@ public class DefaultAccountProviderContextTest extends AbstractContextTest {
         // then
         assertThat(accountDtos).extracting("number").containsOnly("abc");
         assertThat(accountDtos).extracting("balance").containsOnly(BigDecimal.TEN.setScale(2));
+
+        // cleanup
+        websUserRepository.delete(websUser);
     }
 
     @Test
@@ -56,12 +59,13 @@ public class DefaultAccountProviderContextTest extends AbstractContextTest {
         assertThat(accountDto.isPresent());
         assertThat(accountDto.get().getBalance()).isEqualByComparingTo("10.00");
         assertThat(accountDto.get().getInterest()).isEqualByComparingTo("1.00");
+
+        // cleanup
+        websUserRepository.delete(websUser);
     }
 
     @Test
     public void shouldCreateNewAccount() {
-        // given
-
         // when
         String accountNumber = defaultAccountProvider.newAccount(Settings.USERNAME, AccountType.SAVINGS, Currency.GBP);
 
@@ -70,5 +74,8 @@ public class DefaultAccountProviderContextTest extends AbstractContextTest {
         assertThat(account.getCurrency()).isEqualTo(Currency.GBP);
         assertThat(account.getBalance()).isEqualByComparingTo("0");
         assertThat(defaultAccountProvider.getUserSavingsAccount(Settings.USERNAME, account.getId()).isPresent()).isTrue();
+
+        // cleanup
+        accountRepository.delete(account);
     }
 }
