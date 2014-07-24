@@ -1,5 +1,6 @@
 package com.piotrglazar.webs;
 
+import com.piotrglazar.webs.dto.UserDetailsDto;
 import com.piotrglazar.webs.model.WebsUser;
 
 public interface UserProvider {
@@ -13,4 +14,6 @@ public interface UserProvider {
     WebsUser update(WebsUser websUser);
 
     WebsUser findUserByEmail(String email);
+
+    UserDetailsDto getUserDetails(String username);
 }

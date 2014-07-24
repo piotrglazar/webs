@@ -6,11 +6,13 @@ import com.piotrglazar.webs.config.IsolationSupportHibernateJpaDialect;
 import com.piotrglazar.webs.config.Settings;
 import com.piotrglazar.webs.config.UtilityConfiguration;
 import com.piotrglazar.webs.model.Account;
+import com.piotrglazar.webs.model.Address;
 import com.piotrglazar.webs.model.Currency;
 import com.piotrglazar.webs.model.InternalWebsNews;
 import com.piotrglazar.webs.model.SavingsAccount;
 import com.piotrglazar.webs.model.WebsNews;
 import com.piotrglazar.webs.model.WebsUser;
+import com.piotrglazar.webs.model.WebsUserDetails;
 import org.hsqldb.jdbc.JDBCDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,7 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.lang.invoke.MethodHandles;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Configuration
 @Profile("test")
@@ -127,8 +130,11 @@ public class DatabaseTestConfiguration {
         }
 
         private void addUserWithAccounts(String username, String email, String firstAccountNo, String secondAccountNo, boolean isAdmin) {
+            final WebsUserDetails commonUserDetails = commonUserDetails();
+
             WebsUser websUser = userProvider.createUser(username, Settings.PASSWORD);
             websUser.setEmail(email);
+            websUser.setDetails(commonUserDetails);
 
             final Account firstAccount = SavingsAccount.builder().number(firstAccountNo).balance(ACCOUNT_BALANCES.get(0))
                     .currency(Currency.PLN).interest(ACCOUNT_INTERESTS.get(0)).build();
@@ -144,6 +150,11 @@ public class DatabaseTestConfiguration {
                 websUser.getRoles().add(Settings.ADMIN_ROLE_DB);
                 userProvider.update(websUser);
             }
+        }
+
+        private WebsUserDetails commonUserDetails() {
+            final Address address = new Address("Warsaw", "Poland");
+            return  new WebsUserDetails(LocalDateTime.of(2014, 07, 21, 0, 0), address);
         }
     }
 }

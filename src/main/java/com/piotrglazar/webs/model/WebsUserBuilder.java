@@ -11,6 +11,7 @@ public class WebsUserBuilder {
     private String email;
     private Set<String> roles = Sets.newHashSet("USER");
     private Set<Account> accounts = Sets.newHashSet();
+    private WebsUserDetails details;
 
     public WebsUserBuilder username(final String username) {
         this.username = username;
@@ -45,6 +46,12 @@ public class WebsUserBuilder {
     public WebsUser build() {
         final WebsUser websUser = new WebsUser(username, password, roles, accounts, email);
         websUser.setId(id);
+        websUser.setDetails(details);
         return websUser;
+    }
+
+    public WebsUserBuilder details(final WebsUserDetails userDetails) {
+        this.details = userDetails;
+        return this;
     }
 }
