@@ -1,6 +1,7 @@
 package com.piotrglazar.webs.model;
 
 import com.piotrglazar.webs.UserProvider;
+import com.piotrglazar.webs.dto.UserDetailsDto;
 import com.piotrglazar.webs.util.OperationLogging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -52,5 +53,12 @@ class DefaultUserProvider implements UserProvider {
     @Override
     public WebsUser findUserByEmail(final String email) {
         return websUserRepository.findByEmail(email);
+    }
+
+    @Override
+    public UserDetailsDto getUserDetails(final String username) {
+        final WebsUser websUser = getUserByUsername(username);
+        final WebsUserDetails details = websUser.getDetails();
+        return new UserDetailsDto(websUser.getUsername(), websUser.getEmail(), details.getAddress(), details.getMemberSince());
     }
 }

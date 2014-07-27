@@ -1,11 +1,14 @@
 package com.piotrglazar.webs.model;
 
+import com.piotrglazar.webs.dto.UserDetailsDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -56,5 +59,23 @@ public class DefaultUserProviderTest {
 
         // then
         assertThat(foundUser).isNull();
+    }
+
+    @Test
+    public void shouldBuildUserDetailsDto() {
+        // given
+        final WebsUserDetails userDetails = new WebsUserDetails(LocalDateTime.of(2014, 7, 1, 0, 0), new Address("Warsaw", "PL"));
+        final WebsUser user = WebsUser.builder().username("username").email("email").details(userDetails).build();
+        given(websUserRepository.findByUsername("username")).willReturn(user);
+
+        // when
+        final UserDetailsDto dto = defaultUserProvider.getUserDetails("username");
+
+        // then
+        assertThat(dto.getEmail()).isEqualTo("email");
+        assertThat(dto.getMemberSince()).isEqualTo(LocalDateTime.of(2014, 7, 1, 0, 0));
+        assertThat(dto.getUsername()).isEqualTo("username");
+        assertThat(dto.getAddress().getCity()).isEqualTo("Warsaw");
+        assertThat(dto.getAddress().getCountry()).isEqualTo("PL");
     }
 }

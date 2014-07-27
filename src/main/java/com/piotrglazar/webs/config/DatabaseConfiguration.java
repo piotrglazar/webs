@@ -3,11 +3,13 @@ package com.piotrglazar.webs.config;
 import com.piotrglazar.webs.UserProvider;
 import com.piotrglazar.webs.WebsNewsProvider;
 import com.piotrglazar.webs.model.Account;
+import com.piotrglazar.webs.model.Address;
 import com.piotrglazar.webs.model.Currency;
 import com.piotrglazar.webs.model.InternalWebsNews;
 import com.piotrglazar.webs.model.SavingsAccount;
 import com.piotrglazar.webs.model.WebsNews;
 import com.piotrglazar.webs.model.WebsUser;
+import com.piotrglazar.webs.model.WebsUserDetails;
 import org.hsqldb.jdbc.JDBCDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +25,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import static com.piotrglazar.webs.config.Settings.ADMIN_ROLE_DB;
 
@@ -157,8 +160,11 @@ public class DatabaseConfiguration {
         }
 
         private void addUserWithAccounts(String username, String email, String firstAccountNo, String secondAccountNo, boolean admin) {
+            final WebsUserDetails details = commonUserDetails();
+
             WebsUser websUser = userProvider.createUser(username, Settings.PASSWORD);
             websUser.setEmail(email);
+            websUser.setDetails(details);
 
             final Account firstAccount = SavingsAccount.builder().number(firstAccountNo).balance(new BigDecimal(2500))
                     .currency(Currency.PLN).interest(BigDecimal.valueOf(5.5)).build();
@@ -174,6 +180,11 @@ public class DatabaseConfiguration {
                 websUser.getRoles().add(ADMIN_ROLE_DB);
                 userProvider.update(websUser);
             }
+        }
+
+        private WebsUserDetails commonUserDetails() {
+            final Address address = new Address("Warsaw", "Poland");
+            return  new WebsUserDetails(LocalDateTime.now(), address);
         }
     }
 }

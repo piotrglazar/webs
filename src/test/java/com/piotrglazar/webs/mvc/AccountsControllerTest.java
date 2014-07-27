@@ -7,6 +7,7 @@ import com.piotrglazar.webs.config.MvcConfiguration;
 import com.piotrglazar.webs.dto.AccountDto;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
 import com.piotrglazar.webs.model.Account;
+import com.piotrglazar.webs.model.AccountType;
 import com.piotrglazar.webs.model.Currency;
 import com.piotrglazar.webs.model.SavingsAccount;
 import org.junit.Before;
@@ -17,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -102,6 +104,37 @@ public class AccountsControllerTest {
         // then
         verify(model, never()).addAttribute(anyString(), any(SavingsAccountDto.class));
         assertThat(redirect).isEqualTo("redirect:/accounts");
+    }
+
+    @Test
+    public void shouldRedirectToItselfWhenFormIsInvalid() {
+        // given
+        final AccountCreationForm form = mock(AccountCreationForm.class);
+        final BindingResult bindingResult = mock(BindingResult.class);
+        given(bindingResult.hasErrors()).willReturn(true);
+
+        // when
+        final String redirect = accountsController.addAccount(form, bindingResult);
+
+        // then
+        assertThat(redirect).isEqualTo("newAccount");
+        verify(bindingResult).hasErrors();
+    }
+
+    @Test
+    public void shouldAddNewAccount() {
+        // given
+        final AccountCreationForm form = mock(AccountCreationForm.class);
+        final BindingResult bindingResult = mock(BindingResult.class);
+        given(form.getCurrency()).willReturn(Currency.GBP);
+        given(form.getType()).willReturn(AccountType.SAVINGS);
+
+        // when
+        final String redirect = accountsController.addAccount(form, bindingResult);
+
+        // then
+        assertThat(redirect).isEqualTo("redirect:/accounts");
+        verify(accountProvider).newAccount(anyString(), eq(AccountType.SAVINGS), eq(Currency.GBP));
     }
 
     private List<AccountDto> createAccount() {

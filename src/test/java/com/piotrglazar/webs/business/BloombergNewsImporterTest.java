@@ -81,6 +81,7 @@ public class BloombergNewsImporterTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void shouldCreateBloomberNewsFromBloombergPage() {
         // given
         given(websTemplates.bloombergNewsBody(anyList())).willReturn("bloombergNewsBody");

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="shards/head :: head">
+</head>
+<body>
+<div th:replace="shards/navigation :: navigation"></div>
+<div class="jumbotron">
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title" th:text="${welcomeMessage}">User details!</h1>
+            </div>
+            <div class="panel-body">
+                <p><span>Username: </span><span id="username" class="label label-default" th:text="${userDetails.username}"></span></p>
+                <p><span>Email: </span><span id="email" th:text="${userDetails.email}"></span></p>
+                <p><span>Address: </span><span id="address" th:text="${userDetails.address.city} + ', ' + ${userDetails.address.country}"></span></p>
+                <p><span>Member since: </span><span id="memberSince" class="label label-default" th:text="${{userDetails.memberSince}}"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

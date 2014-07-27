@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Set;
 
@@ -43,6 +44,10 @@ public final class WebsUser {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "WEBSUSER_ID", referencedColumnName = "ID")
     private Set<Account> accounts;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "WEBSUSER_ID", referencedColumnName = "ID")
+    private WebsUserDetails details;
 
     public WebsUser() {
 
@@ -123,5 +128,13 @@ public final class WebsUser {
 
     public void setId(final Long id) {
         this.id = id;
+    }
+
+    public WebsUserDetails getDetails() {
+        return details;
+    }
+
+    public void setDetails(final WebsUserDetails details) {
+        this.details = details;
     }
 }
