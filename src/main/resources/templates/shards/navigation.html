@@ -17,6 +17,15 @@
         <ul class="nav navbar-nav">
             <li th:class="${pageName == 'index'} ? 'active' : ''"><a th:href="@{/index}" href="/index">Index</a></li>
             <li th:class="${pageName == 'accounts'} ? 'active' : ''"><a th:href="@{/accounts}" href="/accounts">Accounts</a></li>
+            <li th:class="${pageName == 'loans'} ? 'active dropdown' : 'dropdown'">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Loans<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a th:href="@{/newLoan}" href="#">Contract a loan</a></li>
+                    <li><a th:href="@{/loans}" href="#">Active loans</a></li>
+                    <li class="divider"></li>
+                    <li><a th:href="@{/archiveLoans}" href="#">Archive</a></li>
+                </ul>
+            </li>
             <li th:class="${pageName == 'contact'} ? 'active' : ''"><a href="#">Contact</a></li>
             <li th:class="${pageName == 'userDetails'} ? 'active' : ''"><a th:href="@{/userDetails}">Account details</a></li>
             <li th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}"><a th:href="@{/admin}" href="/admin">Admin</a></li>

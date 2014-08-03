@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpSession;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.xpath;
 
@@ -90,6 +89,21 @@ public class AdminControllerContextTest extends AbstractContextTest {
 
         // when
         mockMvc.perform(get("/admin/interest").session(authenticate))
+
+        // then
+            .andExpect(status().isOk())
+            .andExpect(xpath("//div[@class='alert alert-dismissable alert-success']").exists())
+            .andExpect(xpath("//table[@id='moneyTransferAuditTable']").exists())
+            .andExpect(xpath("//table[@id='newsImporterTable']").exists());
+    }
+
+    @Test
+    public void shouldRepayLoans() throws Exception {
+        // given
+        final MockHttpSession authenticate = Utils.authenticate(mockMvc, Settings.USERNAME, Settings.PASSWORD);
+
+        // when
+        mockMvc.perform(get("/admin/loans").session(authenticate))
 
         // then
             .andExpect(status().isOk())

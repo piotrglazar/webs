@@ -10,23 +10,23 @@ import org.springframework.stereotype.Component;
 import java.lang.invoke.MethodHandles;
 
 @Component
-public class ScheduledInterestAccruer {
+public class ScheduledRepayLoans {
 
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    private final InterestAccruer interestAccruer;
+    private final LoanRepays loanRepays;
 
     @Autowired
-    public ScheduledInterestAccruer(InterestAccruer interestAccruer) {
-        this.interestAccruer = interestAccruer;
+    public ScheduledRepayLoans(final LoanRepays loanRepays) {
+        this.loanRepays = loanRepays;
     }
 
-    @Scheduled(cron = BusinessConfiguration.INTEREST_RATE_ACCRUE_CRON_EXPRESSION)
-    public void accrueInterestPeriodically() {
-        LOG.info("Started - interest accrue");
+    @Scheduled(cron = BusinessConfiguration.LOAN_REPAY_CRON_EXPRESSION)
+    public void repayLoansPeriodically() {
+        LOG.info("Started - repay loans");
 
-        interestAccruer.accrueInterest();
+        loanRepays.repayAllLoans();
 
-        LOG.info("Ended - interest accrue");
+        LOG.info("Ended - repay loans");
     }
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="shards/head :: head">
+</head>
+<body>
+<div th:replace="shards/navigation :: navigation"></div>
+<div class="jumbotron">
+    <div class="container">
+        <div>
+            <h1 th:inline="text">Archive loans!</h1>
+            <table th:if="${!#lists.isEmpty(archiveLoans)}" class="table table-striped" id="loanTable">
+                <thead>
+                <tr class="row">
+                    <th>Amount loaned</th>
+                    <th>Amount remaining</th>
+                    <th>Currency</th>
+                    <th>Postpones</th>
+                    <th>Account number</th>
+                    <th>Weeks</th>
+                    <th>Weeks remaining</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="loan : ${archiveLoans}">
+                    <tr class="row">
+                        <td class="col-md-2"><span th:text="${loan.amountLoaned}"></span></td>
+                        <td class="col-md-2"><span th:text="${loan.amountRemaining}"></span></td>
+                        <td class="col-md-1"><span th:text="${loan.currency}"></span></td>
+                        <td class="col-md-1"><span th:text="${loan.getPostpones().size()}"></span></td>
+                        <td class="col-md-2"><span th:text="${loan.accountNumber}"></span></td>
+                        <td class="col-md-2"><span th:text="${loan.weeks}"></span></td>
+                        <td class="col-md-2"><span th:text="${loan.weeksRemaining}"></span></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+            <div th:if="${#lists.isEmpty(archiveLoans)}">You have currently no archive loans.</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

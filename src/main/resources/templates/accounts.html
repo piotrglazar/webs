@@ -11,7 +11,7 @@
             <div>
                 <a class="btn btn-primary" th:href="@{/newAccount}">New account</a>
             </div>
-            <table class="table table-striped" id="accountTable">
+            <table th:if="${!#lists.isEmpty(accounts)}" class="table table-striped" id="accountTable">
                 <thead>
                 <tr class="row">
                     <th></th>
@@ -39,6 +39,7 @@
                 </th:block>
                 </tbody>
             </table>
+            <div th:if="${#lists.isEmpty(accounts)}">You have currently no accounts</div>
         </div>
     </div>
 </div>

@@ -56,21 +56,21 @@ public class AccountsController {
     }
 
     @RequestMapping(value = "/newAccount", method = RequestMethod.GET)
-    public ModelAndView newAccount(final AccountCreationForm newAccountForm) {
+    public ModelAndView newAccount(final AccountCreationForm accountCreationForm) {
         final ModelAndView modelAndView = new ModelAndView("newAccount");
-        modelAndView.addObject("newAccountForm", newAccountForm);
+        modelAndView.addObject("accountCreationForm", accountCreationForm);
         modelAndView.addObject("allAccountTypes", AccountType.values());
         modelAndView.addObject("allCurrencies", Currency.values());
         return modelAndView;
     }
 
     @RequestMapping(value = "/newAccount", method = RequestMethod.POST)
-    public String addAccount(@Valid final AccountCreationForm form, final BindingResult bindingResult) {
+    public String addAccount(@Valid final AccountCreationForm accountCreationForm, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "newAccount";
         }
 
-        accountProvider.newAccount(getUsername(), form.getType(), form.getCurrency());
+        accountProvider.newAccount(getUsername(), accountCreationForm.getType(), accountCreationForm.getCurrency());
 
         return "redirect:/accounts";
     }

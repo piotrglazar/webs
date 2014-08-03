@@ -49,6 +49,10 @@ public final class WebsUser {
     @JoinColumn(name = "WEBSUSER_ID", referencedColumnName = "ID")
     private WebsUserDetails details;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "WEBSUSER_ID", referencedColumnName = "ID")
+    private Set<Loan> loans;
+
     public WebsUser() {
 
     }
@@ -136,5 +140,17 @@ public final class WebsUser {
 
     public void setDetails(final WebsUserDetails details) {
         this.details = details;
+    }
+
+    public Set<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(final Set<Loan> loans) {
+        this.loans = loans;
+    }
+
+    public void addLoan(final Loan loan) {
+        loans.add(loan);
     }
 }

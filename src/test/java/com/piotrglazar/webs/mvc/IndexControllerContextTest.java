@@ -2,7 +2,6 @@ package com.piotrglazar.webs.mvc;
 
 import com.piotrglazar.webs.AbstractContextTest;
 import com.piotrglazar.webs.commons.Utils;
-import com.piotrglazar.webs.config.Settings;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpSession;
 
@@ -15,7 +14,7 @@ public class IndexControllerContextTest extends AbstractContextTest {
     @Test
     public void shouldDisplayNewsAndWelcomeMessage() throws Exception {
         // given
-        final MockHttpSession authenticate = Utils.authenticate(mockMvc, Settings.USERNAME, Settings.PASSWORD);
+        final MockHttpSession authenticate = Utils.authenticate(mockMvc);
 
         // when
         mockMvc.perform(get("/index").session(authenticate))

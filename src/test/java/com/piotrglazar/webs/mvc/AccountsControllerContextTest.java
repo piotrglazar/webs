@@ -111,6 +111,6 @@ public class AccountsControllerContextTest extends AbstractContextTest {
 
         // then
             .andExpect(status().isOk())
-            .andExpect(model().attributeExists("newAccountForm", "allAccountTypes", "allCurrencies"));
+            .andExpect(model().attributeExists("accountCreationForm", "allAccountTypes", "allCurrencies"));
     }
 }

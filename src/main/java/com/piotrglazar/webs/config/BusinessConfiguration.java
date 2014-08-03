@@ -13,6 +13,7 @@ import java.lang.invoke.MethodHandles;
 public class BusinessConfiguration {
 
     public static final String INTEREST_RATE_ACCRUE_CRON_EXPRESSION = "0 0 0 * * *";
+    public static final String LOAN_REPAY_CRON_EXPRESSION = "0 0 0 * * MON";
 
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 

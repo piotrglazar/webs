@@ -2,6 +2,7 @@ package com.piotrglazar.webs.mvc;
 
 import com.piotrglazar.webs.MoneyTransferAuditProvider;
 import com.piotrglazar.webs.business.InterestAccruer;
+import com.piotrglazar.webs.business.LoanRepays;
 import com.piotrglazar.webs.business.NewsImporters;
 import com.piotrglazar.webs.dto.MoneyTransferAuditDto;
 import com.piotrglazar.webs.util.OperationLogging;
@@ -19,12 +20,15 @@ public class AdminController {
     private final MoneyTransferAuditProvider auditProvider;
     private final NewsImporters newsImporters;
     private final InterestAccruer interestAccruer;
+    private final LoanRepays loanRepays;
 
     @Autowired
-    public AdminController(MoneyTransferAuditProvider auditProvider,  NewsImporters newsImporters, InterestAccruer interestAccruer) {
+    public AdminController(MoneyTransferAuditProvider auditProvider, NewsImporters newsImporters, InterestAccruer interestAccruer,
+                           LoanRepays loanRepays) {
         this.auditProvider = auditProvider;
         this.newsImporters = newsImporters;
         this.interestAccruer = interestAccruer;
+        this.loanRepays = loanRepays;
     }
 
     @RequestMapping("/admin")
@@ -49,6 +53,14 @@ public class AdminController {
     public String accrueInterest(final Model model) {
         interestAccruer.accrueInterest();
         model.addAttribute("uiMessage", "Interest accrued successfully");
+        return showMoneyTransferAudit(model);
+    }
+
+    @RequestMapping("/admin/loans")
+    @OperationLogging(operation = "admin repay loans")
+    public String repayLoans(final Model model) {
+        loanRepays.repayAllLoans();
+        model.addAttribute("uiMessage", "Loans repaid successfully");
         return showMoneyTransferAudit(model);
     }
 }
