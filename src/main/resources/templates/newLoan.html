@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="shards/head :: head">
+</head>
+<body>
+<div th:replace="shards/navigation :: navigation"></div>
+<div class="jumbotron">
+    <div class="container">
+        <div><p><strong>Create new loan!</strong></p></div>
+        <div>
+            <form role="form" th:action="@{/newLoan/}" method="post" th:object="${loanCreationForm}">
+                <fieldset>
+                    <div class="form-group">
+                        <label class="control-label">Please choose your loan option:</label>
+                        <select class="form-control" th:field="*{loanOption}">
+                            <option th:each="loanOption : ${allLoanOptions}"
+                                    th:value="${loanOption}"
+                                    th:text="${loanOption.description}">Loan Option</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Please choose an account:</label>
+                        <select class="form-control" th:field="*{accountId}">
+                            <option th:each="account : ${allAccounts}"
+                                    th:value="${account.id}"
+                                    th:text="${account.number}">Account number</option>
+                        </select>
+                    </div>
+                    <div th:class="${#fields.hasErrors('amountLoaned')}? 'has-error form-group has-feedback' : form-group">
+                        <label class="control-label">Please choose loan amount:</label>
+                        <label class="control-label" th:if="${#fields.hasErrors('amountLoaned')}" id="amountLoanedError" th:errors="*{amountLoaned}">amountLoaned errors</label>
+                        <input type="number" id="amountLoaned" name="amountLoaned" th:field="*{amountLoaned}" class="form-control" placeholder="amount to loan" th:errorclass="input-error" />
+                        <span th:if="${#fields.hasErrors('amountLoaned')}" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <button class="btn btn-success" type="submit">Create</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

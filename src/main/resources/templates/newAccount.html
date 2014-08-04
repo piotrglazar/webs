@@ -8,7 +8,7 @@
     <div class="container">
         <div><p><strong>Create new account!</strong></p></div>
         <div>
-            <form role="form" th:action="@{/newAccount/}" method="post" th:object="${newAccountForm}">
+            <form role="form" th:action="@{/newAccount/}" method="post" th:object="${accountCreationForm}">
                 <fieldset>
                     <select th:field="*{type}">
                         <option th:each="type : ${allAccountTypes}"

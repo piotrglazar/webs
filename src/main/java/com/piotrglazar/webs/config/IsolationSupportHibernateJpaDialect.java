@@ -63,15 +63,15 @@ public class IsolationSupportHibernateJpaDialect extends HibernateJpaDialect {
     private Integer getPreviousIsolationLevel(final TransactionDefinition definition, final Connection connection) throws SQLException {
         final Integer previousIsolationLevel = dataSourceUtilsWrapper.prepareConnectionForTransaction(definition, connection);
         if (LOG.isInfoEnabled()){
-            LOG.info("The previousIsolationLevel {}", previousIsolationLevel);
+            LOG.info("The previous isolationLevel {}", previousIsolationLevel);
         }
         return previousIsolationLevel;
     }
 
     private void logConnectionAndTransactionDetails(TransactionDefinition definition, Connection connection) throws SQLException {
         if (LOG.isInfoEnabled()) {
-            LOG.info("Connection Info: isolationlevel={}, instance={}", connection.getTransactionIsolation(), connection);
-            LOG.info("Transaction Info: IsolationLevel={}, PropagationBehavior={}, Timeout={}, Name={}",
+            LOG.info("Connection Info: isolationLevel={}, instance={}", connection.getTransactionIsolation(), connection);
+            LOG.info("Transaction Info: isolationLevel={}, PropagationBehavior={}, Timeout={}, Name={}",
                     definition.getIsolationLevel(), definition.getPropagationBehavior(), definition.getTimeout(), definition.getName());
         }
 
@@ -96,6 +96,10 @@ public class IsolationSupportHibernateJpaDialect extends HibernateJpaDialect {
         super.cleanupTransaction(((IsolationSupportSessionTransactionData) transactionData)
                 .getSessionTransactionDataFromHibernateTemplate());
         ((IsolationSupportSessionTransactionData) transactionData).resetIsolationLevel();
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Cleaning up after transaction");
+        }
     }
 
     protected static class IsolationSupportSessionTransactionData {

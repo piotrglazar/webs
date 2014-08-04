@@ -3,6 +3,7 @@ package com.piotrglazar.webs.mvc;
 import com.google.common.collect.Lists;
 import com.piotrglazar.webs.MoneyTransferAuditProvider;
 import com.piotrglazar.webs.business.InterestAccruer;
+import com.piotrglazar.webs.business.LoanRepays;
 import com.piotrglazar.webs.business.NewsImporters;
 import com.piotrglazar.webs.dto.MoneyTransferAuditDto;
 import com.piotrglazar.webs.model.MoneyTransferAudit;
@@ -25,6 +26,9 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AdminControllerTest {
+
+    @Mock
+    private LoanRepays loanRepays;
 
     @Mock
     private InterestAccruer interestAccruer;
@@ -99,6 +103,28 @@ public class AdminControllerTest {
         assertThat(model.addAttribute(eq("newsImporters"), anyObject()));
         // successful message is shown
         assertThat(model.addAttribute("uiMessage", "Interest accrued successfully"));
+    }
+
+    @Test
+    public void shouldRepayLoans() {
+        // when
+        controller.repayLoans(model);
+
+        // then
+        verify(loanRepays).repayAllLoans();
+    }
+
+    @Test
+    public void shouldRedirectToItselfAfterRepayingLoans() {
+        // when
+        final String view = controller.repayLoans(model);
+
+        // then
+        assertThat(view).contains("admin");
+        assertThat(model.addAttribute(eq("moneyTransferAudits"), anyObject()));
+        assertThat(model.addAttribute(eq("newsImporters"), anyObject()));
+        // successful message is shown
+        assertThat(model.addAttribute("uiMessage", "Loans repaid successfully"));
     }
 
     private List<MoneyTransferAuditDto> someMoneyTransferAuditDtos() {

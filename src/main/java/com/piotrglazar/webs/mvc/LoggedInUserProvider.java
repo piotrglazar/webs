@@ -15,4 +15,8 @@ public class LoggedInUserProvider {
 
         return (User) authentication.getPrincipal();
     }
+
+    public String getLoggedInUserUsername() {
+        return getLoggedInUser().getUsername();
+    }
 }
