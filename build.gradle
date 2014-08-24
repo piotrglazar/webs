@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.4.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.5.RELEASE")
         classpath group: 'org.zeroturnaround', name: 'gradle-jrebel-plugin', version: '1.1.2'
     }
 }
@@ -64,7 +64,7 @@ dependencies {
 
     testCompile("junit:junit")
     testCompile("org.mockito:mockito-all:1.9.5")
-    testCompile("org.assertj:assertj-core:1.6.0")
+    testCompile("org.assertj:assertj-core:1.6.1")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("com.googlecode.catch-exception:catch-exception:1.2.0")
     testCompile("nl.jqno.equalsverifier:equalsverifier:1.4.1")

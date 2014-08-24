@@ -10,6 +10,7 @@ import org.springframework.transaction.TransactionException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
+import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -102,7 +103,7 @@ public class IsolationSupportHibernateJpaDialect extends HibernateJpaDialect {
         }
     }
 
-    protected static class IsolationSupportSessionTransactionData {
+    protected static class IsolationSupportSessionTransactionData implements Serializable {
 
         private final Object sessionTransactionDataFromHibernateJpaTemplate;
         private final Integer previousIsolationLevel;
