@@ -24,7 +24,12 @@ public class LoggingAspect {
 
         LOG.info("{}", operationName);
 
-        return proceedingJoinPoint.proceed();
+        try {
+            return proceedingJoinPoint.proceed();
+        } catch (Exception e) {
+            LOG.info("{} failed with", operationName, e);
+            throw e;
+        }
     }
 
     private String extractOperationName(final ProceedingJoinPoint proceedingJoinPoint) throws NoSuchMethodException {

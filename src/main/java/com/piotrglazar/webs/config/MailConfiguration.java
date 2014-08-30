@@ -16,6 +16,8 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.lang.invoke.MethodHandles;
 import java.util.Properties;
 
+import static java.lang.Boolean.TRUE;
+
 @Configuration
 @Profile("default")
 public class MailConfiguration {
@@ -81,9 +83,11 @@ public class MailConfiguration {
         javaMailSender.setPassword(mailPassword);
         final Properties properties = new Properties();
         properties.setProperty("mail.transport.protocol", "smtp");
-        properties.setProperty("mail.smtp.auth", Boolean.toString(true));
-        properties.setProperty("mail.smtp.starttls.enable", Boolean.toString(true));
-        properties.setProperty("mail.debug", Boolean.toString(true));
+        properties.setProperty("mail.smtp.auth", TRUE.toString());
+        properties.setProperty("mail.smtp.starttls.enable", TRUE.toString());
+        properties.setProperty("mail.debug", TRUE.toString());
+        properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        properties.setProperty("mail.smtp.ssl.enable", TRUE.toString());
         javaMailSender.setJavaMailProperties(properties);
         return javaMailSender;
     }

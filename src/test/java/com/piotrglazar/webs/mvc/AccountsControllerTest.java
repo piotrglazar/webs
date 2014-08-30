@@ -1,7 +1,6 @@
 package com.piotrglazar.webs.mvc;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.piotrglazar.webs.AccountProvider;
 import com.piotrglazar.webs.config.MvcConfiguration;
 import com.piotrglazar.webs.dto.AccountDto;
@@ -16,7 +15,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
@@ -50,7 +48,7 @@ public class AccountsControllerTest {
 
     @Before
     public void logInUser() {
-        given(loggedInUserProvider.getLoggedInUser()).willReturn(new User("user", "", Sets.newHashSet()));
+        given(loggedInUserProvider.getLoggedInUserUsername()).willReturn("user");
     }
 
     @Test

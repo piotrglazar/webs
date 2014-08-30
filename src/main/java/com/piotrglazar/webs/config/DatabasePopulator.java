@@ -50,7 +50,7 @@ class DatabasePopulator {
         websNewsProvider.addNews(accountsFeatureNews());
         websNewsProvider.addNews(newAccountFeatureNews());
         websNewsProvider.addNews(upcomingFeatureWorldwideFinancialNews());
-        websNewsProvider.addNews(upcomingFeatureAccountInterest());
+        websNewsProvider.addNews(accountInterestFeatureNews());
         websNewsProvider.addNews(upcomingFeatureLanguagePacks());
     }
 
@@ -65,13 +65,13 @@ class DatabasePopulator {
                 .build();
     }
 
-    private WebsNews upcomingFeatureAccountInterest() {
+    private WebsNews accountInterestFeatureNews() {
         return InternalWebsNews.builder()
-                .headline("Upcoming feature - account interest rate!")
+                .headline("Account interest rate!")
                 .body("Webs is the most trustworthy bank online. We are aiming at best interest rate around the world. It will be "
                         + "calculated daily so that you can benefit most from your accounts")
                 .url("#")
-                .urlText("Upcoming feature")
+                .urlText("Watch your account balance!")
                 .imgContent(IMG_CONTENT[3])
                 .build();
     }

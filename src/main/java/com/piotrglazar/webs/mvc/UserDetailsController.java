@@ -22,7 +22,7 @@ public class UserDetailsController {
 
     @RequestMapping
     public String userDetails(final Model model) {
-        final String username = loggedInUserProvider.getLoggedInUser().getUsername();
+        final String username = loggedInUserProvider.getLoggedInUserUsername();
         model.addAttribute("welcomeMessage", String.format("Welcome %s!", username));
         model.addAttribute(MvcConfiguration.PAGE_NAME_ATTRIBUTE, "userDetails");
         model.addAttribute("userDetails", userProvider.getUserDetails(username));

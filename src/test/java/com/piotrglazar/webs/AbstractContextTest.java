@@ -1,6 +1,5 @@
 package com.piotrglazar.webs;
 
-import com.piotrglazar.webs.config.UtilityConfiguration;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
