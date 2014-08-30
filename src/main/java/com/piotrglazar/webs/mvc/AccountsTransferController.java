@@ -68,7 +68,7 @@ public class AccountsTransferController {
             return "accountsTransfer";
         }
 
-        final MoneyTransferParams moneyTransferParams = factory.create(loggedInUserProvider.getLoggedInUser().getUsername(), transferForm);
+        final MoneyTransferParams moneyTransferParams = factory.create(loggedInUserProvider.getLoggedInUserUsername(), transferForm);
 
         accountMoneyTransfer.transferMoney(moneyTransferParams);
 
@@ -76,15 +76,12 @@ public class AccountsTransferController {
     }
 
     private boolean userAccessesNotHisAccount(final Long accountId) {
-        final Optional<SavingsAccountDto> account = accountProvider.getUserSavingsAccount(getUsername(), accountId);
+        final Optional<SavingsAccountDto> account = accountProvider.getUserSavingsAccount(loggedInUserProvider.getLoggedInUserUsername(),
+                accountId);
         return !account.isPresent();
     }
 
-    private String getUsername() {
-        return loggedInUserProvider.getLoggedInUser().getUsername();
-    }
-
     private boolean violationAttempt(final Long accountId, final TransferForm transferForm) {
-        return accountId.longValue() != transferForm.getAccountId();
+        return accountId != transferForm.getAccountId();
     }
 }

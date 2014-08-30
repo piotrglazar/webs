@@ -34,19 +34,16 @@ public class AccountsController {
 
     @RequestMapping("/accounts")
     public String accounts(final Model model) {
-        final List<AccountDto> accountDtos = accountProvider.getUserAccounts(getUsername());
+        final List<AccountDto> accountDtos = accountProvider.getUserAccounts(loggedInUserProvider.getLoggedInUserUsername());
         model.addAttribute("accounts", accountDtos);
         model.addAttribute(MvcConfiguration.PAGE_NAME_ATTRIBUTE, "accounts");
         return "accounts";
     }
 
-    private String getUsername() {
-        return loggedInUserProvider.getLoggedInUser().getUsername();
-    }
-
     @RequestMapping("/accounts/{accountId}/")
     public String accountDetails(@PathVariable("accountId") final Long accountId, final Model model) {
-        final Optional<SavingsAccountDto> account = accountProvider.getUserSavingsAccount(getUsername(), accountId);
+        final Optional<SavingsAccountDto> account =
+                accountProvider.getUserSavingsAccount(loggedInUserProvider.getLoggedInUserUsername(), accountId);
         if (account.isPresent()) {
             model.addAttribute("accountDetails", account.get());
             return "accountDetails";
@@ -70,7 +67,7 @@ public class AccountsController {
             return "newAccount";
         }
 
-        accountProvider.newAccount(getUsername(), accountCreationForm.getType(), accountCreationForm.getCurrency());
+        accountProvider.newAccount(loggedInUserProvider.getLoggedInUserUsername(), accountCreationForm.getType(), accountCreationForm.getCurrency());
 
         return "redirect:/accounts";
     }

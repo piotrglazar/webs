@@ -13,6 +13,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 
@@ -30,13 +32,14 @@ public class DefaultNewsImportingStrategyTest {
         // given
         final NewsImporter newsImporter = mock(NewsImporter.class);
         final List<WebsNews> someNews = Lists.newArrayList(new TestWebsNews());
+        given(newsImporter.provides()).willAnswer(o -> TestWebsNews.class);
 
         // when
         strategy.saveNews(newsImporter, someNews);
 
         // then
         InOrder inOrder = inOrder(websNewsProvider);
-        inOrder.verify(websNewsProvider).removeAll(null);
+        inOrder.verify(websNewsProvider).removeAll(eq(TestWebsNews.class));
         inOrder.verify(websNewsProvider).saveAll(someNews);
     }
 

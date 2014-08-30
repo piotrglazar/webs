@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.Model;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,9 +34,7 @@ public class UserDetailsControllerTest {
     public void shouldFetchUserDetailsFromDb() {
         // given
         final UserDetailsDto userDetails = mock(UserDetailsDto.class);
-        final User user = mock(User.class);
-        given(user.getUsername()).willReturn("user");
-        given(loggedInUserProvider.getLoggedInUser()).willReturn(user);
+        given(loggedInUserProvider.getLoggedInUserUsername()).willReturn("user");
         given(userProvider.getUserDetails("user")).willReturn(userDetails);
 
         // when

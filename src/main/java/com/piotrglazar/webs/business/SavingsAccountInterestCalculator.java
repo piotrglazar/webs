@@ -1,8 +1,8 @@
 package com.piotrglazar.webs.business;
 
 import com.google.common.base.Preconditions;
-import com.piotrglazar.webs.InterestCalculator;
 import com.piotrglazar.webs.InterestCalculationStrategy;
+import com.piotrglazar.webs.InterestCalculator;
 import com.piotrglazar.webs.model.Account;
 import com.piotrglazar.webs.model.AccountType;
 import com.piotrglazar.webs.model.SavingsAccount;

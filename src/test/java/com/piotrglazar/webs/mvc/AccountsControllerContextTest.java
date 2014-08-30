@@ -1,7 +1,6 @@
 package com.piotrglazar.webs.mvc;
 
 import com.piotrglazar.webs.AbstractContextTest;
-import com.piotrglazar.webs.AccountProvider;
 import com.piotrglazar.webs.commons.Utils;
 import com.piotrglazar.webs.model.Account;
 import com.piotrglazar.webs.model.AccountRepository;
