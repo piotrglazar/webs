@@ -2,9 +2,13 @@ package com.piotrglazar.webs.mvc;
 
 import com.google.common.collect.Lists;
 import com.piotrglazar.webs.AccountProvider;
+import com.piotrglazar.webs.MoneyTransferAuditProvider;
 import com.piotrglazar.webs.config.MvcConfiguration;
 import com.piotrglazar.webs.dto.AccountDto;
+import com.piotrglazar.webs.dto.PagerDto;
+import com.piotrglazar.webs.dto.PagerDtoFactory;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
+import com.piotrglazar.webs.dto.WebsPageable;
 import com.piotrglazar.webs.model.Account;
 import com.piotrglazar.webs.model.AccountType;
 import com.piotrglazar.webs.model.Currency;
@@ -15,10 +19,12 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import java.math.BigDecimal;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +49,12 @@ public class AccountsControllerTest {
     @Mock
     private AccountProvider accountProvider;
 
+    @Mock
+    private MoneyTransferAuditProvider moneyTransferAuditProvider;
+
+    @Mock
+    private PagerDtoFactory pagerDtoFactory;
+
     @InjectMocks
     private AccountsController accountsController;
 
@@ -58,9 +70,10 @@ public class AccountsControllerTest {
         given(accountProvider.getUserAccounts("user")).willReturn(accounts);
 
         // when
-        accountsController.accounts(model);
+        final String accountsTemplate = accountsController.accounts(model);
 
         // then
+        assertThat(accountsTemplate).isEqualTo("accounts");
         verify(model).addAttribute("accounts", accounts);
         verify(model).addAttribute(MvcConfiguration.PAGE_NAME_ATTRIBUTE, "accounts");
     }
@@ -68,13 +81,15 @@ public class AccountsControllerTest {
     @Test
     public void shouldPopulateEmptyUserAccountListToViewWhenNoAccountsFound() {
         // given
-        given(accountProvider.getUserAccounts("user")).willReturn(Lists.newLinkedList());
+        final LinkedList<AccountDto> dtos = Lists.newLinkedList();
+        given(accountProvider.getUserAccounts("user")).willReturn(dtos);
 
         // when
-        accountsController.accounts(model);
+        final String accountsTemplate = accountsController.accounts(model);
 
         // then
-        verify(model).addAttribute(eq("accounts"), any(List.class));
+        assertThat(accountsTemplate).isEqualTo("accounts");
+        verify(model).addAttribute("accounts", dtos);
         verify(model).addAttribute(MvcConfiguration.PAGE_NAME_ATTRIBUTE, "accounts");
     }
 
@@ -85,9 +100,10 @@ public class AccountsControllerTest {
         given(accountProvider.getUserSavingsAccount("user", 1L)).willReturn(Optional.of(dto));
 
         // when
-        accountsController.accountDetails(1L, model);
+        final String accountDetailsTemplate = accountsController.accountDetails(1L, model);
 
         // then
+        assertThat(accountDetailsTemplate).isEqualTo("accountDetails");
         verify(model).addAttribute("accountDetails", dto);
     }
 
@@ -133,6 +149,30 @@ public class AccountsControllerTest {
         // then
         assertThat(redirect).isEqualTo("redirect:/accounts");
         verify(accountProvider).newAccount(anyString(), eq(AccountType.SAVINGS), eq(Currency.GBP));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldPopulateUserTransferAuditDetails() {
+        // given
+        final int pageNumber = 0;
+        final WebsPageable websPageable = new WebsPageable(mock(Page.class));
+        given(moneyTransferAuditProvider.findPageForUsername("user", pageNumber)).willReturn(websPageable);
+        final LinkedList<PagerDto> pagers = Lists.newLinkedList();
+        given(pagerDtoFactory.createPagers(any(Integer.class), any(Integer.class), any(String.class))).willReturn(pagers);
+        final PagerDto pager = PagerDto.emptyPager();
+        given(pagerDtoFactory.createLeftPager(any(Integer.class), any(Boolean.class), any(String.class))).willReturn(pager);
+        given(pagerDtoFactory.createRightPager(any(Integer.class), any(Boolean.class), any(String.class))).willReturn(pager);
+
+        // when
+        final String transferHistoryTemplate = accountsController.displayAccountTransferHistory(pageNumber, model);
+
+        // then
+        assertThat(transferHistoryTemplate).isEqualTo("accountTransferHistory");
+        verify(model).addAttribute("moneyTransferAuditData", websPageable);
+        verify(model).addAttribute("pagers", pagers);
+        verify(model).addAttribute("leftPager", pager);
+        verify(model).addAttribute("rightPager", pager);
     }
 
     private List<AccountDto> createAccount() {

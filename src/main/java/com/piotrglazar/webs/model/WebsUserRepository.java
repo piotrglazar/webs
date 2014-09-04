@@ -7,4 +7,6 @@ public interface WebsUserRepository extends JpaRepository<WebsUser, Long> {
     WebsUser findByUsername(String username);
 
     WebsUser findByEmail(String email);
+
+    WebsUser findByAccountsId(Long accountId);
 }

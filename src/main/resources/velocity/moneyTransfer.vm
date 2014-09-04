@@ -4,4 +4,4 @@ from account $fromAccount
 
 Amount: $amount
 
-to account $toAccount
+to account $toAccount owned by $receivingUser

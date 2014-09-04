@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import com.piotrglazar.webs.UniqueIdGenerator;
 import com.piotrglazar.webs.UserProvider;
 import com.piotrglazar.webs.dto.AccountDto;
+import com.piotrglazar.webs.dto.AccountDtoFactory;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +28,9 @@ import static org.mockito.Mockito.mock;
 public class DefaultAccountProviderTest {
 
     @Mock
+    private AccountDtoFactory factory;
+
+    @Mock
     private AccountRepository accountRepository;
 
     @Mock
@@ -44,6 +48,7 @@ public class DefaultAccountProviderTest {
         final SavingsAccount savingsAccount = SavingsAccount.builder().number("abc").interest(BigDecimal.ONE).build();
         savingsAccount.setId(1L);
         given(accountRepository.findByUsername("user")).willReturn(Lists.<Account>newArrayList(savingsAccount));
+        given(factory.dto(savingsAccount)).willReturn(new SavingsAccountDto(savingsAccount));
 
         // when
         final Optional<SavingsAccountDto> savingsAccountDto = accountProvider.getUserSavingsAccount("user", 1L);
@@ -74,6 +79,7 @@ public class DefaultAccountProviderTest {
         // given
         final SavingsAccount savingsAccount = SavingsAccount.builder().number("abc").interest(BigDecimal.ONE).build();
         given(accountRepository.findByUsername("user")).willReturn(Lists.newArrayList(savingsAccount));
+        given(factory.dto(savingsAccount)).willReturn(new SavingsAccountDto(savingsAccount));
 
         // when
         final List<AccountDto> dtos = accountProvider.getUserAccounts("user");

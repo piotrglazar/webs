@@ -6,6 +6,9 @@ import com.piotrglazar.webs.model.Account;
 import com.piotrglazar.webs.model.AccountRepository;
 import com.piotrglazar.webs.model.AccountType;
 import com.piotrglazar.webs.model.Currency;
+import com.piotrglazar.webs.model.MoneyTransferAudit;
+import com.piotrglazar.webs.model.MoneyTransferAuditBuilder;
+import com.piotrglazar.webs.model.MoneyTransferAuditRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,11 +24,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.xpath;
 
 public class AccountsControllerContextTest extends AbstractContextTest {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private MoneyTransferAuditRepository auditRepository;
 
     @Test
     public void shouldDisplayUserAccounts() throws Exception {
@@ -90,14 +97,26 @@ public class AccountsControllerContextTest extends AbstractContextTest {
         removeAccountsOtherThan(validAccountNumbers);
     }
 
-    private void removeAccountsOtherThan(final List<String> validAccountNumbers) {
-        accountRepository.findAll().stream()
-                .filter(a -> !validAccountNumbers.contains(a.getNumber()))
-                .forEach(accountRepository::delete);
-    }
+    @Test
+    public void shouldDisplayAccountTransferHistory() throws Exception {
+        // before
+        final MoneyTransferAudit audit = saveMoneyTransferAudit();
 
-    private List<String> getAccountNumbersAlreadyInDb() {
-        return accountRepository.findAll().stream().map(Account::getNumber).collect(Collectors.toList());
+        // given
+        final MockHttpSession authenticate = Utils.authenticate(mockMvc);
+
+        // when
+        mockMvc.perform(get("/accountTransferHistory/0/").session(authenticate))
+
+        // then
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("moneyTransferAuditData"))
+            .andExpect(xpath("//table[@id='moneyTransferAuditTable']").exists())
+            .andExpect(xpath("//li[@class='disabled']").nodeCount(2))
+            .andExpect(xpath("//li[@class='active']").nodeCount(1));
+
+        // cleanup
+        removeMoneyTransferAudit(audit);
     }
 
     @Test
@@ -111,5 +130,28 @@ public class AccountsControllerContextTest extends AbstractContextTest {
         // then
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("accountCreationForm", "allAccountTypes", "allCurrencies"));
+    }
+
+    private void removeMoneyTransferAudit(final MoneyTransferAudit audit) {
+        auditRepository.delete(audit);
+    }
+
+    private MoneyTransferAudit saveMoneyTransferAudit() {
+        final MoneyTransferAudit audit = new MoneyTransferAuditBuilder()
+                .receivingUserId(1L)
+                .receivingAccountId(1L)
+                .build();
+        auditRepository.save(audit);
+        return audit;
+    }
+
+    private void removeAccountsOtherThan(final List<String> validAccountNumbers) {
+        accountRepository.findAll().stream()
+                .filter(a -> !validAccountNumbers.contains(a.getNumber()))
+                .forEach(accountRepository::delete);
+    }
+
+    private List<String> getAccountNumbersAlreadyInDb() {
+        return accountRepository.findAll().stream().map(Account::getNumber).collect(Collectors.toList());
     }
 }

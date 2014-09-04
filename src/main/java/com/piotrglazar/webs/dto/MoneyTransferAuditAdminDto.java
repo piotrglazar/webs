@@ -2,21 +2,25 @@ package com.piotrglazar.webs.dto;
 
 import com.piotrglazar.webs.model.MoneyTransferAudit;
 
+import javax.annotation.concurrent.Immutable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class MoneyTransferAuditDto {
+@Immutable
+public final class MoneyTransferAuditAdminDto {
 
     private final Long sendingUserId;
     private final Long sendingAccountId;
+    private final Long receivingUserId;
     private final Long receivingAccountId;
     private final BigDecimal amount;
     private final Boolean success;
     private final LocalDateTime date;
 
-    public MoneyTransferAuditDto(MoneyTransferAudit audit) {
+    public MoneyTransferAuditAdminDto(MoneyTransferAudit audit) {
         this.sendingUserId = audit.getSendingUserId();
         this.sendingAccountId = audit.getSendingAccountId();
+        this.receivingUserId = audit.getReceivingUserId();
         this.receivingAccountId = audit.getReceivingAccountId();
         this.amount = audit.getAmount();
         this.success = audit.getSuccess();
@@ -45,5 +49,9 @@ public class MoneyTransferAuditDto {
 
     public LocalDateTime getDate() {
         return date;
+    }
+
+    public Long getReceivingUserId() {
+        return receivingUserId;
     }
 }

@@ -12,13 +12,15 @@ import static org.mockito.Mockito.mock;
 
 public class AccountDtoFactoryTest {
 
+    private AccountDtoFactory factory = new AccountDtoFactory();
+
     @Test(expected = IllegalStateException.class)
     public void shouldFailWhenAskedForNonSavingsAccountDto() {
         // given
         final Account nonSavingsAccount = mock(Account.class);
 
         // expect
-        AccountDtoFactory.dto(nonSavingsAccount);
+        factory.dto(nonSavingsAccount);
     }
 
     @Test
@@ -32,7 +34,7 @@ public class AccountDtoFactoryTest {
                 .build();
 
         // when
-        final SavingsAccountDto dto = (SavingsAccountDto) AccountDtoFactory.dto(savingsAccount);
+        final SavingsAccountDto dto = (SavingsAccountDto) factory.dto(savingsAccount);
 
         // then
         AccountDtoAssert.assertThatDto(dto)

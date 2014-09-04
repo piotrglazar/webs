@@ -68,7 +68,7 @@ public class MoneyTransferAspectTest {
 
         // then
         verify(auditProvider).auditMoneyTransfer(-1L, params.getFromAccount(), params.getToAccount(), params.getAmount(), true,
-                localDateTimeSupplier.get());
+                localDateTimeSupplier.get(), params.getReceivingUserId());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class MoneyTransferAspectTest {
 
         // then
         verify(auditProvider).auditMoneyTransfer(555L, params.getFromAccount(), params.getToAccount(), params.getAmount(), true,
-                localDateTimeSupplier.get());
+                localDateTimeSupplier.get(), params.getReceivingUserId());
     }
 
     @Test
@@ -99,10 +99,10 @@ public class MoneyTransferAspectTest {
 
         // then
         verify(auditProvider).auditMoneyTransfer(555L, params.getFromAccount(), params.getToAccount(), params.getAmount(), false,
-                localDateTimeSupplier.get());
+                localDateTimeSupplier.get(), params.getReceivingUserId());
     }
 
     private MoneyTransferParams moneyTransferParams() {
-        return new MoneyTransferParams("user", "u@u.pl", 123L, 321L, new BigDecimal("15"));
+        return new MoneyTransferParams("user", "u@u.pl", 123L, 321L, new BigDecimal("15"), 1L, "user2");
     }
 }

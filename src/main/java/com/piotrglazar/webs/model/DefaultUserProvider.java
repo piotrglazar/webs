@@ -56,6 +56,11 @@ class DefaultUserProvider implements UserProvider {
     }
 
     @Override
+    public WebsUser findUserByAccountId(final Long accountId) {
+        return websUserRepository.findByAccountsId(accountId);
+    }
+
+    @Override
     public UserDetailsDto getUserDetails(final String username) {
         final WebsUser websUser = getUserByUsername(username);
         final WebsUserDetails details = websUser.getDetails();

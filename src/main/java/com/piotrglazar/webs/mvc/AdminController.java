@@ -4,7 +4,7 @@ import com.piotrglazar.webs.MoneyTransferAuditProvider;
 import com.piotrglazar.webs.business.InterestAccruer;
 import com.piotrglazar.webs.business.LoanRepays;
 import com.piotrglazar.webs.business.NewsImporters;
-import com.piotrglazar.webs.dto.MoneyTransferAuditDto;
+import com.piotrglazar.webs.dto.MoneyTransferAuditAdminDto;
 import com.piotrglazar.webs.util.OperationLogging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +34,7 @@ public class AdminController {
     @RequestMapping("/admin")
     @OperationLogging(operation = "admin main page")
     public String showMoneyTransferAudit(final Model model) {
-        final List<MoneyTransferAuditDto> dtos = auditProvider.findAll();
+        final List<MoneyTransferAuditAdminDto> dtos = auditProvider.findAll();
         model.addAttribute("moneyTransferAudits", dtos);
         model.addAttribute("newsImporters", newsImporters.getNewsImportersNames());
         return "admin";

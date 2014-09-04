@@ -22,26 +22,27 @@ import java.util.stream.Collectors;
 class DefaultAccountProvider implements AccountProvider {
 
     private final AccountRepository accountRepository;
-
     private final UserProvider userProvider;
-
     private final UniqueIdGenerator generator;
+    private final AccountDtoFactory factory;
 
     @Value("#{businessProperties['savingsaccount.interest']?:0}")
     private BigDecimal interest;
 
     @Autowired
-    public DefaultAccountProvider(AccountRepository accountRepository, UserProvider userProvider, UniqueIdGenerator generator) {
+    public DefaultAccountProvider(AccountRepository accountRepository, UserProvider userProvider, UniqueIdGenerator generator,
+                                  AccountDtoFactory factory) {
         this.accountRepository = accountRepository;
         this.userProvider = userProvider;
         this.generator = generator;
+        this.factory = factory;
     }
 
     @Override
     public List<AccountDto> getUserAccounts(final String username) {
         final List<Account> accounts = accountRepository.findByUsername(username);
 
-        return accounts.stream().map(AccountDtoFactory::dto).collect(Collectors.toList());
+        return accounts.stream().map(factory::dto).collect(Collectors.toList());
     }
 
     @Override
