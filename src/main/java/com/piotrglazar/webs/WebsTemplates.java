@@ -24,12 +24,14 @@ public class WebsTemplates {
         this.velocityEngine = velocityEngine;
     }
 
-    public String mailMessage(final String username, final Long fromAccountId, final Long toAccountId, final BigDecimal amount) {
+    public String mailMessage(final String username, final Long fromAccountId, final Long toAccountId, final BigDecimal amount,
+                              final String receivingUsername) {
         final VelocityContext context = new VelocityContext();
         context.put("user", username);
         context.put("fromAccount", fromAccountId);
         context.put("amount", amount);
         context.put("toAccount", toAccountId);
+        context.put("receivingUser", receivingUsername);
         final Template template = velocityEngine.getTemplate(PREFIX + "moneyTransfer.vm");
         final StringWriter writer = new StringWriter();
         template.merge(context, writer);

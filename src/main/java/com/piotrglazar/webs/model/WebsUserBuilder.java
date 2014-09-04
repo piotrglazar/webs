@@ -2,16 +2,17 @@ package com.piotrglazar.webs.model;
 
 import com.google.common.collect.Sets;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public class WebsUserBuilder {
     private Long id;
-    private String username;
-    private String password;
-    private String email;
+    private String username = "";
+    private String password = "";
+    private String email = "";
     private Set<String> roles = Sets.newHashSet("USER");
     private Set<Account> accounts = Sets.newHashSet();
-    private WebsUserDetails details;
+    private WebsUserDetails details = new WebsUserDetails(LocalDateTime.of(2014, 9, 4, 0, 0), new Address("Warsaw", "Poland"));
     private Set<Loan> loans = Sets.newHashSet();
 
     public WebsUserBuilder username(final String username) {
@@ -39,7 +40,7 @@ public class WebsUserBuilder {
         return this;
     }
 
-    public WebsUserBuilder id(final Long id) {
+    public WebsUserBuilder id(final long id) {
         this.id = id;
         return this;
     }

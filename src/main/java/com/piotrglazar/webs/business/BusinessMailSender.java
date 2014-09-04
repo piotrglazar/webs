@@ -40,6 +40,6 @@ public class BusinessMailSender {
 
     private String mailMessageText(final MoneyTransferParams moneyTransferParams) {
         return websTemplates.mailMessage(moneyTransferParams.getUsername(), moneyTransferParams.getFromAccount(),
-                moneyTransferParams.getToAccount(), moneyTransferParams.getAmount());
+                moneyTransferParams.getToAccount(), moneyTransferParams.getAmount(), moneyTransferParams.getReceivingUsername());
     }
 }

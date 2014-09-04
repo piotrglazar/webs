@@ -46,7 +46,9 @@ public class AdminControllerContextTest extends AbstractContextTest {
         mockMvc.perform(get("/admin").session(authenticate))
 
         // then
-            .andExpect(status().isOk());
+            .andExpect(status().isOk())
+            .andExpect(xpath("//table[@id='moneyTransferAuditTable']").exists())
+            .andExpect(xpath("//table[@id='newsImporterTable']").exists());
     }
 
     @Test

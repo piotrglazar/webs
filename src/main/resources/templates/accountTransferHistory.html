@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="shards/head :: head">
+</head>
+<body>
+<div th:replace="shards/navigation :: navigation"></div>
+<div class="jumbotron">
+    <div class="container">
+        <div><p>Account transfer history</p></div>
+        <table th:if="${!#lists.isEmpty(moneyTransferAuditData)}" class="table table-striped" id="moneyTransferAuditTable">
+            <thead>
+            <tr>
+                <th class="text-center">Kind</th>
+                <th class="text-center">User</th>
+                <th class="text-center">Account</th>
+                <th class="text-center">Amount</th>
+                <th class="text-center">Success</th>
+                <th class="text-center">Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="moneyTransferAudit : ${moneyTransferAuditData.content}">
+                <tr>
+                    <td th:text="${moneyTransferAudit.kind}" class="text-center">Kind</td>
+                    <div th:switch="${moneyTransferAudit.getKind().name()}">
+                        <td th:case="INCOMING" class="text-center" th:text="'From user ' + ${moneyTransferAudit.userId}">From user</td>
+                        <td th:case="OUTGOING" class="text-center" th:text="'To user ' + ${moneyTransferAudit.userId}">To user</td>
+                        <td th:case="*" class="text-center">Unknown</td>
+                    </div>
+                    <div th:switch="${moneyTransferAudit.getKind().name()}">
+                        <td th:case="INCOMING" class="text-center" th:text="'To account ' + ${moneyTransferAudit.accountId}">To account</td>
+                        <td th:case="OUTGOING" class="text-center" th:text="'From account ' + ${moneyTransferAudit.accountId}">From account</td>
+                        <td th:case="*" class="text-center">Unknown</td>
+                    </div>
+                    <td th:text="${moneyTransferAudit.amount}" class="text-center">Amount</td>
+                    <td th:text="${moneyTransferAudit.success}" class="text-center">Success</td>
+                    <td th:text="${{moneyTransferAudit.date}}" class="text-center">Date</td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        <div style="text-align: center;">
+            <ul class="pagination">
+                <li th:class="${moneyTransferAuditData.isFirst()} ? 'disabled' : ''"><a th:href="@{${leftPager.url}}">&#171;</a></li>
+
+                <th:block th:each="pager : ${pagers}">
+                    <li th:class="${pager.currentPage} == ${moneyTransferAuditData.pageNumber} ? 'active' : ''">
+                        <a th:href="@{${pager.url}}" th:text="${pager.currentPageForUi}">1</a>
+                    </li>
+                </th:block>
+
+                <li th:class="${moneyTransferAuditData.isLast()} ? 'disabled' : ''"><a th:href="@{${rightPager.url}}">&#187;</a></li>
+            </ul>
+        </div>
+        <div th:if="${!#lists.isEmpty(moneyTransferAuditData)}"></div>
+    </div>
+</div>
+</body>
+</html>

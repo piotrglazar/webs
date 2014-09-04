@@ -17,12 +17,12 @@ public class WebsTemplatesTest extends AbstractContextTest {
     @Test
     public void shouldWriteMessage() {
         // when
-        final String template = websTemplates.mailMessage("user", 1L, 2L, BigDecimal.TEN);
+        final String template = websTemplates.mailMessage("user", 1L, 2L, BigDecimal.TEN, "receivingUser");
 
         // then
         assertThat(template)
                 .isNotEmpty()
-                .contains("user", "1", "2", "10");
+                .contains("user", "1", "2", "10", "receivingUser");
     }
 
     @Test

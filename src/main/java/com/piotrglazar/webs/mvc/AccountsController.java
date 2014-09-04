@@ -1,9 +1,14 @@
 package com.piotrglazar.webs.mvc;
 
 import com.piotrglazar.webs.AccountProvider;
+import com.piotrglazar.webs.MoneyTransferAuditProvider;
 import com.piotrglazar.webs.config.MvcConfiguration;
 import com.piotrglazar.webs.dto.AccountDto;
+import com.piotrglazar.webs.dto.MoneyTransferAuditUserDto;
+import com.piotrglazar.webs.dto.PagerDto;
+import com.piotrglazar.webs.dto.PagerDtoFactory;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
+import com.piotrglazar.webs.dto.WebsPageable;
 import com.piotrglazar.webs.model.AccountType;
 import com.piotrglazar.webs.model.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,13 +29,17 @@ import java.util.Optional;
 public class AccountsController {
 
     private final AccountProvider accountProvider;
-
     private final LoggedInUserProvider loggedInUserProvider;
+    private final MoneyTransferAuditProvider moneyTransferAuditProvider;
+    private final PagerDtoFactory pagerDtoFactory;
 
     @Autowired
-    public AccountsController(final AccountProvider accountProvider, final LoggedInUserProvider loggedInUserProvider) {
+    public AccountsController(AccountProvider accountProvider, LoggedInUserProvider loggedInUserProvider,
+                              MoneyTransferAuditProvider moneyTransferAuditProvider, PagerDtoFactory pagerDtoFactory) {
         this.accountProvider = accountProvider;
         this.loggedInUserProvider = loggedInUserProvider;
+        this.moneyTransferAuditProvider = moneyTransferAuditProvider;
+        this.pagerDtoFactory = pagerDtoFactory;
     }
 
     @RequestMapping("/accounts")
@@ -62,13 +72,34 @@ public class AccountsController {
     }
 
     @RequestMapping(value = "/newAccount", method = RequestMethod.POST)
-    public String addAccount(@Valid final AccountCreationForm accountCreationForm, final BindingResult bindingResult) {
+    public String addAccount(@NotNull @Valid final AccountCreationForm accountCreationForm, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "newAccount";
         }
 
-        accountProvider.newAccount(loggedInUserProvider.getLoggedInUserUsername(), accountCreationForm.getType(), accountCreationForm.getCurrency());
+        accountProvider.newAccount(loggedInUserProvider.getLoggedInUserUsername(), accountCreationForm.getType(),
+                accountCreationForm.getCurrency());
 
         return "redirect:/accounts";
+    }
+
+    @RequestMapping(value = "/accountTransferHistory/{pageNumber}/", method = RequestMethod.GET)
+    public String displayAccountTransferHistory(@PathVariable("pageNumber") final int pageNumber, final Model model) {
+        final String loggedInUserUsername = loggedInUserProvider.getLoggedInUserUsername();
+        final WebsPageable<MoneyTransferAuditUserDto> transferAuditData =
+                moneyTransferAuditProvider.findPageForUsername(loggedInUserUsername, pageNumber);
+        final List<PagerDto> pagers = pagerDtoFactory.createPagers(transferAuditData.getPageNumber(), transferAuditData.getPageCount(),
+                "/accountTransferHistory/");
+        final PagerDto leftPager = pagerDtoFactory.createLeftPager(transferAuditData.getPageNumber(), transferAuditData.isFirst(),
+                "/accountTransferHistory/");
+        final PagerDto rightPager = pagerDtoFactory.createRightPager(transferAuditData.getPageNumber(), transferAuditData.isLast(),
+                "/accountTransferHistory/");
+
+        model.addAttribute("moneyTransferAuditData", transferAuditData);
+        model.addAttribute("pagers", pagers);
+        model.addAttribute("leftPager", leftPager);
+        model.addAttribute("rightPager", rightPager);
+
+        return "accountTransferHistory";
     }
 }

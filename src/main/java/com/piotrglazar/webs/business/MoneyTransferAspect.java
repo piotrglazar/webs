@@ -57,7 +57,7 @@ public class MoneyTransferAspect {
         Long userId = failSafeUserId(moneyTransferParams);
 
         auditProvider.auditMoneyTransfer(userId, moneyTransferParams.getFromAccount(), moneyTransferParams.getToAccount(),
-                moneyTransferParams.getAmount(), result, dateSupplier.get());
+                moneyTransferParams.getAmount(), result, dateSupplier.get(), moneyTransferParams.getReceivingUserId());
     }
 
     private Long failSafeUserId(final MoneyTransferParams moneyTransferParams) {

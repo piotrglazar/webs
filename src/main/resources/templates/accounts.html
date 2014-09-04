@@ -10,6 +10,7 @@
             <h1 th:inline="text">[[${#httpServletRequest.remoteUser}]] accounts!</h1>
             <div>
                 <a class="btn btn-primary" th:href="@{/newAccount}">New account</a>
+                <a class="btn btn-primary" th:href="@{/accountTransferHistory/0/}">Transfer history</a>
             </div>
             <table th:if="${!#lists.isEmpty(accounts)}" class="table table-striped" id="accountTable">
                 <thead>

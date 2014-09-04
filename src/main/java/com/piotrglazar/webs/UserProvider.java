@@ -15,5 +15,7 @@ public interface UserProvider {
 
     WebsUser findUserByEmail(String email);
 
+    WebsUser findUserByAccountId(Long accountId);
+
     UserDetailsDto getUserDetails(String username);
 }

@@ -35,8 +35,8 @@ public class BusinessMailSenderTest {
     @Test
     public void shouldSendMessage() {
         // given
-        given(websTemplates.mailMessage("user", 1234L, 4321L, BigDecimal.valueOf(5555))).willReturn("mailmessage");
-        final MoneyTransferParams params = new MoneyTransferParams("user", "email", 1234L, 4321L, BigDecimal.valueOf(5555));
+        given(websTemplates.mailMessage("user", 1234L, 4321L, BigDecimal.valueOf(5555), "user2")).willReturn("mailmessage");
+        final MoneyTransferParams params = new MoneyTransferParams("user", "email", 1234L, 4321L, BigDecimal.valueOf(5555), 1L, "user2");
 
         // when
         businessMailSender.sendMoneyTransferMessage(params);

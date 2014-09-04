@@ -22,6 +22,8 @@ public final class MoneyTransferAudit {
 
     private Long receivingAccountId;
 
+    private Long receivingUserId;
+
     private BigDecimal amount;
 
     private Boolean success;
@@ -33,13 +35,14 @@ public final class MoneyTransferAudit {
     }
 
     public MoneyTransferAudit(Long sendingUserId, Long sendingAccountId, Long receivingAccountId, BigDecimal amount,
-                              Boolean success, LocalDateTime date) {
+                              Boolean success, LocalDateTime date, Long receivingUserId) {
         this.sendingUserId = sendingUserId;
         this.sendingAccountId = sendingAccountId;
         this.receivingAccountId = receivingAccountId;
         this.amount = amount;
         this.success = success;
         this.date = date;
+        this.receivingUserId = receivingUserId;
     }
 
     public Boolean getSuccess() {
@@ -90,6 +93,22 @@ public final class MoneyTransferAudit {
         this.amount = amount;
     }
 
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(final LocalDateTime date) {
+        this.date = date;
+    }
+
+    public Long getReceivingUserId() {
+        return receivingUserId;
+    }
+
+    public void setReceivingUserId(final Long receivingUserId) {
+        this.receivingUserId = receivingUserId;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
@@ -105,13 +124,5 @@ public final class MoneyTransferAudit {
         }
         final MoneyTransferAudit other = (MoneyTransferAudit) obj;
         return Objects.equal(this.id, other.id);
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(final LocalDateTime date) {
-        this.date = date;
     }
 }

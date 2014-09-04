@@ -4,6 +4,7 @@ import com.piotrglazar.webs.UserProvider;
 import com.piotrglazar.webs.model.Account;
 import com.piotrglazar.webs.model.AccountRepository;
 import com.piotrglazar.webs.model.WebsUser;
+import com.piotrglazar.webs.model.WebsUserBuilder;
 import com.piotrglazar.webs.mvc.TransferForm;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,13 +37,14 @@ public class MoneyTransferParamsFactoryTest {
     public void shouldConstructMoneyTransferParams() {
         // given
         final TransferForm transferForm = transferFormWith("abc", 123, 45);
-        final Account account = mock(Account.class);
-        final WebsUser user = new WebsUser();
-        user.setEmail("email");
-        given(account.getId()).willReturn(2L);
-        given(accountRepository.findByNumber("abc")).willReturn(account);
-        given(userProvider.getUserByUsername("user")).willReturn(user);
+        final Account receivingAccount = mock(Account.class);
+        final WebsUser sender = new WebsUserBuilder().email("email").build();
+        final WebsUser receiver = new WebsUserBuilder().id(1000).build();
+        given(receivingAccount.getId()).willReturn(2L);
+        given(accountRepository.findByNumber("abc")).willReturn(receivingAccount);
+        given(userProvider.getUserByUsername("user")).willReturn(sender);
         given(moneyAmountBuilder.fromIntegralAndFractionalParts(123, 45)).willReturn(new BigDecimal("123.45"));
+        given(userProvider.findUserByAccountId(2L)).willReturn(receiver);
 
         // when
         final MoneyTransferParams params = factory.create("user", transferForm);
@@ -52,6 +54,7 @@ public class MoneyTransferParamsFactoryTest {
         assertThat(params.getToAccount()).isEqualTo(2L);
         assertThat(params.getUsername()).isEqualTo("user");
         assertThat(params.getAmount()).isEqualByComparingTo("123.45");
+        assertThat(params.getReceivingUserId()).isEqualTo(1000);
     }
 
     private TransferForm transferFormWith(final String accountNumber, final long integralPart, final long fractionalPart) {

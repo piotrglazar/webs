@@ -5,7 +5,7 @@ import com.piotrglazar.webs.MoneyTransferAuditProvider;
 import com.piotrglazar.webs.business.InterestAccruer;
 import com.piotrglazar.webs.business.LoanRepays;
 import com.piotrglazar.webs.business.NewsImporters;
-import com.piotrglazar.webs.dto.MoneyTransferAuditDto;
+import com.piotrglazar.webs.dto.MoneyTransferAuditAdminDto;
 import com.piotrglazar.webs.model.MoneyTransferAudit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,7 +48,7 @@ public class AdminControllerTest {
     @Test
     public void shouldDisplayAllMoneyTransferAuditDtoAndNewsImporters() {
         // given
-        final List<MoneyTransferAuditDto> dtos = someMoneyTransferAuditDtos();
+        final List<MoneyTransferAuditAdminDto> dtos = someMoneyTransferAuditDtos();
         final List<String> newsImporterNames = Lists.newArrayList("A", "B", "C");
         given(provider.findAll()).willReturn(dtos);
         given(newsImporters.getNewsImportersNames()).willReturn(newsImporterNames);
@@ -127,9 +127,11 @@ public class AdminControllerTest {
         assertThat(model.addAttribute("uiMessage", "Loans repaid successfully"));
     }
 
-    private List<MoneyTransferAuditDto> someMoneyTransferAuditDtos() {
+    private List<MoneyTransferAuditAdminDto> someMoneyTransferAuditDtos() {
         return Lists.newArrayList(
-                new MoneyTransferAuditDto(new MoneyTransferAudit(1L, 10L, 11L, BigDecimal.TEN, true, LocalDateTime.of(2014, 5, 25, 22, 3))),
-                new MoneyTransferAuditDto(new MoneyTransferAudit(5L, 20L, 25L, BigDecimal.ONE, false, LocalDateTime.of(2014, 5, 2, 2, 3))));
+                new MoneyTransferAuditAdminDto(
+                        new MoneyTransferAudit(1L, 10L, 11L, BigDecimal.TEN, true, LocalDateTime.of(2014, 5, 25, 22, 3), 100L)),
+                new MoneyTransferAuditAdminDto(
+                        new MoneyTransferAudit(5L, 20L, 25L, BigDecimal.ONE, false, LocalDateTime.of(2014, 5, 2, 2, 3), 200L)));
     }
 }

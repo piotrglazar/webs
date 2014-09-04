@@ -16,5 +16,5 @@ public class MoneyTransferValidatorTest {
 
     protected Account accountTo = new SavingsAccount("accountNumber", Currency.PLN, BigDecimal.valueOf(20), BigDecimal.ZERO);
 
-    protected MoneyTransferParams params = new MoneyTransferParams("user", "email", 1L, 2L, BigDecimal.TEN);
+    protected MoneyTransferParams params = new MoneyTransferParams("user", "email", 1L, 2L, BigDecimal.TEN, 1L, "user2");
 }
