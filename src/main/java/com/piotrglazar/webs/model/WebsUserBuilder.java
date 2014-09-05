@@ -7,9 +7,9 @@ import java.util.Set;
 
 public class WebsUserBuilder {
     private Long id;
-    private String username = "";
+    private String username;
     private String password = "";
-    private String email = "";
+    private String email;
     private Set<String> roles = Sets.newHashSet("USER");
     private Set<Account> accounts = Sets.newHashSet();
     private WebsUserDetails details = new WebsUserDetails(LocalDateTime.of(2014, 9, 4, 0, 0), new Address("Warsaw", "Poland"));
