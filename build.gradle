@@ -5,7 +5,8 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.5.RELEASE")
-        classpath group: 'org.zeroturnaround', name: 'gradle-jrebel-plugin', version: '1.1.2'
+        classpath("org.zeroturnaround:gradle-jrebel-plugin:1.1.2")
+        classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.0")
     }
 }
 
@@ -13,6 +14,8 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'rebel'
+apply plugin: 'jacoco'
+apply plugin: 'com.github.kt3k.coveralls'
 
 jar {
     baseName = 'webs'
@@ -83,6 +86,18 @@ idea {
     module {
         downloadJavadoc = true
         downloadSources = true
+    }
+}
+
+jacoco {
+    toolVersion = '0.7.1.201405082137'
+}
+
+jacocoTestReport {
+    reports {
+        html.destination "$buildDir/reports/jacoco"
+        xml.enabled = true
+        html.enabled = true
     }
 }
 
