@@ -1,6 +1,6 @@
 package com.piotrglazar.webs.mvc;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
@@ -46,7 +46,7 @@ public class LoanCreationForm {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("amountLoaned", amountLoaned)
                 .add("loanOption", loanOption)
                 .add("accountId", accountId)
