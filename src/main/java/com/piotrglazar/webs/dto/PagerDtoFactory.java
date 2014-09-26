@@ -1,11 +1,11 @@
 package com.piotrglazar.webs.dto;
 
+import com.piotrglazar.webs.util.MoreCollectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Component
@@ -33,7 +33,7 @@ public class PagerDtoFactory {
     }
 
     private List<PagerDto> singlePiecePager(final int pageCount, final String url) {
-        return IntStream.range(0, pageCount).mapToObj(i -> new PagerDto(i, url)).collect(Collectors.toList());
+        return IntStream.range(0, pageCount).mapToObj(i -> new PagerDto(i, url)).collect(MoreCollectors.toImmutableList());
     }
 
     private boolean isSinglePiecePager(final int pageCount, final int pagerSize) {
@@ -43,11 +43,11 @@ public class PagerDtoFactory {
     private List<PagerDto> constructMiddle(final int pageNumber, final int borderSize, final int pagerSize, final String url) {
         final int start = pageNumber - borderSize;
         final int end = start + pagerSize;
-        return IntStream.range(start, end).mapToObj(i -> new PagerDto(i, url)).collect(Collectors.toList());
+        return IntStream.range(start, end).mapToObj(i -> new PagerDto(i, url)).collect(MoreCollectors.toImmutableList());
     }
 
     private List<PagerDto> constructRightBorder(final int pageCount, final int size, final String url) {
-        return IntStream.range(pageCount - size, pageCount).mapToObj(i -> new PagerDto(i, url)).collect(Collectors.toList());
+        return IntStream.range(pageCount - size, pageCount).mapToObj(i -> new PagerDto(i, url)).collect(MoreCollectors.toImmutableList());
     }
 
     private boolean isRightBorder(final int pageNumber, final int pageCount, final int size) {
@@ -56,7 +56,7 @@ public class PagerDtoFactory {
 
     private List<PagerDto> constructLeftBorder(final int pageCount, final int size, final String url) {
         final int howMany = Math.min(pageCount, size);
-        return IntStream.range(0, howMany).mapToObj(i -> new PagerDto(i, url)).collect(Collectors.toList());
+        return IntStream.range(0, howMany).mapToObj(i -> new PagerDto(i, url)).collect(MoreCollectors.toImmutableList());
     }
 
     private boolean isLeftBorder(final int pageNumber, final int size) {

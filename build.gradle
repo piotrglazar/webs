@@ -1,6 +1,8 @@
 buildscript {
     repositories {
-        maven { url "http://repo.spring.io/libs-snapshot" }
+        maven {
+            url "http://repo.spring.io/libs-snapshot"
+        }
         mavenCentral()
     }
     dependencies {
@@ -24,23 +26,25 @@ jar {
 
 repositories {
     mavenCentral()
-    maven { url "http://repo.spring.io/libs-snapshot" }
+    maven {
+        url "http://repo.spring.io/libs-snapshot"
+    }
 }
 
 dependencies {
     // jetty
-    compile("org.springframework.boot:spring-boot-starter-web") {
+    compile("org.springframework.boot:spring-boot-starter-web:1.1.6.RELEASE") {
         exclude module: "spring-boot-starter-tomcat"
     }
-    compile("org.springframework.boot:spring-boot-starter-jetty")
+    compile("org.springframework.boot:spring-boot-starter-jetty:1.1.6.RELEASE")
     // actuator
-    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-starter-actuator:1.1.6.RELEASE")
     // thymeleaf
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf:1.1.6.RELEASE")
     // security
-    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-security:1.1.6.RELEASE")
     // data
-    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa:1.1.6.RELEASE")
     compile("org.hsqldb:hsqldb:2.3.2")
     // guava
     compile("com.google.guava:guava:18.0")
@@ -54,7 +58,7 @@ dependencies {
     // log
     compile("org.slf4j:slf4j-api:1.7.7")
     // velocity
-    compile("org.springframework.boot:spring-boot-starter-velocity")
+    compile("org.springframework.boot:spring-boot-starter-velocity:1.1.6.RELEASE")
     // logback
     compile("ch.qos.logback:logback-classic:1.1.2")
     // rest
@@ -79,7 +83,7 @@ dependencies {
 jar.dependsOn(generateRebel)
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
+    gradleVersion = '2.1'
 }
 
 idea {

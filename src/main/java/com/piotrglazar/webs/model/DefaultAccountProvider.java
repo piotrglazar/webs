@@ -7,6 +7,7 @@ import com.piotrglazar.webs.WebsRuntimeException;
 import com.piotrglazar.webs.dto.AccountDto;
 import com.piotrglazar.webs.dto.AccountDtoFactory;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
+import com.piotrglazar.webs.util.MoreCollectors;
 import com.piotrglazar.webs.util.OperationLogging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 class DefaultAccountProvider implements AccountProvider {
@@ -42,7 +42,7 @@ class DefaultAccountProvider implements AccountProvider {
     public List<AccountDto> getUserAccounts(final String username) {
         final List<Account> accounts = accountRepository.findByUsername(username);
 
-        return accounts.stream().map(factory::dto).collect(Collectors.toList());
+        return accounts.stream().map(factory::dto).collect(MoreCollectors.toImmutableList());
     }
 
     @Override

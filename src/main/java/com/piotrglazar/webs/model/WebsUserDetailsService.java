@@ -1,6 +1,7 @@
 package com.piotrglazar.webs.model;
 
 import com.piotrglazar.webs.UserProvider;
+import com.piotrglazar.webs.util.MoreCollectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 class WebsUserDetailsService implements UserDetailsService {
@@ -38,6 +38,6 @@ class WebsUserDetailsService implements UserDetailsService {
     }
 
     private List<GrantedAuthority> getGrantedAuthorities(final WebsUser websUser) {
-        return websUser.getRoles().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return websUser.getRoles().stream().map(SimpleGrantedAuthority::new).collect(MoreCollectors.toImmutableList());
     }
 }

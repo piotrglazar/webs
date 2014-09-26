@@ -6,6 +6,7 @@ import com.piotrglazar.webs.dto.MoneyTransferAuditAdminDto;
 import com.piotrglazar.webs.dto.MoneyTransferAuditUserDto;
 import com.piotrglazar.webs.dto.MoneyTransferAuditUserDtoFactory;
 import com.piotrglazar.webs.dto.WebsPageable;
+import com.piotrglazar.webs.util.MoreCollectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 class DefaultMoneyTransferAuditProvider implements MoneyTransferAuditProvider {
@@ -52,7 +52,7 @@ class DefaultMoneyTransferAuditProvider implements MoneyTransferAuditProvider {
 
     @Override
     public List<MoneyTransferAuditAdminDto> findAll() {
-        return repository.findAll().stream().map(MoneyTransferAuditAdminDto::new).collect(Collectors.toList());
+        return repository.findAll().stream().map(MoneyTransferAuditAdminDto::new).collect(MoreCollectors.toImmutableList());
     }
 
     @Override

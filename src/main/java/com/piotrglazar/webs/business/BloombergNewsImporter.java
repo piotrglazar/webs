@@ -3,10 +3,12 @@ package com.piotrglazar.webs.business;
 import com.google.common.collect.Lists;
 import com.piotrglazar.webs.WebsTemplates;
 import com.piotrglazar.webs.model.BloombergNews;
+import com.piotrglazar.webs.util.MoreCollectors;
 import com.piotrglazar.webs.util.WebsiteReader;
 import com.piotrglazar.webs.util.WebsiteReaderFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,9 +42,9 @@ public class BloombergNewsImporter implements NewsImporter {
         final Elements tickers = document.select("#markets_snapshot > section > ul.tab.tickers > li");
         final List<BloombergNewsBody> bloombergNewsBodyBodies = tickers.stream()
                 .map(e -> bloombergNewsBodyFactory.createNews(e.select(".name > a").text(),
-                        e.select(".day_change span").stream().map(elt -> elt.text()).collect(Collectors.joining(" ")),
+                        e.select(".day_change span").stream().map(Element::text).collect(Collectors.joining(" ")),
                         e.select(".price").text()))
-                .collect(Collectors.<BloombergNewsBody>toList());
+                .collect(MoreCollectors.toImmutableList());
         return websTemplates.bloombergNewsBody(bloombergNewsBodyBodies);
     }
 

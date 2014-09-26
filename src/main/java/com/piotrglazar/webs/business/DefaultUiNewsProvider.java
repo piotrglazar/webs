@@ -2,11 +2,11 @@ package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.WebsNewsProvider;
 import com.piotrglazar.webs.dto.NewsDto;
+import com.piotrglazar.webs.util.MoreCollectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Component
 public class DefaultUiNewsProvider implements UiNewsProvider {
@@ -20,6 +20,6 @@ public class DefaultUiNewsProvider implements UiNewsProvider {
 
     @Override
     public Collection<NewsDto> getNews() {
-        return websNewsProvider.getNews().stream().map(NewsDto::new).collect(Collectors.toList());
+        return websNewsProvider.getNews().stream().map(NewsDto::new).collect(MoreCollectors.toImmutableList());
     }
 }
