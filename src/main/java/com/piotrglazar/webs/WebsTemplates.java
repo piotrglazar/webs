@@ -1,6 +1,7 @@
 package com.piotrglazar.webs;
 
 import com.piotrglazar.webs.business.BloombergNewsBody;
+import com.piotrglazar.webs.util.MoreCollectors;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Component;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class WebsTemplates {
@@ -40,7 +40,7 @@ public class WebsTemplates {
 
     public String bloombergNewsBody(final List<BloombergNewsBody> bloombergNewBodies) {
         final VelocityContext context = new VelocityContext();
-        context.put("tickers", bloombergNewBodies.stream().map(BloombergNewsBody::asMap).collect(Collectors.toList()));
+        context.put("tickers", bloombergNewBodies.stream().map(BloombergNewsBody::asMap).collect(MoreCollectors.toImmutableList()));
         final Template template = velocityEngine.getTemplate(PREFIX + "bloombergNewsBody.vm");
         final StringWriter writer = new StringWriter();
         template.merge(context, writer);

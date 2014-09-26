@@ -1,6 +1,7 @@
 package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.model.WebsNews;
+import com.piotrglazar.webs.util.MoreCollectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class NewsImporters {
@@ -26,7 +26,7 @@ public class NewsImporters {
     }
 
     public List<String> getNewsImportersNames() {
-        return newsImporters.stream().map(NewsImporter::name).collect(Collectors.toList());
+        return newsImporters.stream().map(NewsImporter::name).collect(MoreCollectors.toImmutableList());
     }
 
     public void fetchNews(final int newsImporterIndex) {

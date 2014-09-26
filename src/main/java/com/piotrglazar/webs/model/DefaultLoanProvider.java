@@ -6,6 +6,7 @@ import com.piotrglazar.webs.business.LoanBusinessLogic;
 import com.piotrglazar.webs.dto.LoanDto;
 import com.piotrglazar.webs.dto.LoanDtoBuilder;
 import com.piotrglazar.webs.mvc.LoanCreationForm;
+import com.piotrglazar.webs.util.MoreCollectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
@@ -15,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 @Component
 class DefaultLoanProvider implements LoanProvider {
@@ -44,7 +44,7 @@ class DefaultLoanProvider implements LoanProvider {
                 .filter(loan -> loan.getWeeksRemaining() > 0)
                 .map(loan -> {loan.setCanPostpone(loanBusinessLogic.canPostpone(loan)); return loan;})
                 .map(LoanDtoBuilder::fromLoan)
-                .collect(Collectors.toList());
+                .collect(MoreCollectors.toImmutableList());
     }
 
     @Override
@@ -52,7 +52,7 @@ class DefaultLoanProvider implements LoanProvider {
         return loanRepository.findByUsername(username).stream()
                 .filter(loan -> loan.getWeeksRemaining() == 0)
                 .map(LoanDtoBuilder::fromLoan)
-                .collect(Collectors.toList());
+                .collect(MoreCollectors.toImmutableList());
     }
 
     @Override

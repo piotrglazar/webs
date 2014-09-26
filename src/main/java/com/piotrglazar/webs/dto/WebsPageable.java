@@ -1,12 +1,12 @@
 package com.piotrglazar.webs.dto;
 
 import com.google.common.collect.ImmutableList;
+import com.piotrglazar.webs.util.MoreCollectors;
 import org.springframework.data.domain.Page;
 
 import javax.annotation.concurrent.Immutable;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Immutable
 public final class WebsPageable<T> {
@@ -30,7 +30,7 @@ public final class WebsPageable<T> {
     }
 
     public <S> WebsPageable<S> transform(Function<? super T, ? extends S> function) {
-        final List<S> transformedContent = content.stream().map(function).collect(Collectors.toList());
+        final List<S> transformedContent = content.stream().map(function).collect(MoreCollectors.toImmutableList());
         return new WebsPageable<>(transformedContent, first, last, pageNumber, pageCount);
     }
 
