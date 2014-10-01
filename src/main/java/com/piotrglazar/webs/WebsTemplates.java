@@ -1,6 +1,7 @@
 package com.piotrglazar.webs;
 
 import com.piotrglazar.webs.business.BloombergNewsBody;
+import com.piotrglazar.webs.dto.ExchangeRateDto;
 import com.piotrglazar.webs.util.MoreCollectors;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -42,6 +43,15 @@ public class WebsTemplates {
         final VelocityContext context = new VelocityContext();
         context.put("tickers", bloombergNewBodies.stream().map(BloombergNewsBody::asMap).collect(MoreCollectors.toImmutableList()));
         final Template template = velocityEngine.getTemplate(PREFIX + "bloombergNewsBody.vm");
+        final StringWriter writer = new StringWriter();
+        template.merge(context, writer);
+        return writer.toString();
+    }
+
+    public String exchangeRatesNewsBody(final ExchangeRateDto exchangeRate) {
+        final VelocityContext context = new VelocityContext();
+        context.put("exchangeRate", exchangeRate);
+        final Template template = velocityEngine.getTemplate(PREFIX + "exchangeRatesNewsBody.vm");
         final StringWriter writer = new StringWriter();
         template.merge(context, writer);
         return writer.toString();

@@ -4,6 +4,7 @@ import com.piotrglazar.webs.AbstractContextTest;
 import com.piotrglazar.webs.commons.Utils;
 import com.piotrglazar.webs.config.Settings;
 import com.piotrglazar.webs.model.BloombergNews;
+import com.piotrglazar.webs.model.ExchangeRatesNews;
 import com.piotrglazar.webs.model.WebsNewsRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -82,6 +83,7 @@ public class AdminControllerContextTest extends AbstractContextTest {
 
         // cleanup
         websNewsRepository.deleteAllNews(BloombergNews.getNewsName());
+        websNewsRepository.deleteAllNews(ExchangeRatesNews.getNewsName());
     }
 
     @Test

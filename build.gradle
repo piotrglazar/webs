@@ -68,7 +68,8 @@ dependencies {
     compile("org.jsoup:jsoup:1.8.1")
     // annotations
     compile("com.google.code.findbugs:jsr305:3.0.0")
-
+    // rx java
+    compile("com.netflix.rxjava:rxjava-core:0.20.4")
 
 
     testCompile("junit:junit:4.11")

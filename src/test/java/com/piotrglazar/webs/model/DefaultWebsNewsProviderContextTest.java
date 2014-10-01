@@ -71,8 +71,9 @@ public class DefaultWebsNewsProviderContextTest extends AbstractContextTest {
         provider.saveAll(news);
 
         // then
-        for (TestWebsNews testNews : news) {
-            assertThat(newsRepository.findOne(testNews.getId())).isNotNull();
-        }
+        news.stream().forEach(testNews -> assertThat(newsRepository.findOne(testNews.getId())).isNotNull());
+
+        // cleanup
+        news.stream().forEach(newsRepository::delete);
     }
 }
