@@ -52,7 +52,9 @@
                 </thead>
                 <tbody>
                 <th:block th:each="newsImporterName : ${newsImporters}">
-                    <td class="text-center"><a th:text="${newsImporterName}" th:href="@{/admin/importNews/} + ${newsImporterNameStat.index} + '/'">News importer class</a></td>
+                    <tr>
+                        <td><a th:text="${newsImporterName}" th:href="@{/admin/importNews/} + ${newsImporterNameStat.index} + '/'">News importer class</a></td>
+                    </tr>
                 </th:block>
                 </tbody>
             </table>

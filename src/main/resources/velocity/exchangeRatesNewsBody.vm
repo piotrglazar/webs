@@ -1,0 +1,6 @@
+#foreach($rate in $exchangeRate.rates.keySet())
+    <p>
+        <span class="label label-info">$rate / $exchangeRate.base</span>
+        <span class='badge'>$exchangeRate.rates[$rate]</span>
+    </p>
+#end
