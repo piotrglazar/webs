@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionException;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.sql.Connection;
@@ -31,10 +29,9 @@ public class IsolationSupportHibernateJpaDialect extends HibernateJpaDialect {
      * This method is overridden to set custom isolation levels on the
      * connection
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("all")
     @Override
-    public Object beginTransaction(final EntityManager entityManager, final TransactionDefinition definition)
-            throws PersistenceException, TransactionException, SQLException {
+    public Object beginTransaction(final EntityManager entityManager, final TransactionDefinition definition) throws SQLException {
         setTransactionTimeout(entityManager, definition);
 
         final Connection connection = getConnection(entityManager, definition);
@@ -105,9 +102,11 @@ public class IsolationSupportHibernateJpaDialect extends HibernateJpaDialect {
 
     protected static class IsolationSupportSessionTransactionData implements Serializable {
 
+        private static final long serialVersionUID = 1;
+
         private final Object sessionTransactionDataFromHibernateJpaTemplate;
         private final Integer previousIsolationLevel;
-        private final Connection connection;
+        private final transient Connection connection;
         private final DataSourceUtilsWrapper dataSourceUtilsWrapper;
 
         public IsolationSupportSessionTransactionData(Object sessionTransactionDataFromHibernateJpaTemplate, Integer previousIsolationLevel,

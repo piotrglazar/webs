@@ -1,10 +1,10 @@
 package com.piotrglazar.webs.business;
 
 import com.google.common.collect.Lists;
-import com.piotrglazar.webs.model.Account;
-import com.piotrglazar.webs.model.Loan;
-import com.piotrglazar.webs.model.LoanBuilder;
-import com.piotrglazar.webs.model.LoanRepository;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.entities.Loan;
+import com.piotrglazar.webs.model.entities.LoanBuilder;
+import com.piotrglazar.webs.model.repositories.LoanRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.verify;
 public class LoanRepaysTest {
 
     @Mock
-    private LoanBusinessLogic loanBusinessLogic;
+    private DefaultLoanBusinessLogic loanBusinessLogic;
 
     @Mock
     private LoanRepository loanRepository;

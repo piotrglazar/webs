@@ -1,6 +1,10 @@
 package com.piotrglazar.webs.model;
 
 import com.piotrglazar.webs.AbstractContextTest;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.entities.WebsUser;
+import com.piotrglazar.webs.model.repositories.AccountRepository;
+import com.piotrglazar.webs.model.repositories.WebsUserRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

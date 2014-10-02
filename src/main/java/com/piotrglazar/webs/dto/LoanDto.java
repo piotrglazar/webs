@@ -1,7 +1,7 @@
 package com.piotrglazar.webs.dto;
 
 import com.google.common.collect.ImmutableSet;
-import com.piotrglazar.webs.model.Currency;
+import com.piotrglazar.webs.business.utils.Currency;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

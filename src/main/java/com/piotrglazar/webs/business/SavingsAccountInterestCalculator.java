@@ -3,9 +3,9 @@ package com.piotrglazar.webs.business;
 import com.google.common.base.Preconditions;
 import com.piotrglazar.webs.InterestCalculationStrategy;
 import com.piotrglazar.webs.InterestCalculator;
-import com.piotrglazar.webs.model.Account;
-import com.piotrglazar.webs.model.AccountType;
-import com.piotrglazar.webs.model.SavingsAccount;
+import com.piotrglazar.webs.business.utils.AccountType;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.entities.SavingsAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

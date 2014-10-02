@@ -1,8 +1,8 @@
 package com.piotrglazar.webs.mvc.validators;
 
 import com.piotrglazar.webs.UserProvider;
-import com.piotrglazar.webs.model.WebsUser;
-import com.piotrglazar.webs.mvc.RegisterForm;
+import com.piotrglazar.webs.model.entities.WebsUser;
+import com.piotrglazar.webs.mvc.forms.RegisterForm;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

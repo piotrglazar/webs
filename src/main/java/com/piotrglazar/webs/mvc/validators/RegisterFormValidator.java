@@ -1,7 +1,7 @@
 package com.piotrglazar.webs.mvc.validators;
 
 import com.piotrglazar.webs.ValidatorChain;
-import com.piotrglazar.webs.mvc.RegisterForm;
+import com.piotrglazar.webs.mvc.forms.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

@@ -1,11 +1,15 @@
 package com.piotrglazar.webs.model;
 
+import com.piotrglazar.webs.LoanBusinessLogic;
 import com.piotrglazar.webs.LoanProvider;
 import com.piotrglazar.webs.UserProvider;
-import com.piotrglazar.webs.business.LoanBusinessLogic;
 import com.piotrglazar.webs.dto.LoanDto;
 import com.piotrglazar.webs.dto.LoanDtoBuilder;
-import com.piotrglazar.webs.mvc.LoanCreationForm;
+import com.piotrglazar.webs.model.entities.Loan;
+import com.piotrglazar.webs.model.entities.WebsUser;
+import com.piotrglazar.webs.model.repositories.AccountRepository;
+import com.piotrglazar.webs.model.repositories.LoanRepository;
+import com.piotrglazar.webs.mvc.forms.LoanCreationForm;
 import com.piotrglazar.webs.util.MoreCollectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

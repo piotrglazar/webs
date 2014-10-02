@@ -19,6 +19,7 @@ public class LoggingAspect {
     private static final Logger LOG = LoggerFactory.getLogger("Operation");
 
     @Around("@annotation(com.piotrglazar.webs.util.OperationLogging)")
+    @SuppressWarnings("all")
     public Object logOperation(final ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         final String operationName = extractOperationName(proceedingJoinPoint);
 

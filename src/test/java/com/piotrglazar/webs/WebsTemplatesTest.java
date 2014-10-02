@@ -1,7 +1,8 @@
 package com.piotrglazar.webs;
 
 import com.google.common.collect.Lists;
-import com.piotrglazar.webs.business.BloombergNewsBody;
+import com.piotrglazar.webs.dto.BloombergNewsBody;
+import com.piotrglazar.webs.util.templates.WebsTemplates;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

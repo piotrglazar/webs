@@ -1,7 +1,7 @@
 package com.piotrglazar.webs.business.validators;
 
 import com.piotrglazar.webs.business.MoneyTransferDetails;
-import com.piotrglazar.webs.model.Currency;
+import com.piotrglazar.webs.business.utils.Currency;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

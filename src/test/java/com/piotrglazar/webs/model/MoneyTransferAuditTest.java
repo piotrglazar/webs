@@ -1,5 +1,6 @@
 package com.piotrglazar.webs.model;
 
+import com.piotrglazar.webs.model.entities.MoneyTransferAudit;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Test;
 

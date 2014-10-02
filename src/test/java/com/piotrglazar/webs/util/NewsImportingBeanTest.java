@@ -1,6 +1,7 @@
 package com.piotrglazar.webs.util;
 
-import com.piotrglazar.webs.business.NewsImporters;
+import com.piotrglazar.webs.NewsImporters;
+import com.piotrglazar.webs.util.beans.NewsImportingBean;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

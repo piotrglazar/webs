@@ -14,16 +14,18 @@ import java.lang.annotation.Target;
 
 @ConstraintComposition
 @Min(0)
-@Digits(fraction = 0, integer = 10)
+@Digits(fraction = 0, integer = PositiveNumber.MAX_DIGITS)
 @ReportAsSingleViolation
 @Constraint(validatedBy = { })
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PositiveNumber {
 
-    public String message() default "Please provide a non-negative number";
+    int MAX_DIGITS = 10;
 
-    public Class<?>[] groups() default { };
+    String message() default "Please provide a non-negative number";
 
-    public Class<? extends Payload>[] payload() default { };
+    Class<?>[] groups() default { };
+
+    Class<? extends Payload>[] payload() default { };
 }

@@ -1,6 +1,7 @@
 package com.piotrglazar.webs.model;
 
 import com.piotrglazar.webs.UserProvider;
+import com.piotrglazar.webs.model.entities.WebsUser;
 import com.piotrglazar.webs.util.MoreCollectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

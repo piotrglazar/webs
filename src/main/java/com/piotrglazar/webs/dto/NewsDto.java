@@ -1,6 +1,6 @@
 package com.piotrglazar.webs.dto;
 
-import com.piotrglazar.webs.model.WebsNews;
+import com.piotrglazar.webs.model.entities.WebsNews;
 
 public class NewsDto {
 

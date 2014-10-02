@@ -1,8 +1,8 @@
 package com.piotrglazar.webs.dto;
 
 import com.google.common.collect.Sets;
-import com.piotrglazar.webs.model.Currency;
-import com.piotrglazar.webs.model.Loan;
+import com.piotrglazar.webs.business.utils.Currency;
+import com.piotrglazar.webs.model.entities.Loan;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

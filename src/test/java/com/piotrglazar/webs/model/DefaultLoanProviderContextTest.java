@@ -3,8 +3,10 @@ package com.piotrglazar.webs.model;
 import com.piotrglazar.webs.AbstractContextTest;
 import com.piotrglazar.webs.LoanProvider;
 import com.piotrglazar.webs.config.Settings;
-import com.piotrglazar.webs.mvc.LoanCreationForm;
-import com.piotrglazar.webs.mvc.LoanOption;
+import com.piotrglazar.webs.model.entities.Loan;
+import com.piotrglazar.webs.model.repositories.LoanRepository;
+import com.piotrglazar.webs.mvc.forms.LoanCreationForm;
+import com.piotrglazar.webs.util.LoanOption;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

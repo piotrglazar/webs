@@ -14,6 +14,8 @@ public class BusinessConfiguration {
 
     public static final String INTEREST_RATE_ACCRUE_CRON_EXPRESSION = "0 0 0 * * *";
     public static final String LOAN_REPAY_CRON_EXPRESSION = "0 0 0 * * MON";
+    public static final int MAXIMUM_FRACTION_NUMBER = 99;
+    public static final int INTEGRAL_PART_SHIFT = 100;
 
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 

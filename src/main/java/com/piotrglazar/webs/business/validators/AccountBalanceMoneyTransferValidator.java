@@ -2,7 +2,7 @@ package com.piotrglazar.webs.business.validators;
 
 import com.piotrglazar.webs.business.MoneyTransferDetails;
 import com.piotrglazar.webs.business.MoneyTransferValidator;
-import com.piotrglazar.webs.model.Account;
+import com.piotrglazar.webs.model.entities.Account;
 import com.piotrglazar.webs.util.ErrorGatherer;
 import org.springframework.stereotype.Component;
 

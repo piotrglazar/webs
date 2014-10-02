@@ -2,11 +2,12 @@ package com.piotrglazar.webs.mvc;
 
 import com.google.common.collect.Lists;
 import com.piotrglazar.webs.MoneyTransferAuditProvider;
+import com.piotrglazar.webs.NewsImporters;
 import com.piotrglazar.webs.business.InterestAccruer;
 import com.piotrglazar.webs.business.LoanRepays;
-import com.piotrglazar.webs.business.NewsImporters;
 import com.piotrglazar.webs.dto.MoneyTransferAuditAdminDto;
-import com.piotrglazar.webs.model.MoneyTransferAudit;
+import com.piotrglazar.webs.model.entities.MoneyTransferAudit;
+import com.piotrglazar.webs.mvc.controllers.AdminController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

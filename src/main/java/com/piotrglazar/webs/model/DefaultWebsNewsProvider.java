@@ -1,6 +1,8 @@
 package com.piotrglazar.webs.model;
 
 import com.piotrglazar.webs.WebsNewsProvider;
+import com.piotrglazar.webs.model.entities.WebsNews;
+import com.piotrglazar.webs.model.repositories.WebsNewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

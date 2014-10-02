@@ -1,6 +1,6 @@
 package com.piotrglazar.webs;
 
-import com.piotrglazar.webs.mvc.LoanOption;
+import com.piotrglazar.webs.util.LoanOption;
 
 import java.math.BigDecimal;
 

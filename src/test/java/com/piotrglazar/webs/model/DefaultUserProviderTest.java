@@ -1,6 +1,10 @@
 package com.piotrglazar.webs.model;
 
 import com.piotrglazar.webs.dto.UserDetailsDto;
+import com.piotrglazar.webs.model.entities.Address;
+import com.piotrglazar.webs.model.entities.WebsUser;
+import com.piotrglazar.webs.model.entities.WebsUserDetails;
+import com.piotrglazar.webs.model.repositories.WebsUserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

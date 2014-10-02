@@ -1,9 +1,9 @@
 package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.InterestCalculator;
-import com.piotrglazar.webs.model.Account;
-import com.piotrglazar.webs.model.AccountRepository;
-import com.piotrglazar.webs.model.AccountType;
+import com.piotrglazar.webs.business.utils.AccountType;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;

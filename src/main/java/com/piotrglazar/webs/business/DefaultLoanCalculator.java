@@ -1,7 +1,7 @@
 package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.LoanCalculator;
-import com.piotrglazar.webs.mvc.LoanOption;
+import com.piotrglazar.webs.util.LoanOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

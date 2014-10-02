@@ -3,9 +3,17 @@ package com.piotrglazar.webs.model;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.piotrglazar.webs.UserProvider;
-import com.piotrglazar.webs.business.LoanBusinessLogic;
+import com.piotrglazar.webs.business.DefaultLoanBusinessLogic;
+import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.dto.LoanDto;
-import com.piotrglazar.webs.mvc.LoanCreationForm;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.entities.Loan;
+import com.piotrglazar.webs.model.entities.LoanBuilder;
+import com.piotrglazar.webs.model.entities.WebsUser;
+import com.piotrglazar.webs.model.entities.WebsUserBuilder;
+import com.piotrglazar.webs.model.repositories.AccountRepository;
+import com.piotrglazar.webs.model.repositories.LoanRepository;
+import com.piotrglazar.webs.mvc.forms.LoanCreationForm;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -43,7 +51,7 @@ public class DefaultLoanProviderTest {
     private LoanRepository loanRepository;
 
     @Mock
-    private LoanBusinessLogic loanBusinessLogic;
+    private DefaultLoanBusinessLogic loanBusinessLogic;
 
     @InjectMocks
     private DefaultLoanProvider loanProvider;

@@ -1,6 +1,10 @@
 package com.piotrglazar.webs.config;
 
-public class Settings {
+public final class Settings {
+
+    private Settings() {
+
+    }
 
     public static final String USERNAME = "user";
 

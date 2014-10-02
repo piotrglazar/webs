@@ -1,8 +1,9 @@
 package com.piotrglazar.webs.business;
 
 import com.google.common.collect.Lists;
+import com.piotrglazar.webs.NewsImporters;
 import com.piotrglazar.webs.model.TestWebsNews;
-import com.piotrglazar.webs.model.WebsNews;
+import com.piotrglazar.webs.model.entities.WebsNews;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +33,7 @@ public class NewsImportersTest {
 
     @Before
     public void setUp() {
-        newsImporters = new NewsImporters(Lists.newArrayList(firstNewsImporter, secondNewsImporter), newsImportingStrategy);
+        newsImporters = new DefaultNewsImporters(Lists.newArrayList(firstNewsImporter, secondNewsImporter), newsImportingStrategy);
     }
 
     @Test

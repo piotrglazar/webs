@@ -1,7 +1,7 @@
 package com.piotrglazar.webs.business;
 
-import com.piotrglazar.webs.WebsTemplates;
 import com.piotrglazar.webs.util.OperationLogging;
+import com.piotrglazar.webs.util.templates.WebsTemplates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.MailSender;

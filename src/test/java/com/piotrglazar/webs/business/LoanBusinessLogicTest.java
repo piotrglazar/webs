@@ -1,8 +1,8 @@
 package com.piotrglazar.webs.business;
 
 import com.google.common.collect.Sets;
-import com.piotrglazar.webs.model.Loan;
-import com.piotrglazar.webs.model.LoanBuilder;
+import com.piotrglazar.webs.model.entities.Loan;
+import com.piotrglazar.webs.model.entities.LoanBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -31,7 +31,7 @@ public class LoanBusinessLogicTest {
     private Supplier<LocalDateTime> dateTimeSupplier;
 
     @InjectMocks
-    private LoanBusinessLogic loanBusinessLogic;
+    private DefaultLoanBusinessLogic loanBusinessLogic;
 
     @Test
     public void shouldAllowToPostponeNewLoan() {
@@ -49,7 +49,7 @@ public class LoanBusinessLogicTest {
     @Test
     public void shouldNotAllowToPostponeLoanWhichWasPostponedMaximumTimes() {
         // given
-        final Set<LocalDate> postpones = postpones(LoanBusinessLogic.MAX_POSTPONES + 1);
+        final Set<LocalDate> postpones = postpones(DefaultLoanBusinessLogic.MAX_POSTPONES + 1);
         final Loan loan = new LoanBuilder().postpones(postpones).build();
 
         // when

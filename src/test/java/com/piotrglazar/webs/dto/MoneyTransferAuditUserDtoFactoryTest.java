@@ -1,7 +1,7 @@
 package com.piotrglazar.webs.dto;
 
-import com.piotrglazar.webs.model.MoneyTransferAudit;
-import com.piotrglazar.webs.model.MoneyTransferAuditBuilder;
+import com.piotrglazar.webs.model.entities.MoneyTransferAudit;
+import com.piotrglazar.webs.model.entities.MoneyTransferAuditBuilder;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

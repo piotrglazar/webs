@@ -1,7 +1,8 @@
 package com.piotrglazar.webs.util;
 
-import com.piotrglazar.webs.model.AccountRepository;
-import com.piotrglazar.webs.model.WebsUserRepository;
+import com.piotrglazar.webs.model.repositories.AccountRepository;
+import com.piotrglazar.webs.model.repositories.WebsUserRepository;
+import com.piotrglazar.webs.util.beans.DatabaseStatisticsBean;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

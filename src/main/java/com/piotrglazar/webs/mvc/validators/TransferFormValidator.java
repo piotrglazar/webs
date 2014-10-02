@@ -1,7 +1,7 @@
 package com.piotrglazar.webs.mvc.validators;
 
 import com.piotrglazar.webs.AccountProvider;
-import com.piotrglazar.webs.mvc.TransferForm;
+import com.piotrglazar.webs.mvc.forms.TransferForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
