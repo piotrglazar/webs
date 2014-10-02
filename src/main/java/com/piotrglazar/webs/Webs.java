@@ -23,4 +23,9 @@ public class Webs {
     public static void main(String[] args) throws IOException {
         SpringApplication.run(Webs.class, args);
     }
+
+    @Override
+    public String toString() {
+        return "Webs - Online bank";
+    }
 }

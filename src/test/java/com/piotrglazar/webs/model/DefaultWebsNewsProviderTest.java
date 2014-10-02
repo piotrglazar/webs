@@ -1,6 +1,9 @@
 package com.piotrglazar.webs.model;
 
 import com.google.common.collect.Lists;
+import com.piotrglazar.webs.model.entities.InternalWebsNews;
+import com.piotrglazar.webs.model.entities.WebsNews;
+import com.piotrglazar.webs.model.repositories.WebsNewsRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

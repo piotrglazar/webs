@@ -1,6 +1,6 @@
 package com.piotrglazar.webs.business;
 
-import com.piotrglazar.webs.WebsTemplates;
+import com.piotrglazar.webs.util.templates.WebsTemplates;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;

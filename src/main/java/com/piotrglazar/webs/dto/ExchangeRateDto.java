@@ -1,7 +1,7 @@
 package com.piotrglazar.webs.dto;
 
 import com.google.common.collect.ImmutableMap;
-import com.piotrglazar.webs.business.ExchangeRateResponse;
+import com.piotrglazar.webs.api.ExchangeRateResponse;
 
 import java.math.BigDecimal;
 import java.util.Map;

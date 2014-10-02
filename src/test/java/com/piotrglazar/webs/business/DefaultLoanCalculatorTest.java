@@ -1,6 +1,6 @@
 package com.piotrglazar.webs.business;
 
-import com.piotrglazar.webs.mvc.LoanOption;
+import com.piotrglazar.webs.util.LoanOption;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

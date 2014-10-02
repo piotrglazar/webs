@@ -2,7 +2,7 @@ package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.MoneyTransferAuditProvider;
 import com.piotrglazar.webs.UserProvider;
-import com.piotrglazar.webs.model.WebsUser;
+import com.piotrglazar.webs.model.entities.WebsUser;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.junit.Before;
 import org.junit.Test;

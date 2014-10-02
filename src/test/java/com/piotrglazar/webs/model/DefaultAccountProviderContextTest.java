@@ -3,9 +3,16 @@ package com.piotrglazar.webs.model;
 import com.google.common.collect.Sets;
 import com.piotrglazar.webs.AbstractContextTest;
 import com.piotrglazar.webs.AccountProvider;
+import com.piotrglazar.webs.business.utils.AccountType;
+import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.config.Settings;
 import com.piotrglazar.webs.dto.AccountDto;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.entities.SavingsAccount;
+import com.piotrglazar.webs.model.entities.WebsUser;
+import com.piotrglazar.webs.model.repositories.AccountRepository;
+import com.piotrglazar.webs.model.repositories.WebsUserRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,7 +20,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import static com.piotrglazar.webs.model.WebsUser.builder;
+import static com.piotrglazar.webs.model.entities.WebsUser.builder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DefaultAccountProviderContextTest extends AbstractContextTest {

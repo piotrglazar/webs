@@ -3,7 +3,7 @@ package com.piotrglazar.webs.business;
 import com.google.common.collect.Lists;
 import com.piotrglazar.webs.WebsNewsProvider;
 import com.piotrglazar.webs.dto.NewsDto;
-import com.piotrglazar.webs.model.InternalWebsNews;
+import com.piotrglazar.webs.model.entities.InternalWebsNews;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

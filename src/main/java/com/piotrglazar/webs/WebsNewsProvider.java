@@ -1,6 +1,6 @@
 package com.piotrglazar.webs;
 
-import com.piotrglazar.webs.model.WebsNews;
+import com.piotrglazar.webs.model.entities.WebsNews;
 
 import java.util.Collection;
 

@@ -1,7 +1,7 @@
 package com.piotrglazar.webs.mvc.validators;
 
-import com.piotrglazar.webs.mvc.RegisterForm;
 import com.piotrglazar.webs.mvc.RegisterFormFieldValidator;
+import com.piotrglazar.webs.mvc.forms.RegisterForm;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 

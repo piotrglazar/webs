@@ -1,14 +1,14 @@
 package com.piotrglazar.webs.mvc;
 
 import com.piotrglazar.webs.AbstractContextTest;
+import com.piotrglazar.webs.business.utils.AccountType;
+import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.commons.Utils;
-import com.piotrglazar.webs.model.Account;
-import com.piotrglazar.webs.model.AccountRepository;
-import com.piotrglazar.webs.model.AccountType;
-import com.piotrglazar.webs.model.Currency;
-import com.piotrglazar.webs.model.MoneyTransferAudit;
-import com.piotrglazar.webs.model.MoneyTransferAuditBuilder;
-import com.piotrglazar.webs.model.MoneyTransferAuditRepository;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.entities.MoneyTransferAudit;
+import com.piotrglazar.webs.model.entities.MoneyTransferAuditBuilder;
+import com.piotrglazar.webs.model.repositories.AccountRepository;
+import com.piotrglazar.webs.model.repositories.MoneyTransferAuditRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

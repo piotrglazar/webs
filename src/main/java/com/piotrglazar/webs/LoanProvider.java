@@ -1,7 +1,7 @@
 package com.piotrglazar.webs;
 
 import com.piotrglazar.webs.dto.LoanDto;
-import com.piotrglazar.webs.mvc.LoanCreationForm;
+import com.piotrglazar.webs.mvc.forms.LoanCreationForm;
 
 import java.util.List;
 

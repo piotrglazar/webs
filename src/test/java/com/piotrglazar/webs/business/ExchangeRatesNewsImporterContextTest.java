@@ -1,8 +1,8 @@
 package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.AbstractContextTest;
-import com.piotrglazar.webs.model.ExchangeRatesNews;
-import com.piotrglazar.webs.model.WebsNewsRepository;
+import com.piotrglazar.webs.model.entities.ExchangeRatesNews;
+import com.piotrglazar.webs.model.repositories.WebsNewsRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

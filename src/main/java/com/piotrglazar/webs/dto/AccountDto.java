@@ -1,7 +1,7 @@
 package com.piotrglazar.webs.dto;
 
-import com.piotrglazar.webs.model.Account;
-import com.piotrglazar.webs.model.Currency;
+import com.piotrglazar.webs.business.utils.Currency;
+import com.piotrglazar.webs.model.entities.Account;
 
 import java.math.BigDecimal;
 

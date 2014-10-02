@@ -1,9 +1,8 @@
 package com.piotrglazar.webs.business;
 
-import com.piotrglazar.webs.model.Account;
-import com.piotrglazar.webs.model.AccountRepository;
-import com.piotrglazar.webs.model.Loan;
-import com.piotrglazar.webs.model.LoanRepository;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.entities.Loan;
+import com.piotrglazar.webs.model.repositories.LoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
@@ -17,11 +16,11 @@ import java.util.stream.Collectors;
 @Component
 public class LoanRepays {
 
-    private final LoanBusinessLogic loanBusinessLogic;
+    private final DefaultLoanBusinessLogic loanBusinessLogic;
     private final LoanRepository loanRepository;
 
     @Autowired
-    public LoanRepays(LoanBusinessLogic loanBusinessLogic, LoanRepository loanRepository, AccountRepository accountRepository) {
+    public LoanRepays(DefaultLoanBusinessLogic loanBusinessLogic, LoanRepository loanRepository) {
         this.loanBusinessLogic = loanBusinessLogic;
         this.loanRepository = loanRepository;
     }

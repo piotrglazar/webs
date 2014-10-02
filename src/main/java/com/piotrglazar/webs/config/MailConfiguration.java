@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -61,15 +60,34 @@ public class MailConfiguration {
         }
     }
 
+    @Bean(name = "sampleMailMessage")
+    public SimpleMailMessage sampleMailMessage() {
+        final SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("piotr.glazar@gmail.com");
+        message.setFrom(mailUsername);
+        message.setSubject("yay - it works!");
+        return message;
+    }
+
+    @Bean(name = "moneyTransferMessage")
+    public SimpleMailMessage moneyTransferMessage() {
+        final SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(mailUsername);
+        message.setSubject("Money transfer");
+        message.setText("Money transfer details");
+        message.setTo("piotr.glazar@gmail.com");
+        return message;
+    }
+
     private MailSender fakeMailSender() {
         return new MailSender() {
             @Override
-            public void send(final SimpleMailMessage simpleMessage) throws MailException {
+            public void send(final SimpleMailMessage simpleMessage) {
 
             }
 
             @Override
-            public void send(final SimpleMailMessage[] simpleMessages) throws MailException {
+            public void send(final SimpleMailMessage[] simpleMessages) {
 
             }
         };
@@ -90,24 +108,5 @@ public class MailConfiguration {
         properties.setProperty("mail.smtp.ssl.enable", TRUE.toString());
         javaMailSender.setJavaMailProperties(properties);
         return javaMailSender;
-    }
-
-    @Bean(name = "sampleMailMessage")
-    public SimpleMailMessage sampleMailMessage() {
-        final SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("piotr.glazar@gmail.com");
-        message.setFrom(mailUsername);
-        message.setSubject("yay - it works!");
-        return message;
-    }
-
-    @Bean(name = "moneyTransferMessage")
-    public SimpleMailMessage moneyTransferMessage() {
-        final SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(mailUsername);
-        message.setSubject("Money transfer");
-        message.setText("Money transfer details");
-        message.setTo("piotr.glazar@gmail.com");
-        return message;
     }
 }

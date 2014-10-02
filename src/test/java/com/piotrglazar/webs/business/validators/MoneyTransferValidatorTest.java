@@ -1,9 +1,9 @@
 package com.piotrglazar.webs.business.validators;
 
 import com.piotrglazar.webs.business.MoneyTransferParams;
-import com.piotrglazar.webs.model.Account;
-import com.piotrglazar.webs.model.Currency;
-import com.piotrglazar.webs.model.SavingsAccount;
+import com.piotrglazar.webs.business.utils.Currency;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.entities.SavingsAccount;
 import com.piotrglazar.webs.util.ErrorGatherer;
 
 import java.math.BigDecimal;

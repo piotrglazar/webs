@@ -1,8 +1,9 @@
 package com.piotrglazar.webs.business;
 
-import com.piotrglazar.webs.WebsTemplates;
+import com.piotrglazar.webs.api.ExchangeRateResponse;
 import com.piotrglazar.webs.dto.ExchangeRateDto;
-import com.piotrglazar.webs.model.ExchangeRatesNews;
+import com.piotrglazar.webs.model.entities.ExchangeRatesNews;
+import com.piotrglazar.webs.util.templates.WebsTemplates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;

@@ -3,6 +3,7 @@ package com.piotrglazar.webs.mvc;
 import com.piotrglazar.webs.UserProvider;
 import com.piotrglazar.webs.config.MvcConfiguration;
 import com.piotrglazar.webs.dto.UserDetailsDto;
+import com.piotrglazar.webs.mvc.controllers.UserDetailsController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

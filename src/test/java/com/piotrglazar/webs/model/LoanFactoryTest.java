@@ -1,8 +1,11 @@
 package com.piotrglazar.webs.model;
 
 import com.piotrglazar.webs.LoanCalculator;
-import com.piotrglazar.webs.mvc.LoanCreationForm;
-import com.piotrglazar.webs.mvc.LoanOption;
+import com.piotrglazar.webs.business.utils.Currency;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.entities.Loan;
+import com.piotrglazar.webs.mvc.forms.LoanCreationForm;
+import com.piotrglazar.webs.util.LoanOption;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

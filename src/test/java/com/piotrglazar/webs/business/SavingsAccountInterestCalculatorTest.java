@@ -1,10 +1,10 @@
 package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.InterestCalculationStrategy;
-import com.piotrglazar.webs.model.Account;
-import com.piotrglazar.webs.model.AccountType;
-import com.piotrglazar.webs.model.Currency;
-import com.piotrglazar.webs.model.SavingsAccount;
+import com.piotrglazar.webs.business.utils.AccountType;
+import com.piotrglazar.webs.business.utils.Currency;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.entities.SavingsAccount;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

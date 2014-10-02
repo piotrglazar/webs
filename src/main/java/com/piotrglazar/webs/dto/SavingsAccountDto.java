@@ -1,6 +1,6 @@
 package com.piotrglazar.webs.dto;
 
-import com.piotrglazar.webs.model.SavingsAccount;
+import com.piotrglazar.webs.model.entities.SavingsAccount;
 
 import java.math.BigDecimal;
 

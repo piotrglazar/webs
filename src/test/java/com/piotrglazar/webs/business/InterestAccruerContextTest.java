@@ -2,8 +2,8 @@ package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.AbstractContextTest;
 import com.piotrglazar.webs.DatabaseTestConfiguration;
-import com.piotrglazar.webs.model.Account;
-import com.piotrglazar.webs.model.AccountRepository;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.repositories.AccountRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

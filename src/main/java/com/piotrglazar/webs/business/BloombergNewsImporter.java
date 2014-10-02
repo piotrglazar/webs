@@ -1,11 +1,13 @@
 package com.piotrglazar.webs.business;
 
 import com.google.common.collect.Lists;
-import com.piotrglazar.webs.WebsTemplates;
-import com.piotrglazar.webs.model.BloombergNews;
+import com.piotrglazar.webs.dto.BloombergNewsBody;
+import com.piotrglazar.webs.dto.BloombergNewsBodyFactory;
+import com.piotrglazar.webs.model.entities.BloombergNews;
 import com.piotrglazar.webs.util.MoreCollectors;
-import com.piotrglazar.webs.util.WebsiteReader;
-import com.piotrglazar.webs.util.WebsiteReaderFactory;
+import com.piotrglazar.webs.util.readers.WebsiteReader;
+import com.piotrglazar.webs.util.readers.WebsiteReaderFactory;
+import com.piotrglazar.webs.util.templates.WebsTemplates;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

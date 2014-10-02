@@ -1,6 +1,6 @@
 package com.piotrglazar.webs.dto;
 
-import com.piotrglazar.webs.model.MoneyTransferAudit;
+import com.piotrglazar.webs.model.entities.MoneyTransferAudit;
 
 import javax.annotation.concurrent.Immutable;
 import java.math.BigDecimal;

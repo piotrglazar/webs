@@ -1,9 +1,10 @@
 package com.piotrglazar.webs.business;
 
 import com.google.common.collect.ImmutableMap;
-import com.piotrglazar.webs.WebsTemplates;
+import com.piotrglazar.webs.api.ExchangeRateResponse;
 import com.piotrglazar.webs.dto.ExchangeRateDto;
-import com.piotrglazar.webs.model.ExchangeRatesNews;
+import com.piotrglazar.webs.model.entities.ExchangeRatesNews;
+import com.piotrglazar.webs.util.templates.WebsTemplates;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

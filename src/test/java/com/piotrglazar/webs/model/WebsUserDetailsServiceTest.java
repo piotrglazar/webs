@@ -2,6 +2,7 @@ package com.piotrglazar.webs.model;
 
 import com.google.common.collect.Sets;
 import com.piotrglazar.webs.UserProvider;
+import com.piotrglazar.webs.model.entities.WebsUser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

@@ -1,11 +1,11 @@
 package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.UserProvider;
-import com.piotrglazar.webs.model.Account;
-import com.piotrglazar.webs.model.AccountRepository;
-import com.piotrglazar.webs.model.WebsUser;
-import com.piotrglazar.webs.model.WebsUserBuilder;
-import com.piotrglazar.webs.mvc.TransferForm;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.entities.WebsUser;
+import com.piotrglazar.webs.model.entities.WebsUserBuilder;
+import com.piotrglazar.webs.model.repositories.AccountRepository;
+import com.piotrglazar.webs.mvc.forms.TransferForm;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

@@ -1,6 +1,6 @@
 package com.piotrglazar.webs.dto;
 
-import com.piotrglazar.webs.model.MoneyTransferAudit;
+import com.piotrglazar.webs.model.entities.MoneyTransferAudit;
 import org.springframework.stereotype.Component;
 
 @Component

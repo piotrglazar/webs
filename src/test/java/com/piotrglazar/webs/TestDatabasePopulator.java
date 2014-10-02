@@ -1,14 +1,14 @@
 package com.piotrglazar.webs;
 
+import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.config.Settings;
-import com.piotrglazar.webs.model.Account;
-import com.piotrglazar.webs.model.Address;
-import com.piotrglazar.webs.model.Currency;
-import com.piotrglazar.webs.model.InternalWebsNews;
-import com.piotrglazar.webs.model.SavingsAccount;
-import com.piotrglazar.webs.model.WebsNews;
-import com.piotrglazar.webs.model.WebsUser;
-import com.piotrglazar.webs.model.WebsUserDetails;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.entities.Address;
+import com.piotrglazar.webs.model.entities.InternalWebsNews;
+import com.piotrglazar.webs.model.entities.SavingsAccount;
+import com.piotrglazar.webs.model.entities.WebsNews;
+import com.piotrglazar.webs.model.entities.WebsUser;
+import com.piotrglazar.webs.model.entities.WebsUserDetails;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;

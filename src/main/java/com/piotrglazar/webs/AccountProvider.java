@@ -1,9 +1,9 @@
 package com.piotrglazar.webs;
 
+import com.piotrglazar.webs.business.utils.AccountType;
+import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.dto.AccountDto;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
-import com.piotrglazar.webs.model.AccountType;
-import com.piotrglazar.webs.model.Currency;
 
 import java.util.List;
 import java.util.Optional;

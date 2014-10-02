@@ -1,6 +1,6 @@
 package com.piotrglazar.webs.dto;
 
-import com.piotrglazar.webs.model.Address;
+import com.piotrglazar.webs.model.entities.Address;
 
 import java.time.LocalDateTime;
 

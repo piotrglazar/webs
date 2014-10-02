@@ -1,7 +1,10 @@
 package com.piotrglazar.webs.model;
 
 import com.piotrglazar.webs.LoanCalculator;
-import com.piotrglazar.webs.mvc.LoanCreationForm;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.entities.Loan;
+import com.piotrglazar.webs.model.entities.LoanBuilder;
+import com.piotrglazar.webs.mvc.forms.LoanCreationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

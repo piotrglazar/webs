@@ -1,7 +1,7 @@
 package com.piotrglazar.webs.dto;
 
-import com.piotrglazar.webs.model.Account;
-import com.piotrglazar.webs.model.SavingsAccount;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.entities.SavingsAccount;
 import org.springframework.stereotype.Component;
 
 @Component

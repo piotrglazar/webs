@@ -2,6 +2,9 @@ package com.piotrglazar.webs.model;
 
 import com.piotrglazar.webs.UserProvider;
 import com.piotrglazar.webs.dto.UserDetailsDto;
+import com.piotrglazar.webs.model.entities.WebsUser;
+import com.piotrglazar.webs.model.entities.WebsUserDetails;
+import com.piotrglazar.webs.model.repositories.WebsUserRepository;
 import com.piotrglazar.webs.util.OperationLogging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

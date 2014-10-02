@@ -1,7 +1,7 @@
 package com.piotrglazar.webs.business;
 
-import com.piotrglazar.webs.model.Account;
-import com.piotrglazar.webs.model.AccountRepository;
+import com.piotrglazar.webs.model.entities.Account;
+import com.piotrglazar.webs.model.repositories.AccountRepository;
 import com.piotrglazar.webs.util.ErrorGatherer;
 import com.piotrglazar.webs.util.OperationLogging;
 import org.springframework.beans.factory.annotation.Autowired;
