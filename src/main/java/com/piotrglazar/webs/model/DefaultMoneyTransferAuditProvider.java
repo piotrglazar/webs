@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
+import rx.Observable;
+import rx.Subscriber;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -70,5 +72,24 @@ class DefaultMoneyTransferAuditProvider implements MoneyTransferAuditProvider {
     public WebsPageable<MoneyTransferAuditUserDto> findPageForUsername(final String username, final int pageNumber) {
         final WebsUser user = userProvider.findUserByUsername(username);
         return findForUser(user.getId(), pageNumber);
+    }
+
+    public Observable<MoneyTransferAuditUserDto> findTransferHistory(final String username) {
+        final Long userId = userProvider.findUserByUsername(username).getId();
+        return Observable.create((Observable.OnSubscribe<MoneyTransferAuditUserDto>) f -> {
+            f.onStart();
+            Page<MoneyTransferAudit> page = repository.findBySendingUserIdOrReceivingUserId(userId, userId,
+                    new PageRequest(0, pageSize));
+            subscribeAuditData(userId, f, page);
+            f.onCompleted();
+        });
+    }
+
+    private void subscribeAuditData(Long userId, Subscriber<? super MoneyTransferAuditUserDto> f, Page<MoneyTransferAudit> page) {
+        page.getContent().stream().map(m -> factory.build(userId, m)).forEach(f::onNext);
+        if (page.hasNext()) {
+            subscribeAuditData(userId, f, repository.findBySendingUserIdOrReceivingUserId(userId, userId,
+                    new PageRequest(page.nextPageable().getPageNumber(), pageSize)));
+        }
     }
 }

@@ -45,6 +45,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-security:1.1.7.RELEASE")
     // data
     compile("org.springframework.boot:spring-boot-starter-data-jpa:1.1.7.RELEASE")
+    // db
     compile("org.hsqldb:hsqldb:2.3.2")
     // guava
     compile("com.google.guava:guava:18.0")

@@ -3,6 +3,7 @@ package com.piotrglazar.webs;
 import com.piotrglazar.webs.dto.MoneyTransferAuditAdminDto;
 import com.piotrglazar.webs.dto.MoneyTransferAuditUserDto;
 import com.piotrglazar.webs.dto.WebsPageable;
+import rx.Observable;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,4 +19,6 @@ public interface MoneyTransferAuditProvider {
     WebsPageable<MoneyTransferAuditUserDto> findForUser(Long userId, int pageNumber);
 
     WebsPageable<MoneyTransferAuditUserDto> findPageForUsername(String username, int pageNumber);
+
+    Observable<MoneyTransferAuditUserDto> findTransferHistory(String username);
 }
