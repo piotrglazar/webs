@@ -7,9 +7,11 @@ import com.piotrglazar.webs.business.utils.AccountType;
 import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.config.MvcConfiguration;
 import com.piotrglazar.webs.dto.AccountDto;
+import com.piotrglazar.webs.dto.MoneyTransferAuditUserDto;
 import com.piotrglazar.webs.dto.PagerDto;
 import com.piotrglazar.webs.dto.PagerDtoFactory;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
+import com.piotrglazar.webs.dto.UserDownloads;
 import com.piotrglazar.webs.dto.WebsPageable;
 import com.piotrglazar.webs.model.entities.Account;
 import com.piotrglazar.webs.model.entities.SavingsAccount;
@@ -24,8 +26,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import rx.Observable;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -175,6 +179,28 @@ public class AccountsControllerTest {
         verify(model).addAttribute("pagers", pagers);
         verify(model).addAttribute("leftPager", pager);
         verify(model).addAttribute("rightPager", pager);
+    }
+
+    @Test
+    public void shouldPrepareMoneyTransferDetailsData() {
+        // given
+        final MoneyTransferAuditUserDto dto = arbitraryMoneyTransferAuditUserDto();
+        given(moneyTransferAuditProvider.findTransferHistory("user"))
+                .willReturn(Observable.from(new MoneyTransferAuditUserDto[]{dto}));
+
+        // when
+        final UserDownloads auditData = accountsController.moneyTransferAuditData();
+
+        // then
+        assertThat(auditData.getFilename()).contains("user");
+        assertThat(auditData.getContent()).hasSize(1);
+        assertThat(auditData.getContent().get(0)).contains(dto.getAccountId().toString(), dto.getAmount().toString(),
+                dto.getUserId().toString());
+    }
+
+    private MoneyTransferAuditUserDto arbitraryMoneyTransferAuditUserDto() {
+        return new MoneyTransferAuditUserDto(MoneyTransferAuditUserDto.Kind.INCOMING, 123L, BigDecimal.TEN, Boolean.TRUE,
+                LocalDateTime.of(2014, 10, 14, 0, 0), 10001L);
     }
 
     private List<AccountDto> createAccount() {

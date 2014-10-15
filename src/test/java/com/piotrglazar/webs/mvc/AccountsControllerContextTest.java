@@ -4,6 +4,7 @@ import com.piotrglazar.webs.AbstractContextTest;
 import com.piotrglazar.webs.business.utils.AccountType;
 import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.commons.Utils;
+import com.piotrglazar.webs.config.Settings;
 import com.piotrglazar.webs.model.entities.Account;
 import com.piotrglazar.webs.model.entities.MoneyTransferAudit;
 import com.piotrglazar.webs.model.entities.MoneyTransferAuditBuilder;
@@ -19,8 +20,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.piotrglazar.webs.commons.Utils.addCsrf;
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -130,6 +133,21 @@ public class AccountsControllerContextTest extends AbstractContextTest {
         // then
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("accountCreationForm", "allAccountTypes", "allCurrencies"));
+    }
+
+    @Test
+    public void shouldServeMoneyTransferHistory() throws Exception {
+        // given
+        final MockHttpSession authenticate = Utils.authenticate(mockMvc);
+
+        mockMvc.perform(get("/downloadTransferHistory").session(authenticate))
+
+        // then
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().string(containsString("filename")))
+            .andExpect(content().string(containsString(Settings.USERNAME)))
+            .andExpect(content().string(containsString("content")));
     }
 
     private void removeMoneyTransferAudit(final MoneyTransferAudit audit) {

@@ -12,12 +12,14 @@ import com.piotrglazar.webs.model.entities.MoneyTransferAudit;
 import com.piotrglazar.webs.model.entities.WebsUser;
 import com.piotrglazar.webs.model.entities.WebsUserBuilder;
 import com.piotrglazar.webs.model.repositories.MoneyTransferAuditRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import rx.Observable;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -28,6 +30,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("unchecked")
 public class DefaultMoneyTransferAuditProviderTest {
 
     @Mock
@@ -39,14 +42,21 @@ public class DefaultMoneyTransferAuditProviderTest {
     @Mock
     private MoneyTransferAuditRepository repository;
 
+    @Mock
+    private Page<MoneyTransferAudit> page = mock(Page.class);
+
     private int pageSize = 10;
 
     private DefaultMoneyTransferAuditProvider provider;
 
+    @Before
+    public void setUp() throws Exception {
+        provider = new DefaultMoneyTransferAuditProvider(repository, factory, userProvider, pageSize);
+    }
+
     @Test
     public void shouldConvertAllMoneyTransferAuditToDto() {
         // given
-        provider = new DefaultMoneyTransferAuditProvider(repository, factory, userProvider, pageSize);
         given(repository.findAll()).willReturn(Lists.newArrayList(moneyTransferAuditEntry()));
 
         // when
@@ -58,24 +68,55 @@ public class DefaultMoneyTransferAuditProviderTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void shouldConvertMoneyTransferAuditToUserDtoForGivenUser() {
         // given
-        provider = new DefaultMoneyTransferAuditProvider(repository, factory, userProvider, pageSize);
         // user id matches sendingUserId from moneyTransferAuditEntry
-        final WebsUser user = new WebsUserBuilder().username("user").id(123L).build();
-        given(userProvider.findUserByUsername("user")).willReturn(user);
-        final MoneyTransferAudit auditEntry = moneyTransferAuditEntry();
-        final Page<MoneyTransferAudit> page = mock(Page.class);
-        given(page.getContent()).willReturn(Lists.newArrayList(auditEntry));
-        given(repository.findBySendingUserIdOrReceivingUserId(123L, 123L, new PageRequest(0, 10))).willReturn(page);
-        given(factory.build(123L, auditEntry)).willReturn(moneyTransferAuditUserDto());
+        userWithNameAndId("user", 123L);
+        final MoneyTransferAudit auditEntry = auditEntry();
+        pageWithAuditData();
+        auditDataForUser(auditEntry);
 
         // when
         final WebsPageable<MoneyTransferAuditUserDto> dtos = provider.findPageForUsername("user", 0);
 
         // then
         assertThat(dtos.getContent()).hasSize(1);
+    }
+
+    private void auditDataForUser(final MoneyTransferAudit auditEntry) {
+        given(factory.build(123L, auditEntry)).willReturn(moneyTransferAuditUserDto());
+    }
+
+    @Test
+    public void shouldBuildObservableWithTransferHistoryData() {
+        // given
+        // user id matches sendingUserId from moneyTransferAuditEntry
+        userWithNameAndId("user", 123L);
+        final MoneyTransferAudit auditEntry = auditEntry();
+        pageWithAuditData();
+        auditDataForUser(auditEntry);
+
+        // when
+        final Observable<MoneyTransferAuditUserDto> transferHistory = provider.findTransferHistory("user");
+
+        // then
+        final List<MoneyTransferAuditUserDto> dto = transferHistory.toList().toBlocking().first();
+        assertThat(dto).hasSize(1);
+    }
+
+    private void pageWithAuditData() {
+        given(repository.findBySendingUserIdOrReceivingUserId(123L, 123L, new PageRequest(0, pageSize))).willReturn(page);
+    }
+
+    private MoneyTransferAudit auditEntry() {
+        final MoneyTransferAudit auditEntry = moneyTransferAuditEntry();
+        given(page.getContent()).willReturn(Lists.newArrayList(auditEntry));
+        return auditEntry;
+    }
+
+    private void userWithNameAndId(final String username, final long id) {
+        final WebsUser user = new WebsUserBuilder().username(username).id(id).build();
+        given(userProvider.findUserByUsername(username)).willReturn(user);
     }
 
     private MoneyTransferAuditUserDto moneyTransferAuditUserDto() {
@@ -90,12 +131,13 @@ public class DefaultMoneyTransferAuditProviderTest {
     }
 
     private void assertThatDtoWasCreatedFrom(final MoneyTransferAuditAdminDto moneyTransferAuditAdminDto, final MoneyTransferAudit audit) {
-        assertThat(moneyTransferAuditAdminDto.getAmount()).isEqualTo(audit.getAmount());
-        assertThat(moneyTransferAuditAdminDto.getReceivingAccountId()).isEqualTo(audit.getReceivingAccountId());
-        assertThat(moneyTransferAuditAdminDto.getSendingAccountId()).isEqualTo(audit.getSendingAccountId());
-        assertThat(moneyTransferAuditAdminDto.getSendingUserId()).isEqualTo(audit.getSendingUserId());
-        assertThat(moneyTransferAuditAdminDto.getSuccess()).isEqualTo(audit.getSuccess());
-        assertThat(moneyTransferAuditAdminDto.getDate()).isEqualTo(audit.getDate());
+        MoneyTransferAuditAdminDtoAssert.assertThat(moneyTransferAuditAdminDto)
+                .hasAmount(audit.getAmount())
+                .hasReceivingAccountId(audit.getReceivingAccountId())
+                .hasSendingAccountId(audit.getSendingAccountId())
+                .hasSendingUserId(audit.getSendingUserId())
+                .hasSuccess(audit.getSuccess())
+                .hasDate(audit.getDate());
     }
 
     private MoneyTransferAudit moneyTransferAuditEntry() {

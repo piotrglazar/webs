@@ -9,18 +9,23 @@ import com.piotrglazar.webs.dto.AccountDto;
 import com.piotrglazar.webs.dto.MoneyTransferAuditUserDto;
 import com.piotrglazar.webs.dto.PagerDto;
 import com.piotrglazar.webs.dto.PagerDtoFactory;
+import com.piotrglazar.webs.dto.PrintableMoneyTransferAudit;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
+import com.piotrglazar.webs.dto.UserDownloads;
 import com.piotrglazar.webs.dto.WebsPageable;
 import com.piotrglazar.webs.mvc.LoggedInUserProvider;
 import com.piotrglazar.webs.mvc.forms.AccountCreationForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import rx.Observable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -103,5 +108,20 @@ public class AccountsController {
         model.addAttribute("rightPager", rightPager);
 
         return "accountTransferHistory";
+    }
+
+    @RequestMapping(value = "/downloadTransferHistory", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public UserDownloads moneyTransferAuditData() {
+        final String loggedInUserUsername = loggedInUserProvider.getLoggedInUserUsername();
+        final Observable<MoneyTransferAuditUserDto> transferHistory = moneyTransferAuditProvider.findTransferHistory(loggedInUserUsername);
+        final List<String> auditData = transferHistory
+                .map(PrintableMoneyTransferAudit::from)
+                .map(PrintableMoneyTransferAudit::getMessage)
+                .map(m -> m.concat("\n"))
+                .toList()
+                .toBlocking()
+                .first();
+        return new UserDownloads(loggedInUserUsername + ".txt", auditData);
     }
 }
