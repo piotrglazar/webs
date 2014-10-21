@@ -14,7 +14,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import rx.Observable;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Set;
 
 @Component
@@ -39,16 +38,13 @@ public class ExchangeRatesNewsImporter implements NewsImporter {
     }
 
     @Override
-    public List<ExchangeRatesNews> fetchNews() {
+    public Observable<ExchangeRatesNews> fetchNews() {
         return Observable.create((Observable.OnSubscribe<ExchangeRatesNews>) subscriber -> {
                 final ResponseEntity<ExchangeRateResponse> entity = restTemplate.getForEntity(requestUri, ExchangeRateResponse.class);
                 final ExchangeRateDto exchangeRates = getExchangeRates(entity.getBody());
                 subscriber.onNext(new ExchangeRatesNews("Exchange rates", websTemplates.exchangeRatesNewsBody(exchangeRates)));
                 subscriber.onCompleted();
-            })
-            .toList()
-            .toBlocking()
-            .first();
+            });
     }
 
     private ExchangeRateDto getExchangeRates(final ExchangeRateResponse exchangeRateResponse) {

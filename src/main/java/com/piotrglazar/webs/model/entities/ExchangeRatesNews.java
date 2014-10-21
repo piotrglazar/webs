@@ -14,6 +14,6 @@ public final class ExchangeRatesNews extends WebsNews {
     }
 
     public static String getNewsName() {
-        return "ExchangeRateNews";
+        return "ExchangeRatesNews";
     }
 }

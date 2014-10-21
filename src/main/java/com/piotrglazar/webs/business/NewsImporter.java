@@ -1,12 +1,11 @@
 package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.model.entities.WebsNews;
-
-import java.util.List;
+import rx.Observable;
 
 public interface NewsImporter {
 
-    List<? extends WebsNews> fetchNews();
+    Observable<? extends WebsNews> fetchNews();
 
     Class<? extends WebsNews> provides();
 

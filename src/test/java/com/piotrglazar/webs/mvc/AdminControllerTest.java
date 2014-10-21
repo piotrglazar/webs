@@ -128,6 +128,15 @@ public class AdminControllerTest {
         assertThat(model.addAttribute("uiMessage", "Loans repaid successfully"));
     }
 
+    @Test
+    public void shouldImportAllNews() {
+        // when
+        controller.importAllNews(model);
+
+        // then
+        verify(newsImporters).fetchAllNews();
+    }
+
     private List<MoneyTransferAuditAdminDto> someMoneyTransferAuditDtos() {
         return Lists.newArrayList(
                 new MoneyTransferAuditAdminDto(

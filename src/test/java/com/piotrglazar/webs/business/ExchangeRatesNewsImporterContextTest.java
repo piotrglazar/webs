@@ -5,6 +5,7 @@ import com.piotrglazar.webs.model.entities.ExchangeRatesNews;
 import com.piotrglazar.webs.model.repositories.WebsNewsRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import rx.Observable;
 
 import java.util.List;
 
@@ -21,13 +22,14 @@ public class ExchangeRatesNewsImporterContextTest extends AbstractContextTest {
     @Test
     public void shouldImportNews() {
         // when
-        final List<ExchangeRatesNews> exchangeRateNews = newsImporter.fetchNews();
+        final Observable<ExchangeRatesNews> exchangeRateNews = newsImporter.fetchNews();
 
         // then
-        assertThat(exchangeRateNews).hasSize(1);
-        assertThat(exchangeRateNews.get(0).getBody()).contains("USD", "EUR", "GBP", "PLN");
+        final List<ExchangeRatesNews> newsList = exchangeRateNews.toList().toBlocking().first();
+        assertThat(newsList).hasSize(1);
+        assertThat(newsList.get(0).getBody()).contains("USD", "EUR", "GBP", "PLN");
 
         // cleanup
-        exchangeRateNews.stream().forEach(websNewsRepository::delete);
+        newsList.forEach(websNewsRepository::delete);
     }
 }

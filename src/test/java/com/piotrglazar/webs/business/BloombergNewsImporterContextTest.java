@@ -5,6 +5,7 @@ import com.piotrglazar.webs.model.entities.BloombergNews;
 import com.piotrglazar.webs.model.repositories.WebsNewsRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import rx.Observable;
 
 import java.util.List;
 
@@ -21,14 +22,15 @@ public class BloombergNewsImporterContextTest extends AbstractContextTest {
     @Test
     public void shouldCreateBloombergNews() {
         // when
-        final List<BloombergNews> news = bloombergNewsImporter.fetchNews();
+        final Observable<BloombergNews> news = bloombergNewsImporter.fetchNews();
 
         // then
-        assertThat(news).hasSize(1);
+        final List<BloombergNews> newsList = news.toList().toBlocking().first();
+        assertThat(newsList).hasSize(1);
         // five indices from stock exchange and others
-        assertThat(news.get(0).getBody().split("\n")).hasSize(15);
+        assertThat(newsList.get(0).getBody().split("\n")).hasSize(15);
 
         // cleanup
-        news.stream().forEach(websNewsRepository::delete);
+        newsList.forEach(websNewsRepository::delete);
     }
 }

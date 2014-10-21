@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import rx.Observable;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -75,11 +76,12 @@ public class BloombergNewsImporterTest {
         given(websTemplates.bloombergNewsBody(anyList())).willReturn("bloombergNewsBody");
 
         // when
-        final List<BloombergNews> news = bloombergNewsImporter.fetchNews();
+        final Observable<BloombergNews> news = bloombergNewsImporter.fetchNews();
 
         // then
-        assertThat(news).hasSize(1);
-        final BloombergNews bloombergNews = news.get(0);
+        final List<BloombergNews> newsList = news.toList().toBlocking().first();
+        assertThat(newsList).hasSize(1);
+        final BloombergNews bloombergNews = newsList.get(0);
         assertThat(bloombergNews.getHeadline()).isEqualTo("Latest news from Bloomberg");
         assertThat(bloombergNews.getUrl()).isEqualTo(BloombergNewsImporter.BLOOMBERG);
         assertThat(bloombergNews.getBody()).contains("bloombergNewsBody");
