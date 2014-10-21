@@ -48,6 +48,14 @@ public class AdminController {
         return showMoneyTransferAudit(model);
     }
 
+    @RequestMapping("/admin/importAllNews")
+    @OperationLogging(operation = "admin import all news")
+    public String importAllNews(final Model model) {
+        newsImporters.fetchAllNews();
+        model.addAttribute("uiMessage", "All news successfully imported");
+        return showMoneyTransferAudit(model);
+    }
+
     @RequestMapping("/admin/interest")
     @OperationLogging(operation = "admin accrue interest")
     public String accrueInterest(final Model model) {

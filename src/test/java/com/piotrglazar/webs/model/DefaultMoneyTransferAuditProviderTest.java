@@ -19,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import rx.Observable;
 
 import java.math.BigDecimal;
@@ -101,7 +102,8 @@ public class DefaultMoneyTransferAuditProviderTest {
 
         // then
         final List<MoneyTransferAuditUserDto> dto = transferHistory.toList().toBlocking().first();
-        assertThat(dto).hasSize(1);
+        // there are two page objects
+        assertThat(dto).hasSize(2);
     }
 
     private void pageWithAuditData() {
@@ -111,6 +113,8 @@ public class DefaultMoneyTransferAuditProviderTest {
     private MoneyTransferAudit auditEntry() {
         final MoneyTransferAudit auditEntry = moneyTransferAuditEntry();
         given(page.getContent()).willReturn(Lists.newArrayList(auditEntry));
+        given(page.hasNext()).willReturn(true, false);
+        given(page.nextPageable()).willReturn(mock(Pageable.class));
         return auditEntry;
     }
 

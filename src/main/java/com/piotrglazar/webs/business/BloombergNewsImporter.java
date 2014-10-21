@@ -1,6 +1,5 @@
 package com.piotrglazar.webs.business;
 
-import com.google.common.collect.Lists;
 import com.piotrglazar.webs.dto.BloombergNewsBody;
 import com.piotrglazar.webs.dto.BloombergNewsBodyFactory;
 import com.piotrglazar.webs.model.entities.BloombergNews;
@@ -14,6 +13,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import rx.Observable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,10 +51,13 @@ public class BloombergNewsImporter implements NewsImporter {
     }
 
     @Override
-    public List<BloombergNews> fetchNews() {
-        final String webPageContent = webPageContent();
-        final String tickers = extractTickers(webPageContent);
-        return Lists.newArrayList(bloombergNews(tickers));
+    public Observable<BloombergNews> fetchNews() {
+        return Observable.create((Observable.OnSubscribe<BloombergNews>) f -> {
+            final String webPageContent = webPageContent();
+            final String tickers = extractTickers(webPageContent);
+            f.onNext(bloombergNews(tickers));
+            f.onCompleted();
+        });
     }
 
     @Override

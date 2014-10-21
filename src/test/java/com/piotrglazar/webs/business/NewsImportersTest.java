@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import rx.Observable;
 
 import java.util.List;
 
@@ -40,8 +41,8 @@ public class NewsImportersTest {
     @SuppressWarnings("unchecked")
     public void shouldImportNewsUsingStrategy() {
         // given
-        final List<? extends WebsNews> news = Lists.newArrayList(new TestWebsNews());
-        given(firstNewsImporter.fetchNews()).willReturn((List) news);
+        final Observable<? extends WebsNews> news = Observable.from(Lists.newArrayList(new TestWebsNews()));
+        given(firstNewsImporter.fetchNews()).willReturn((Observable) news);
 
         // when
         newsImporters.fetchNews(0);

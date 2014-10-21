@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class BloombergNewsBody {
+public final class BloombergNewsBody {
 
     private final String name;
     private final String growth;

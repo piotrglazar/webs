@@ -1,15 +1,16 @@
 package com.piotrglazar.webs.business;
 
-import com.google.common.base.Preconditions;
 import com.piotrglazar.webs.WebsNewsProvider;
 import com.piotrglazar.webs.model.entities.WebsNews;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import rx.Observable;
 
 import java.lang.invoke.MethodHandles;
-import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 class DefaultNewsImportingStrategy implements NewsImportingStrategy {
@@ -24,12 +25,36 @@ class DefaultNewsImportingStrategy implements NewsImportingStrategy {
     }
 
     @Override
-    public void saveNews(final NewsImporter newsImporter, final Collection<? extends WebsNews> news) {
-        Preconditions.checkArgument(!news.isEmpty(), "No news to save.");
+    public void saveNews(final NewsImporter newsImporter, final Observable<? extends WebsNews> rawNews) {
+        rawNews.toList().subscribe(
+                news -> {
+                    if (news.isEmpty()) {
+                        LOG.info("No news from {} to save", newsImporter);
+                    } else {
+                        LOG.debug("Saving news {} {}", newsImporter, news);
+                        websNewsProvider.removeAll(newsImporter.provides());
+                        websNewsProvider.saveAll(news);
+                    }
+                },
+                e -> LOG.error("Failed to save news {}", newsImporter, e),
+                () -> LOG.debug("Finished saving from NewsImporter {}", newsImporter));
+    }
 
-        websNewsProvider.removeAll(newsImporter.provides());
-        websNewsProvider.saveAll(news);
-
-        LOG.debug("NewsImporter {} saved {}", newsImporter, news);
+    @Override
+    @SuppressWarnings("unchecked")
+    public void saveAllNews(final Observable<? extends WebsNews> allRawNews) {
+        allRawNews.toList().subscribe(
+                news -> {
+                    if (news.isEmpty()) {
+                        LOG.info("No news to save");
+                    } else {
+                        LOG.debug("Saving all news {}", news);
+                        ((List<Class<? extends WebsNews>>) news.stream().map(WebsNews::getClass).distinct().collect(Collectors.toList()))
+                                .forEach(websNewsProvider::removeAll);
+                        websNewsProvider.saveAll(news);
+                    }
+                },
+                e -> LOG.error("Failed to save all news", e),
+                () -> LOG.debug("Finished saving all news"));
     }
 }

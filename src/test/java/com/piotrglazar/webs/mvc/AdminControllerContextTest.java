@@ -87,6 +87,25 @@ public class AdminControllerContextTest extends AbstractContextTest {
     }
 
     @Test
+    public void shouldImportAllNews() throws Exception {
+        // given
+        final MockHttpSession authenticate = Utils.authenticate(mockMvc, Settings.USERNAME, Settings.PASSWORD);
+
+        // when
+        mockMvc.perform(get("/admin/importAllNews").session(authenticate))
+
+        // then
+            .andExpect(status().isOk())
+            .andExpect(xpath("//div[@class='alert alert-dismissable alert-success']").exists())
+            .andExpect(xpath("//table[@id='moneyTransferAuditTable']").exists())
+            .andExpect(xpath("//table[@id='newsImporterTable']").exists());
+
+        // cleanup
+        websNewsRepository.deleteAllNews(BloombergNews.getNewsName());
+        websNewsRepository.deleteAllNews(ExchangeRatesNews.getNewsName());
+    }
+
+    @Test
     public void shouldAccrueInterest() throws Exception {
         // given
         final MockHttpSession authenticate = Utils.authenticate(mockMvc, Settings.USERNAME, Settings.PASSWORD);

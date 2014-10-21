@@ -138,4 +138,13 @@ public class DefaultAccountProviderTest {
         assertThat(savedAccount.getBalance()).isEqualByComparingTo("0");
         assertThat(savedAccount.getCurrency()).isEqualTo(Currency.GBP);
     }
+
+    @Test
+    public void shouldReturnAccountDtoWhenAccountNotFound() {
+        // when
+        final AccountDto dto = accountProvider.getAccount("abc");
+
+        // then
+        assertThat(dto).isNull();
+    }
 }

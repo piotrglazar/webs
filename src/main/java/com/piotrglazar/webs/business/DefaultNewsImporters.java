@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import rx.Observable;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
@@ -34,7 +35,7 @@ public class DefaultNewsImporters implements NewsImporters {
     @Override
     public void fetchNews(final int newsImporterIndex) {
         final NewsImporter newsImporter = getNewsImporter(newsImporterIndex);
-        final List<? extends WebsNews> news = newsImporter.fetchNews();
+        final Observable<? extends WebsNews> news = newsImporter.fetchNews();
 
         LOG.info("NewsImporter {} fetching news {}", newsImporter, news);
 
@@ -52,8 +53,9 @@ public class DefaultNewsImporters implements NewsImporters {
 
     @Override
     public void fetchAllNews() {
-        for (int i = 0; i < newsImporters.size(); ++i) {
-            fetchNews(i);
-        }
+        Observable<? extends WebsNews> allNews = newsImporters.stream()
+                .map(NewsImporter::fetchNews)
+                .reduce(Observable.empty(), Observable::concat);
+        newsImportingStrategy.saveAllNews(allNews);
     }
 }

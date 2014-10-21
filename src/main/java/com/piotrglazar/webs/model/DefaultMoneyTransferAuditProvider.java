@@ -77,7 +77,6 @@ class DefaultMoneyTransferAuditProvider implements MoneyTransferAuditProvider {
     public Observable<MoneyTransferAuditUserDto> findTransferHistory(final String username) {
         final Long userId = userProvider.findUserByUsername(username).getId();
         return Observable.create((Observable.OnSubscribe<MoneyTransferAuditUserDto>) f -> {
-            f.onStart();
             Page<MoneyTransferAudit> page = repository.findBySendingUserIdOrReceivingUserId(userId, userId,
                     new PageRequest(0, pageSize));
             subscribeAuditData(userId, f, page);

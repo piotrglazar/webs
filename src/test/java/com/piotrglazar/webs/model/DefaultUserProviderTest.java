@@ -82,4 +82,10 @@ public class DefaultUserProviderTest {
         assertThat(dto.getAddress().getCity()).isEqualTo("Warsaw");
         assertThat(dto.getAddress().getCountry()).isEqualTo("PL");
     }
+
+    @Test(expected = WebsUserNotFoundException.class)
+    public void shouldGetThrowExceptionWhenUserNotFound() {
+        // expect
+        defaultUserProvider.getUserByUsername("abc");
+    }
 }
