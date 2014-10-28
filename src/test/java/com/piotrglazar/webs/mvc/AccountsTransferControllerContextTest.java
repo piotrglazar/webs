@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.xpath;
 
-public class AccountsTransferControllerTest extends AbstractContextTest {
+public class AccountsTransferControllerContextTest extends AbstractContextTest {
 
     @Test
     public void shouldTransferMoney() throws Exception {
@@ -121,5 +121,24 @@ public class AccountsTransferControllerTest extends AbstractContextTest {
         // then
             .andExpect(status().is(HttpStatus.FOUND.value()))
             .andExpect(redirectedUrl("/accounts"));
+    }
+
+    @Test
+    public void shouldShowErrorWhenAccountIdFromUrlDoNotMatchAccountIdInForm() throws Exception {
+        // given
+        final MockHttpSession authenticate = Utils.authenticate(mockMvc);
+
+        // when
+        mockMvc.perform(addCsrf(post("/accountsTransfer/1/").session(authenticate)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("accountId", "4")
+                .param("accountNumber", "def456")
+                .param("integralPart", "1000")
+                .param("fractionalPart", "0")))
+
+
+        // then
+        .andExpect(status().is(HttpStatus.FOUND.value()))
+        .andExpect(redirectedUrl("/accounts"));
     }
 }

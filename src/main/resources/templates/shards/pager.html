@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="pager" style="text-align: center;">
+    <ul class="pagination">
+        <li th:class="${moneyTransferAuditData.isFirst()} ? 'disabled' : ''"><a th:href="@{${pagers.left.url}}">&#171;</a></li>
+
+        <th:block th:each="pager : ${pagers.middle}">
+            <li th:class="${pager.currentPage} == ${moneyTransferAuditData.pageNumber} ? 'active' : ''">
+                <a th:href="@{${pager.url}}" th:text="${pager.currentPageForUi}">1</a>
+            </li>
+        </th:block>
+
+        <li th:class="${moneyTransferAuditData.isLast()} ? 'disabled' : ''"><a th:href="@{${pagers.right.url}}">&#187;</a></li>
+    </ul>
+</div>
+</body>
+</html>

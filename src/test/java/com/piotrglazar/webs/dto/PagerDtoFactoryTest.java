@@ -28,7 +28,7 @@ public class PagerDtoFactoryTest {
         final PagerDtoFactory factory = new PagerDtoFactory(pagerSize);
 
         // when
-        final List<PagerDto> pagers = factory.createPagers(pageNumber, pageCount, "abc");
+        final List<PagerDto> pagers = factory.createMiddlePagers(pageNumber, pageCount, "abc");
 
         // then
         assertThat(pagers)
@@ -51,7 +51,7 @@ public class PagerDtoFactoryTest {
         final PagerDtoFactory factory = new PagerDtoFactory(pagerSize);
 
         // when
-        final List<PagerDto> pagers = factory.createPagers(pageNumber, pageCount, "abc");
+        final List<PagerDto> pagers = factory.createMiddlePagers(pageNumber, pageCount, "abc");
 
         // then
         assertThat(pagers)
@@ -75,7 +75,7 @@ public class PagerDtoFactoryTest {
         final PagerDtoFactory factory = new PagerDtoFactory(pagerSize);
 
         // when
-        final List<PagerDto> pagers = factory.createPagers(pageNumber, pageCount, "abc");
+        final List<PagerDto> pagers = factory.createMiddlePagers(pageNumber, pageCount, "abc");
 
         // then
         assertThat(pagers)
@@ -97,7 +97,7 @@ public class PagerDtoFactoryTest {
         final PagerDtoFactory factory = new PagerDtoFactory(pagerSize);
 
         // when
-        final List<PagerDto> pagers = factory.createPagers(pageNumber, pageCount, "abc");
+        final List<PagerDto> pagers = factory.createMiddlePagers(pageNumber, pageCount, "abc");
 
         // then
         assertThat(pagers)
@@ -138,5 +138,22 @@ public class PagerDtoFactoryTest {
         // then
         assertThat(rightPager.getUrl()).isEqualTo(expectedUrl);
         assertThat(rightPager.getCurrentPage()).isEqualTo(expectedPageNumber);
+    }
+
+    @Test
+    public void shouldConstructAllPagersAtOnce() {
+        // given
+        final PagerDtoFactory factory = new PagerDtoFactory(3);
+        final PagerDto left = factory.createLeftPager(9, false, "url");
+        final PagerDto right = factory.createRightPager(9, false, "url");
+        final List<PagerDto> middle = factory.createMiddlePagers(9, 10, "url");
+
+        // when
+        final PagersDto pagers = factory.createPagers(9, 10, false, false, "url");
+
+        // then
+        assertThat(pagers.getLeft()).isEqualTo(left);
+        assertThat(pagers.getRight()).isEqualTo(right);
+        assertThat(pagers.getMiddle()).isEqualTo(middle);
     }
 }
