@@ -3,6 +3,8 @@ package com.piotrglazar.webs.config;
 import com.piotrglazar.webs.UserProvider;
 import com.piotrglazar.webs.WebsNewsProvider;
 import org.hsqldb.jdbc.JDBCDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,15 +17,20 @@ import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
+import java.lang.invoke.MethodHandles;
 
 @Configuration
 @EnableJpaRepositories
 @Profile("default")
 public class DatabaseConfiguration {
 
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     @Bean
     public DataSource dataSource() {
-        return new SimpleDriverDataSource(new JDBCDriver(), "jdbc:hsqldb:file:/home/webs/production", "sa", "");
+        final String currentDirectory = UtilityConfiguration.getCurrentDirectory();
+        LOG.info("Using database {}/db/production", currentDirectory);
+        return new SimpleDriverDataSource(new JDBCDriver(), "jdbc:hsqldb:file:" + currentDirectory + "/db/production", "sa", "");
     }
 
     @Bean
