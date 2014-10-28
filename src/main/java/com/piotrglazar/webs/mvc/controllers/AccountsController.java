@@ -7,8 +7,8 @@ import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.config.MvcConfiguration;
 import com.piotrglazar.webs.dto.AccountDto;
 import com.piotrglazar.webs.dto.MoneyTransferAuditUserDto;
-import com.piotrglazar.webs.dto.PagerDto;
 import com.piotrglazar.webs.dto.PagerDtoFactory;
+import com.piotrglazar.webs.dto.PagersDto;
 import com.piotrglazar.webs.dto.PrintableMoneyTransferAudit;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
 import com.piotrglazar.webs.dto.UserDownloads;
@@ -95,17 +95,11 @@ public class AccountsController {
         final String loggedInUserUsername = loggedInUserProvider.getLoggedInUserUsername();
         final WebsPageable<MoneyTransferAuditUserDto> transferAuditData =
                 moneyTransferAuditProvider.findPageForUsername(loggedInUserUsername, pageNumber);
-        final List<PagerDto> pagers = pagerDtoFactory.createPagers(transferAuditData.getPageNumber(), transferAuditData.getPageCount(),
-                "/accountTransferHistory/");
-        final PagerDto leftPager = pagerDtoFactory.createLeftPager(transferAuditData.getPageNumber(), transferAuditData.isFirst(),
-                "/accountTransferHistory/");
-        final PagerDto rightPager = pagerDtoFactory.createRightPager(transferAuditData.getPageNumber(), transferAuditData.isLast(),
-                "/accountTransferHistory/");
+        final PagersDto pagers = pagerDtoFactory.createPagers(transferAuditData.getPageNumber(), transferAuditData.getPageCount(), transferAuditData.isFirst(),
+                transferAuditData.isLast(), "/accountTransferHistory/");
 
         model.addAttribute("moneyTransferAuditData", transferAuditData);
         model.addAttribute("pagers", pagers);
-        model.addAttribute("leftPager", leftPager);
-        model.addAttribute("rightPager", rightPager);
 
         return "accountTransferHistory";
     }

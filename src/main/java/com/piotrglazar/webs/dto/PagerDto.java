@@ -1,6 +1,7 @@
 package com.piotrglazar.webs.dto;
 
 import javax.annotation.concurrent.Immutable;
+import java.util.Objects;
 
 @Immutable
 public final class PagerDto {
@@ -32,5 +33,22 @@ public final class PagerDto {
 
     public static PagerDto emptyPager() {
         return new PagerDto();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(currentPage, url);
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final PagerDto other = (PagerDto) obj;
+        return Objects.equals(this.currentPage, other.currentPage) && Objects.equals(this.url, other.url);
     }
 }

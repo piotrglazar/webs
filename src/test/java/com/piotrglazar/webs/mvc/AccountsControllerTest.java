@@ -10,6 +10,7 @@ import com.piotrglazar.webs.dto.AccountDto;
 import com.piotrglazar.webs.dto.MoneyTransferAuditUserDto;
 import com.piotrglazar.webs.dto.PagerDto;
 import com.piotrglazar.webs.dto.PagerDtoFactory;
+import com.piotrglazar.webs.dto.PagersDto;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
 import com.piotrglazar.webs.dto.UserDownloads;
 import com.piotrglazar.webs.dto.WebsPageable;
@@ -37,6 +38,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -164,11 +167,8 @@ public class AccountsControllerTest {
         final int pageNumber = 0;
         final WebsPageable websPageable = new WebsPageable(mock(Page.class));
         given(moneyTransferAuditProvider.findPageForUsername("user", pageNumber)).willReturn(websPageable);
-        final LinkedList<PagerDto> pagers = Lists.newLinkedList();
-        given(pagerDtoFactory.createPagers(any(Integer.class), any(Integer.class), any(String.class))).willReturn(pagers);
-        final PagerDto pager = PagerDto.emptyPager();
-        given(pagerDtoFactory.createLeftPager(any(Integer.class), any(Boolean.class), any(String.class))).willReturn(pager);
-        given(pagerDtoFactory.createRightPager(any(Integer.class), any(Boolean.class), any(String.class))).willReturn(pager);
+        final PagersDto pagers = new PagersDto(PagerDto.emptyPager(), Lists.newArrayList(PagerDto.emptyPager()), PagerDto.emptyPager());
+        given(pagerDtoFactory.createPagers(anyInt(), anyInt(), anyBoolean(), anyBoolean(), anyString())).willReturn(pagers);
 
         // when
         final String transferHistoryTemplate = accountsController.displayAccountTransferHistory(pageNumber, model);
@@ -177,8 +177,6 @@ public class AccountsControllerTest {
         assertThat(transferHistoryTemplate).isEqualTo("accountTransferHistory");
         verify(model).addAttribute("moneyTransferAuditData", websPageable);
         verify(model).addAttribute("pagers", pagers);
-        verify(model).addAttribute("leftPager", pager);
-        verify(model).addAttribute("rightPager", pager);
     }
 
     @Test

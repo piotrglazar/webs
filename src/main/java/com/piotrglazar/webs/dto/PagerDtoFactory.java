@@ -20,7 +20,15 @@ public class PagerDtoFactory {
         this.borderSize = pagerSize / 2;
     }
 
-    public List<PagerDto> createPagers(int pageNumber, int pageCount, String url) {
+    public PagersDto createPagers(int pageNumber, int pageCount, boolean isFirst, boolean isLast, String url) {
+        final PagerDto leftPager = createLeftPager(pageNumber, isFirst, url);
+        final PagerDto rightPager = createRightPager(pageNumber, isLast, url);
+        final List<PagerDto> middlePagers = createMiddlePagers(pageNumber, pageCount, url);
+
+        return new PagersDto(leftPager, middlePagers, rightPager);
+    }
+
+    public List<PagerDto> createMiddlePagers(int pageNumber, int pageCount, String url) {
         if (isSinglePiecePager(pageCount, pagerSize)) {
             return singlePiecePager(pageCount, url);
         } else if (isLeftBorder(pageNumber, borderSize)) {

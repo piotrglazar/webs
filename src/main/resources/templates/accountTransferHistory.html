@@ -39,19 +39,7 @@
             </th:block>
             </tbody>
         </table>
-        <div style="text-align: center;">
-            <ul class="pagination">
-                <li th:class="${moneyTransferAuditData.isFirst()} ? 'disabled' : ''"><a th:href="@{${leftPager.url}}">&#171;</a></li>
-
-                <th:block th:each="pager : ${pagers}">
-                    <li th:class="${pager.currentPage} == ${moneyTransferAuditData.pageNumber} ? 'active' : ''">
-                        <a th:href="@{${pager.url}}" th:text="${pager.currentPageForUi}">1</a>
-                    </li>
-                </th:block>
-
-                <li th:class="${moneyTransferAuditData.isLast()} ? 'disabled' : ''"><a th:href="@{${rightPager.url}}">&#187;</a></li>
-            </ul>
-        </div>
+        <div th:replace="shards/pager :: pager"></div>
         <div th:if="${!#lists.isEmpty(moneyTransferAuditData)}"></div>
     </div>
 </div>
