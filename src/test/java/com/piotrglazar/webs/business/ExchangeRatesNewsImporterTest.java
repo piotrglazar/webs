@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 
+import static com.piotrglazar.webs.TestUtilities.toListToBlocking;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
@@ -50,7 +51,7 @@ public class ExchangeRatesNewsImporterTest {
         final Observable<ExchangeRatesNews> news = newsImporter.fetchNews();
 
         // then
-        final List<ExchangeRatesNews> newsList = news.toList().toBlocking().first(); // TODO utility method
+        final List<ExchangeRatesNews> newsList = toListToBlocking(news);
         assertThat(newsList).hasSize(1);
         assertThat(newsList.get(0).getHeadline()).isEqualTo("Exchange rates");
         assertThat(newsList.get(0).getBody()).contains("PLN / USD: 10");
@@ -60,6 +61,24 @@ public class ExchangeRatesNewsImporterTest {
     public void shouldProvideExchangeRatesNews() {
         // expect
         assertThat(newsImporter.provides()).isEqualTo(ExchangeRatesNews.class);
+    }
+
+    @Test
+    public void shouldFetchExchangeRates() {
+        // given
+        given(restTemplate.getForEntity(any(URI.class), eq(ExchangeRateResponse.class))).willReturn(responseEntity(exchangeRateResponse()));
+        given(websTemplates.exchangeRatesNewsBody(any(ExchangeRateDto.class))).willReturn("PLN / USD: 10");
+
+        // when
+        final Observable<ExchangeRateDto> exchangeRates = newsImporter.fetchExchangeRates();
+
+        // then
+        final List<ExchangeRateDto> exchangeRatesList = toListToBlocking(exchangeRates);
+        assertThat(exchangeRatesList).hasSize(1);
+        assertThat(exchangeRatesList.get(0).getBase()).isEqualTo("USD");
+        assertThat(exchangeRatesList.get(0).getRates())
+                .containsEntry("PLN", BigDecimal.TEN)
+                .hasSize(1);
     }
 
     private ResponseEntity<ExchangeRateResponse> responseEntity(final ExchangeRateResponse exchangeRateResponse) {

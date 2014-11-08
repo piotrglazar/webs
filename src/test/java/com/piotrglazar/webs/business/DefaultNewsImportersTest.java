@@ -14,6 +14,7 @@ import rx.Observable;
 
 import java.util.List;
 
+import static com.piotrglazar.webs.TestUtilities.toListToBlocking;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -59,7 +60,7 @@ public class DefaultNewsImportersTest {
 
     private void assertThatAllNewsAreFetched() {
         verify(newsImportingStrategy).saveAllNews(allNewsObservable.capture());
-        final List<? extends WebsNews> allNews = allNewsObservable.getValue().toList().toBlocking().first();
+        final List<? extends WebsNews> allNews = toListToBlocking(allNewsObservable.getValue());
         assertThat(allNews).hasSize(4);
     }
 

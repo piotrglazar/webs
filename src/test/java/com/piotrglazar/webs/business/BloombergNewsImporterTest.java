@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.piotrglazar.webs.TestUtilities.toListToBlocking;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyList;
@@ -79,7 +80,7 @@ public class BloombergNewsImporterTest {
         final Observable<BloombergNews> news = bloombergNewsImporter.fetchNews();
 
         // then
-        final List<BloombergNews> newsList = news.toList().toBlocking().first();
+        final List<BloombergNews> newsList = toListToBlocking(news);
         assertThat(newsList).hasSize(1);
         final BloombergNews bloombergNews = newsList.get(0);
         assertThat(bloombergNews.getHeadline()).isEqualTo("Latest news from Bloomberg");

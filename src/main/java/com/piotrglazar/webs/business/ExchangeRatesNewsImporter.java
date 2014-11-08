@@ -39,12 +39,15 @@ public class ExchangeRatesNewsImporter implements NewsImporter {
 
     @Override
     public Observable<ExchangeRatesNews> fetchNews() {
-        return Observable.create((Observable.OnSubscribe<ExchangeRatesNews>) subscriber -> {
-                final ResponseEntity<ExchangeRateResponse> entity = restTemplate.getForEntity(requestUri, ExchangeRateResponse.class);
-                final ExchangeRateDto exchangeRates = getExchangeRates(entity.getBody());
-                subscriber.onNext(new ExchangeRatesNews("Exchange rates", websTemplates.exchangeRatesNewsBody(exchangeRates)));
-                subscriber.onCompleted();
-            });
+        return fetchExchangeRates().map(e -> new ExchangeRatesNews("Exchange rates", websTemplates.exchangeRatesNewsBody(e)));
+    }
+
+    public Observable<ExchangeRateDto> fetchExchangeRates() {
+        return Observable.create((Observable.OnSubscribe<ExchangeRateDto>) subscriber -> {
+            final ResponseEntity<ExchangeRateResponse> entity = restTemplate.getForEntity(requestUri, ExchangeRateResponse.class);
+            subscriber.onNext(getExchangeRates(entity.getBody()));
+            subscriber.onCompleted();
+        });
     }
 
     private ExchangeRateDto getExchangeRates(final ExchangeRateResponse exchangeRateResponse) {
