@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.piotrglazar.webs.TestUtilities.toListToBlocking;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -101,7 +102,7 @@ public class DefaultMoneyTransferAuditProviderTest {
         final Observable<MoneyTransferAuditUserDto> transferHistory = provider.findTransferHistory("user");
 
         // then
-        final List<MoneyTransferAuditUserDto> dto = transferHistory.toList().toBlocking().first();
+        final List<MoneyTransferAuditUserDto> dto = toListToBlocking(transferHistory);
         // there are two page objects
         assertThat(dto).hasSize(2);
     }

@@ -9,6 +9,7 @@ import rx.Observable;
 
 import java.util.List;
 
+import static com.piotrglazar.webs.TestUtilities.toListToBlocking;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BloombergNewsImporterContextTest extends AbstractContextTest {
@@ -25,7 +26,7 @@ public class BloombergNewsImporterContextTest extends AbstractContextTest {
         final Observable<BloombergNews> news = bloombergNewsImporter.fetchNews();
 
         // then
-        final List<BloombergNews> newsList = news.toList().toBlocking().first();
+        final List<BloombergNews> newsList = toListToBlocking(news);
         assertThat(newsList).hasSize(1);
         // five indices from stock exchange and others
         assertThat(newsList.get(0).getBody().split("\n")).hasSize(15);
