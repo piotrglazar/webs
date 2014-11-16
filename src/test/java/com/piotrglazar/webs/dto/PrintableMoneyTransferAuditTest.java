@@ -1,5 +1,6 @@
 package com.piotrglazar.webs.dto;
 
+import com.piotrglazar.webs.business.utils.Currency;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -19,6 +20,7 @@ public class PrintableMoneyTransferAuditTest {
                 .kind(MoneyTransferAuditUserDto.Kind.INCOMING)
                 .success(true)
                 .userId(1001)
+                .currency(Currency.GBP)
                 .build();
 
         // when
@@ -26,7 +28,7 @@ public class PrintableMoneyTransferAuditTest {
 
         // then
         assertThat(printableMoneyTransferAudit.getMessage())
-                .isEqualTo("On 2014-10-15T00:00 you have received 777.7 from user 1001 to account 123 - Success");
+                .isEqualTo("On 2014-10-15T00:00 you have received 777.7 GBP from user 1001 to account 123 - Success");
     }
 
     @Test
@@ -39,6 +41,7 @@ public class PrintableMoneyTransferAuditTest {
                 .kind(MoneyTransferAuditUserDto.Kind.OUTGOING)
                 .success(false)
                 .userId(1001)
+                .currency(Currency.PLN)
                 .build();
 
         // when
@@ -46,6 +49,6 @@ public class PrintableMoneyTransferAuditTest {
 
         // then
         assertThat(printableMoneyTransferAudit.getMessage())
-                .isEqualTo("On 2014-10-15T00:00 you have sent 777.7 to user 1001 from account 123 - Failure");
+                .isEqualTo("On 2014-10-15T00:00 you have sent 777.7 PLN to user 1001 from account 123 - Failure");
     }
 }

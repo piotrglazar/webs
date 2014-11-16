@@ -1,5 +1,7 @@
 package com.piotrglazar.webs.business;
 
+import com.piotrglazar.webs.business.utils.Currency;
+
 import javax.annotation.concurrent.Immutable;
 import java.math.BigDecimal;
 
@@ -13,9 +15,10 @@ public final class MoneyTransferParams {
     private final BigDecimal amount;
     private final Long receivingUserId;
     private final String receivingUsername;
+    private final Currency currency;
 
     public MoneyTransferParams(String username, String email, Long fromAccount, Long toAccount, BigDecimal amount, Long receivingUserId,
-                               String receivingUsername) {
+                               String receivingUsername, Currency currency) {
         this.username = username;
         this.email = email;
         this.fromAccount = fromAccount;
@@ -23,6 +26,7 @@ public final class MoneyTransferParams {
         this.amount = amount;
         this.receivingUserId = receivingUserId;
         this.receivingUsername = receivingUsername;
+        this.currency = currency;
     }
 
     public String getUsername() {
@@ -51,5 +55,9 @@ public final class MoneyTransferParams {
 
     public String getReceivingUsername() {
         return receivingUsername;
+    }
+
+    public Currency getCurrency() {
+        return currency;
     }
 }

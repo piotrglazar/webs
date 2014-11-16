@@ -193,12 +193,12 @@ public class AccountsControllerTest {
         assertThat(auditData.getFilename()).contains("user");
         assertThat(auditData.getContent()).hasSize(1);
         assertThat(auditData.getContent().get(0)).contains(dto.getAccountId().toString(), dto.getAmount().toString(),
-                dto.getUserId().toString());
+                dto.getUserId().toString(), dto.getCurrency().toString());
     }
 
     private MoneyTransferAuditUserDto arbitraryMoneyTransferAuditUserDto() {
         return new MoneyTransferAuditUserDto(MoneyTransferAuditUserDto.Kind.INCOMING, 123L, BigDecimal.TEN, Boolean.TRUE,
-                LocalDateTime.of(2014, 10, 14, 0, 0), 10001L);
+                LocalDateTime.of(2014, 10, 14, 0, 0), 10001L, Currency.GBP);
     }
 
     private List<AccountDto> createAccount() {

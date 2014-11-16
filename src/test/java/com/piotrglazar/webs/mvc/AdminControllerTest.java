@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.piotrglazar.webs.business.utils.Currency.GBP;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyObject;
@@ -140,8 +141,8 @@ public class AdminControllerTest {
     private List<MoneyTransferAuditAdminDto> someMoneyTransferAuditDtos() {
         return Lists.newArrayList(
                 new MoneyTransferAuditAdminDto(
-                        new MoneyTransferAudit(1L, 10L, 11L, BigDecimal.TEN, true, LocalDateTime.of(2014, 5, 25, 22, 3), 100L)),
+                        new MoneyTransferAudit(1L, 10L, 11L, BigDecimal.TEN, true, LocalDateTime.of(2014, 5, 25, 22, 3), 100L, GBP)),
                 new MoneyTransferAuditAdminDto(
-                        new MoneyTransferAudit(5L, 20L, 25L, BigDecimal.ONE, false, LocalDateTime.of(2014, 5, 2, 2, 3), 200L)));
+                        new MoneyTransferAudit(5L, 20L, 25L, BigDecimal.ONE, false, LocalDateTime.of(2014, 5, 2, 2, 3), 200L, GBP)));
     }
 }

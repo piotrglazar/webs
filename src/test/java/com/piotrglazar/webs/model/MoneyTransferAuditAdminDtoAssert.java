@@ -1,5 +1,6 @@
 package com.piotrglazar.webs.model;
 
+import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.dto.MoneyTransferAuditAdminDto;
 import org.assertj.core.api.Assertions;
 
@@ -45,6 +46,11 @@ public class MoneyTransferAuditAdminDtoAssert {
 
     public MoneyTransferAuditAdminDtoAssert hasDate(LocalDateTime date) {
         Assertions.assertThat(that.getDate()).isEqualTo(date);
+        return this;
+    }
+
+    public MoneyTransferAuditAdminDtoAssert hasCurrency(final Currency currency) {
+        Assertions.assertThat(that.getCurrency()).isEqualTo(currency);
         return this;
     }
 }

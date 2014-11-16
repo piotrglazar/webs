@@ -2,6 +2,7 @@ package com.piotrglazar.webs.model;
 
 import com.piotrglazar.webs.MoneyTransferAuditProvider;
 import com.piotrglazar.webs.UserProvider;
+import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.dto.MoneyTransferAuditAdminDto;
 import com.piotrglazar.webs.dto.MoneyTransferAuditUserDto;
 import com.piotrglazar.webs.dto.MoneyTransferAuditUserDtoFactory;
@@ -42,16 +43,17 @@ class DefaultMoneyTransferAuditProvider implements MoneyTransferAuditProvider {
 
     @Override
     public void auditMoneyTransfer(Long sendingUserId, Long sendingAccountId, Long receivingAccountId, BigDecimal amount,
-                                   Boolean success, LocalDateTime date, Long receivingUserId) {
+                                   Boolean success, LocalDateTime date, Long receivingUserId, Currency currency) {
         final MoneyTransferAudit audit = new MoneyTransferAuditBuilder()
-                                                .sendingUserId(sendingUserId)
-                                                .sendingAccountId(sendingAccountId)
-                                                .receivingAccountId(receivingAccountId)
-                                                .amount(amount)
-                                                .success(success)
-                                                .date(date)
-                                                .receivingUserId(receivingUserId)
-                                                .build();
+            .sendingUserId(sendingUserId)
+            .sendingAccountId(sendingAccountId)
+            .receivingAccountId(receivingAccountId)
+            .amount(amount)
+            .success(success)
+            .date(date)
+            .receivingUserId(receivingUserId)
+            .currency(currency)
+            .build();
 
         repository.saveAndFlush(audit);
     }

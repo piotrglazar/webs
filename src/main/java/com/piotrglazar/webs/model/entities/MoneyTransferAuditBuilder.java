@@ -1,5 +1,7 @@
 package com.piotrglazar.webs.model.entities;
 
+import com.piotrglazar.webs.business.utils.Currency;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -13,6 +15,7 @@ public class MoneyTransferAuditBuilder {
     private BigDecimal amount = BigDecimal.ZERO;
     private boolean success = true;
     private LocalDateTime date = LocalDateTime.of(2014, 8, 31, 0, 0);
+    private Currency currency = Currency.PLN;
 
     public MoneyTransferAuditBuilder id(final long id) {
         this.id = id;
@@ -54,9 +57,14 @@ public class MoneyTransferAuditBuilder {
         return this;
     }
 
+    public MoneyTransferAuditBuilder currency(final Currency currency) {
+        this.currency = currency;
+        return this;
+    }
+
     public MoneyTransferAudit build() {
         final MoneyTransferAudit audit = new MoneyTransferAudit(sendingUserId, sendingAccountId, receivingAccountId, amount, success, date,
-                receivingUserId);
+                receivingUserId, currency);
         if (id != 0) {
             audit.setId(id);
         }

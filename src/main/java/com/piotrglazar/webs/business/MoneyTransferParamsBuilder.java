@@ -1,5 +1,7 @@
 package com.piotrglazar.webs.business;
 
+import com.piotrglazar.webs.business.utils.Currency;
+
 import java.math.BigDecimal;
 
 public class MoneyTransferParamsBuilder {
@@ -11,6 +13,7 @@ public class MoneyTransferParamsBuilder {
     private BigDecimal amount = BigDecimal.ZERO;
     private long receivingUserId;
     private String receivingUsername = "";
+    private Currency currency = Currency.PLN;
 
     public MoneyTransferParamsBuilder username(final String username) {
         this.username = username;
@@ -47,7 +50,12 @@ public class MoneyTransferParamsBuilder {
         return this;
     }
 
+    public MoneyTransferParamsBuilder currency(final Currency currency) {
+        this.currency = currency;
+        return this;
+    }
+
     public MoneyTransferParams build() {
-        return new MoneyTransferParams(username, email, fromAccount, toAccount, amount, receivingUserId, receivingUsername);
+        return new MoneyTransferParams(username, email, fromAccount, toAccount, amount, receivingUserId, receivingUsername, currency);
     }
 }

@@ -1,6 +1,7 @@
 package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.UserProvider;
+import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.model.entities.Account;
 import com.piotrglazar.webs.model.entities.WebsUser;
 import com.piotrglazar.webs.model.entities.WebsUserBuilder;
@@ -14,7 +15,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -41,6 +41,7 @@ public class MoneyTransferParamsFactoryTest {
         final WebsUser sender = new WebsUserBuilder().email("email").build();
         final WebsUser receiver = new WebsUserBuilder().id(1000).build();
         given(receivingAccount.getId()).willReturn(2L);
+        given(receivingAccount.getCurrency()).willReturn(Currency.GBP);
         given(accountRepository.findByNumber("abc")).willReturn(receivingAccount);
         given(userProvider.getUserByUsername("user")).willReturn(sender);
         given(moneyAmountBuilder.fromIntegralAndFractionalParts(123, 45)).willReturn(new BigDecimal("123.45"));
@@ -50,11 +51,13 @@ public class MoneyTransferParamsFactoryTest {
         final MoneyTransferParams params = factory.create("user", transferForm);
 
         // then
-        assertThat(params.getFromAccount()).isEqualTo(1L);
-        assertThat(params.getToAccount()).isEqualTo(2L);
-        assertThat(params.getUsername()).isEqualTo("user");
-        assertThat(params.getAmount()).isEqualByComparingTo("123.45");
-        assertThat(params.getReceivingUserId()).isEqualTo(1000);
+        MoneyTransferParamsAssert.assertThat(params)
+                .hasFromAccount(1)
+                .hasToAccount(2)
+                .hasUsername("user")
+                .hasAmount("123.45")
+                .hasReceivingUserId(1000)
+                .hasCurrency(Currency.GBP);
     }
 
     private TransferForm transferFormWith(final String accountNumber, final long integralPart, final long fractionalPart) {

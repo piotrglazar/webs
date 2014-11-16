@@ -1,6 +1,7 @@
 package com.piotrglazar.webs;
 
 import com.google.common.collect.Lists;
+import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.dto.BloombergNewsBody;
 import com.piotrglazar.webs.util.templates.WebsTemplates;
 import org.junit.Test;
@@ -18,7 +19,7 @@ public class WebsTemplatesTest extends AbstractContextTest {
     @Test
     public void shouldWriteMessage() {
         // when
-        final String template = websTemplates.mailMessage("user", 1L, 2L, BigDecimal.TEN, "receivingUser");
+        final String template = websTemplates.mailMessage("user", 1L, 2L, BigDecimal.TEN, "receivingUser", Currency.GBP);
 
         // then
         assertThat(template)

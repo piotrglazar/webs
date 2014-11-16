@@ -1,5 +1,6 @@
 package com.piotrglazar.webs.util.templates;
 
+import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.dto.BloombergNewsBody;
 import com.piotrglazar.webs.dto.ExchangeRateDto;
 import com.piotrglazar.webs.util.MoreCollectors;
@@ -26,11 +27,11 @@ public class WebsTemplates {
     }
 
     public String mailMessage(final String username, final Long fromAccountId, final Long toAccountId, final BigDecimal amount,
-                              final String receivingUsername) {
+                              final String receivingUsername, final Currency currency) {
         final VelocityContext context = new VelocityContext();
         context.put("user", username);
         context.put("fromAccount", fromAccountId);
-        context.put("amount", amount);
+        context.put("amount", String.format("%s %s", amount, currency));
         context.put("toAccount", toAccountId);
         context.put("receivingUser", receivingUsername);
         final Template template = velocityEngine.getTemplate(PREFIX + "moneyTransfer.vm");

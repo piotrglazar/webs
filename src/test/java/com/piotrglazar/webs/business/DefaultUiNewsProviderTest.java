@@ -1,6 +1,5 @@
 package com.piotrglazar.webs.business;
 
-import com.google.common.collect.Lists;
 import com.piotrglazar.webs.WebsNewsProvider;
 import com.piotrglazar.webs.dto.NewsDto;
 import com.piotrglazar.webs.model.entities.InternalWebsNews;
@@ -12,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Collection;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
@@ -27,7 +27,7 @@ public class DefaultUiNewsProviderTest {
     @Test
     public void shouldConvertNewsToNewsDto() {
         // given
-        given(websNewsProvider.getNews()).willReturn(Lists.newArrayList(new InternalWebsNews("head", "body", "url", "urlText", "imgContent")));
+        given(websNewsProvider.getNews()).willReturn(newArrayList(new InternalWebsNews("head", "body", "url", "urlText", "imgContent")));
 
         // when
         final Collection<NewsDto> uiNews = uiNewsProvider.getNews();
@@ -35,10 +35,11 @@ public class DefaultUiNewsProviderTest {
         // then
         assertThat(uiNews).hasSize(1);
         final NewsDto news = uiNews.iterator().next();
-        assertThat(news.getHeadline()).isEqualTo("head");
-        assertThat(news.getBody()).isEqualTo("body");
-        assertThat(news.getUrl()).isEqualTo("url");
-        assertThat(news.getUrlText()).isEqualTo("urlText");
-        assertThat(news.getImgContent()).isEqualTo("imgContent");
+        NewsDtoAssert.assertThat(news)
+            .hasHeadline("head")
+            .hasBody("body")
+            .hasUrl("url")
+            .hasUrlText("urlText")
+            .hasImgContent("imgContent");
     }
 }
