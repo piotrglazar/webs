@@ -1,5 +1,6 @@
 package com.piotrglazar.webs.dto;
 
+import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.model.entities.MoneyTransferAudit;
 
 import javax.annotation.concurrent.Immutable;
@@ -16,6 +17,7 @@ public final class MoneyTransferAuditAdminDto {
     private final BigDecimal amount;
     private final Boolean success;
     private final LocalDateTime date;
+    private final Currency currency;
 
     public MoneyTransferAuditAdminDto(MoneyTransferAudit audit) {
         this.sendingUserId = audit.getSendingUserId();
@@ -25,6 +27,7 @@ public final class MoneyTransferAuditAdminDto {
         this.amount = audit.getAmount();
         this.success = audit.getSuccess();
         this.date = audit.getDate();
+        this.currency = audit.getCurrency();
     }
 
     public Long getSendingUserId() {
@@ -53,5 +56,9 @@ public final class MoneyTransferAuditAdminDto {
 
     public Long getReceivingUserId() {
         return receivingUserId;
+    }
+
+    public Currency getCurrency() {
+        return currency;
     }
 }

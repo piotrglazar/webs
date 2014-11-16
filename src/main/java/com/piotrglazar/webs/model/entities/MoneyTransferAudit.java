@@ -1,6 +1,7 @@
 package com.piotrglazar.webs.model.entities;
 
 import com.google.common.base.Objects;
+import com.piotrglazar.webs.business.utils.Currency;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,12 +31,14 @@ public final class MoneyTransferAudit {
 
     private LocalDateTime date;
 
+    private Currency currency;
+
     public MoneyTransferAudit() {
 
     }
 
     public MoneyTransferAudit(Long sendingUserId, Long sendingAccountId, Long receivingAccountId, BigDecimal amount,
-                              Boolean success, LocalDateTime date, Long receivingUserId) {
+                              Boolean success, LocalDateTime date, Long receivingUserId, Currency currency) {
         this.sendingUserId = sendingUserId;
         this.sendingAccountId = sendingAccountId;
         this.receivingAccountId = receivingAccountId;
@@ -43,6 +46,7 @@ public final class MoneyTransferAudit {
         this.success = success;
         this.date = date;
         this.receivingUserId = receivingUserId;
+        this.currency = currency;
     }
 
     public Boolean getSuccess() {
@@ -107,6 +111,14 @@ public final class MoneyTransferAudit {
 
     public void setReceivingUserId(final Long receivingUserId) {
         this.receivingUserId = receivingUserId;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(final Currency currency) {
+        this.currency = currency;
     }
 
     @Override

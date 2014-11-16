@@ -1,5 +1,7 @@
 package com.piotrglazar.webs.dto;
 
+import com.piotrglazar.webs.business.utils.Currency;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -10,24 +12,24 @@ public class PrintableMoneyTransferAudit {
     private final String message;
 
     public PrintableMoneyTransferAudit(Kind kind, Long userId, BigDecimal amount, Boolean success,
-                                       LocalDateTime date, Long accountId) {
-        final StringBuilder builder = buildMessage(kind, userId, amount, success, date, accountId);
+                                       LocalDateTime date, Long accountId, Currency currency) {
+        final StringBuilder builder = buildMessage(kind, userId, amount, success, date, accountId, currency);
         this.message = builder.toString();
     }
 
     private StringBuilder buildMessage(Kind kind, Long userId, BigDecimal amount, Boolean success,
-                                       LocalDateTime date, Long accountId) {
+                                       LocalDateTime date, Long accountId, Currency currency) {
         final StringBuilder builder = new StringBuilder();
         addTimeMessage(builder, date);
         addKindMessage(builder, kind);
-        addAmountMessage(builder, amount);
+        addAmountMessage(builder, amount, currency);
         addUserMessage(builder, userId, kind);
         addAccountMessage(builder, accountId, kind);
         addSuccessMessage(builder, success);
         return builder;
     }
 
-    private void addSuccessMessage(final StringBuilder builder, final Boolean success) {
+    private void addSuccessMessage(StringBuilder builder, Boolean success) {
         if (success) {
             builder.append(" - Success");
         } else {
@@ -35,7 +37,7 @@ public class PrintableMoneyTransferAudit {
         }
     }
 
-    private void addAccountMessage(final StringBuilder builder, final Long accountId, final Kind kind) {
+    private void addAccountMessage(StringBuilder builder, Long accountId, Kind kind) {
         kindRelatedMessages(builder, kind, " to ", " from ");
         builder
             .append("account ")
@@ -52,25 +54,27 @@ public class PrintableMoneyTransferAudit {
         }
     }
 
-    private void addUserMessage(final StringBuilder builder, final Long userId, final Kind kind) {
+    private void addUserMessage(StringBuilder builder, Long userId, Kind kind) {
         kindRelatedMessages(builder, kind, " from ", " to ");
         builder
             .append("user ")
             .append(userId);
     }
 
-    private void addAmountMessage(final StringBuilder builder, final BigDecimal amount) {
+    private void addAmountMessage(StringBuilder builder, BigDecimal amount, Currency currency) {
         builder
             .append(" ")
-            .append(amount);
+            .append(amount)
+            .append(" ")
+            .append(currency);
     }
 
-    private void addKindMessage(final StringBuilder builder, final Kind kind) {
+    private void addKindMessage(StringBuilder builder, Kind kind) {
         builder.append(" you have ");
         kindRelatedMessages(builder, kind, "received", "sent");
     }
 
-    private void addTimeMessage(final StringBuilder builder, final LocalDateTime date) {
+    private void addTimeMessage(StringBuilder builder, LocalDateTime date) {
         builder
             .append("On ")
             .append(date);
@@ -87,6 +91,6 @@ public class PrintableMoneyTransferAudit {
 
     public static PrintableMoneyTransferAudit from(MoneyTransferAuditUserDto dto) {
         return new PrintableMoneyTransferAudit(dto.getKind(), dto.getUserId(), dto.getAmount(), dto.getSuccess(), dto.getDate(),
-                dto.getAccountId());
+                dto.getAccountId(), dto.getCurrency());
     }
 }

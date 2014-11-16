@@ -21,6 +21,7 @@ public class MoneyTransferAuditUserDtoFactory {
                 .success(moneyTransferAudit.getSuccess())
                 .date(moneyTransferAudit.getDate())
                 .accountId(accountId)
+                .currency(moneyTransferAudit.getCurrency())
                 .build();
     }
 

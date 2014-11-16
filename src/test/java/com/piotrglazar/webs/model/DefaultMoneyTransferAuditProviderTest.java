@@ -3,6 +3,7 @@ package com.piotrglazar.webs.model;
 
 import com.google.common.collect.Lists;
 import com.piotrglazar.webs.UserProvider;
+import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.dto.MoneyTransferAuditAdminDto;
 import com.piotrglazar.webs.dto.MoneyTransferAuditUserDto;
 import com.piotrglazar.webs.dto.MoneyTransferAuditUserDtoBuilder;
@@ -142,10 +143,11 @@ public class DefaultMoneyTransferAuditProviderTest {
                 .hasSendingAccountId(audit.getSendingAccountId())
                 .hasSendingUserId(audit.getSendingUserId())
                 .hasSuccess(audit.getSuccess())
-                .hasDate(audit.getDate());
+                .hasDate(audit.getDate())
+                .hasCurrency(audit.getCurrency());
     }
 
     private MoneyTransferAudit moneyTransferAuditEntry() {
-        return new MoneyTransferAudit(123L, 10L, 15L, BigDecimal.ONE, true, LocalDateTime.of(2014, 5, 26, 22, 28), 100L);
+        return new MoneyTransferAudit(123L, 10L, 15L, BigDecimal.ONE, true, LocalDateTime.of(2014, 5, 26, 22, 28), 100L, Currency.GBP);
     }
 }

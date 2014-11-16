@@ -2,6 +2,7 @@ package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.MoneyTransferAuditProvider;
 import com.piotrglazar.webs.UserProvider;
+import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.model.entities.WebsUser;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.junit.Before;
@@ -68,7 +69,7 @@ public class MoneyTransferAspectTest {
 
         // then
         verify(auditProvider).auditMoneyTransfer(-1L, params.getFromAccount(), params.getToAccount(), params.getAmount(), true,
-                localDateTimeSupplier.get(), params.getReceivingUserId());
+                localDateTimeSupplier.get(), params.getReceivingUserId(), Currency.GBP);
     }
 
     @Test
@@ -83,7 +84,7 @@ public class MoneyTransferAspectTest {
 
         // then
         verify(auditProvider).auditMoneyTransfer(555L, params.getFromAccount(), params.getToAccount(), params.getAmount(), true,
-                localDateTimeSupplier.get(), params.getReceivingUserId());
+                localDateTimeSupplier.get(), params.getReceivingUserId(), Currency.GBP);
     }
 
     @Test
@@ -99,10 +100,10 @@ public class MoneyTransferAspectTest {
 
         // then
         verify(auditProvider).auditMoneyTransfer(555L, params.getFromAccount(), params.getToAccount(), params.getAmount(), false,
-                localDateTimeSupplier.get(), params.getReceivingUserId());
+                localDateTimeSupplier.get(), params.getReceivingUserId(), Currency.GBP);
     }
 
     private MoneyTransferParams moneyTransferParams() {
-        return new MoneyTransferParams("user", "u@u.pl", 123L, 321L, new BigDecimal("15"), 1L, "user2");
+        return new MoneyTransferParams("user", "u@u.pl", 123L, 321L, new BigDecimal("15"), 1L, "user2", Currency.GBP);
     }
 }

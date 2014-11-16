@@ -32,7 +32,7 @@
                         <td th:case="OUTGOING" class="text-center" th:text="'From account ' + ${moneyTransferAudit.accountId}">From account</td>
                         <td th:case="*" class="text-center">Unknown</td>
                     </div>
-                    <td th:text="${moneyTransferAudit.amount}" class="text-center">Amount</td>
+                    <td th:text="${moneyTransferAudit.amount} + ' ' + ${moneyTransferAudit.currency}" class="text-center">Amount</td>
                     <td th:text="${moneyTransferAudit.success}" class="text-center">Success</td>
                     <td th:text="${{moneyTransferAudit.date}}" class="text-center">Date</td>
                 </tr>

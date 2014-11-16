@@ -1,5 +1,7 @@
 package com.piotrglazar.webs.dto;
 
+import com.piotrglazar.webs.business.utils.Currency;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -10,6 +12,7 @@ public class MoneyTransferAuditUserDtoBuilder {
     private boolean success;
     private LocalDateTime date = LocalDateTime.of(2014, 8, 31, 0, 0);
     private long accountId;
+    private Currency currency = Currency.PLN;
 
     public MoneyTransferAuditUserDtoBuilder kind(final MoneyTransferAuditUserDto.Kind kind) {
         this.kind = kind;
@@ -41,7 +44,12 @@ public class MoneyTransferAuditUserDtoBuilder {
         return this;
     }
 
+    public MoneyTransferAuditUserDtoBuilder currency(final Currency currency) {
+        this.currency = currency;
+        return this;
+    }
+
     public MoneyTransferAuditUserDto build() {
-        return new MoneyTransferAuditUserDto(kind, userId, amount, success, date, accountId);
+        return new MoneyTransferAuditUserDto(kind, userId, amount, success, date, accountId, currency);
     }
 }

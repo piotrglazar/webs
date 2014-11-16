@@ -1,5 +1,6 @@
 package com.piotrglazar.webs.business;
 
+import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.util.templates.WebsTemplates;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,8 +36,17 @@ public class BusinessMailSenderTest {
     @Test
     public void shouldSendMessage() {
         // given
-        given(websTemplates.mailMessage("user", 1234L, 4321L, BigDecimal.valueOf(5555), "user2")).willReturn("mailmessage");
-        final MoneyTransferParams params = new MoneyTransferParams("user", "email", 1234L, 4321L, BigDecimal.valueOf(5555), 1L, "user2");
+        given(websTemplates.mailMessage("user", 1234L, 4321L, BigDecimal.valueOf(5555), "user2", Currency.GBP)).willReturn("mailmessage");
+        final MoneyTransferParams params = new MoneyTransferParamsBuilder()
+                .username("user")
+                .email("email")
+                .fromAccount(1234L)
+                .toAccount(4321L)
+                .amount(BigDecimal.valueOf(5555))
+                .receivingUserId(1L)
+                .receivingUsername("user2")
+                .currency(Currency.GBP)
+                .build();
 
         // when
         businessMailSender.sendMoneyTransferMessage(params);
