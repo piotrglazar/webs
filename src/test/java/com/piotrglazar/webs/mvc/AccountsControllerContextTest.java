@@ -81,7 +81,7 @@ public class AccountsControllerContextTest extends AbstractContextTest {
     @Test
     public void shouldCreateAccount() throws Exception {
         // before
-        List<String> validAccountNumbers = getAccountNumbersAlreadyInDb();
+        final List<String> validAccountNumbers = getAccountNumbersAlreadyInDb();
 
         // given
         final MockHttpSession authenticate = Utils.authenticate(mockMvc);

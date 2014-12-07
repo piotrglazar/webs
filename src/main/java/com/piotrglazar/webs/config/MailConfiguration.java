@@ -69,12 +69,10 @@ public class MailConfiguration {
         return message;
     }
 
-    @Bean(name = "moneyTransferMessage")
-    public SimpleMailMessage moneyTransferMessage() {
+    @Bean(name = "websMessageTemplate")
+    public SimpleMailMessage websMessageTemplate() {
         final SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(mailUsername);
-        message.setSubject("Money transfer");
-        message.setText("Money transfer details");
         message.setTo("piotr.glazar@gmail.com");
         return message;
     }

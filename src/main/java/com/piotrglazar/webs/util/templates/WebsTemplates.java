@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.StringWriter;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.util.List;
 
 @Component
@@ -26,33 +27,38 @@ public class WebsTemplates {
         this.velocityEngine = velocityEngine;
     }
 
-    public String mailMessage(final String username, final Long fromAccountId, final Long toAccountId, final BigDecimal amount,
-                              final String receivingUsername, final Currency currency) {
+    public String moneyTransferMailMessage(final String username, final Long fromAccountId, final Long toAccountId, final BigDecimal amount,
+                                           final String receivingUsername, final Currency currency) {
         final VelocityContext context = new VelocityContext();
         context.put("user", username);
         context.put("fromAccount", fromAccountId);
         context.put("amount", String.format("%s %s", amount, currency));
         context.put("toAccount", toAccountId);
         context.put("receivingUser", receivingUsername);
-        final Template template = velocityEngine.getTemplate(PREFIX + "moneyTransfer.vm");
-        final StringWriter writer = new StringWriter();
-        template.merge(context, writer);
-        return writer.toString();
+        return fillInTemplate(context, "moneyTransfer.vm");
     }
 
     public String bloombergNewsBody(final List<BloombergNewsBody> bloombergNewBodies) {
         final VelocityContext context = new VelocityContext();
         context.put("tickers", bloombergNewBodies.stream().map(BloombergNewsBody::asMap).collect(MoreCollectors.toImmutableList()));
-        final Template template = velocityEngine.getTemplate(PREFIX + "bloombergNewsBody.vm");
-        final StringWriter writer = new StringWriter();
-        template.merge(context, writer);
-        return writer.toString();
+        return fillInTemplate(context, "bloombergNewsBody.vm");
     }
 
     public String exchangeRatesNewsBody(final ExchangeRateDto exchangeRate) {
         final VelocityContext context = new VelocityContext();
         context.put("exchangeRate", exchangeRate);
-        final Template template = velocityEngine.getTemplate(PREFIX + "exchangeRatesNewsBody.vm");
+        return fillInTemplate(context, "exchangeRatesNewsBody.vm");
+    }
+
+    public String passwordResetMailMessage(final String username, final URL passwordResetUrl) {
+        final VelocityContext context = new VelocityContext();
+        context.put("username", username);
+        context.put("passwordResetUrl", passwordResetUrl);
+        return fillInTemplate(context, "passwordResetMessage.vm");
+    }
+
+    private String fillInTemplate(final VelocityContext context, final String templateName) {
+        final Template template = velocityEngine.getTemplate(PREFIX + templateName);
         final StringWriter writer = new StringWriter();
         template.merge(context, writer);
         return writer.toString();
