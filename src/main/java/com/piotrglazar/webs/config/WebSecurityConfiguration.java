@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.lang.invoke.MethodHandles;
 
+import static com.piotrglazar.webs.config.UtilityConfiguration.PASSWORD_RESET_ROOT_URL;
+
 @Configuration
 @EnableWebMvcSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -28,9 +30,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login", "/hello", "/newUser", "/img/**", "/css/**", "/js/**", "/fonts/**", "/resources/**").permitAll()
-                .antMatchers("/admin/**").hasRole(Settings.ADMIN_ROLE_WEB)
-                .anyRequest().authenticated();
+                .antMatchers("/login", "/hello", "/newUser", "/img/**", "/css/**", "/js/**", "/fonts/**", "/resources/**",
+                        "/" + PASSWORD_RESET_ROOT_URL + "/**")
+                    .permitAll()
+                .antMatchers("/admin/**")
+                    .hasRole(Settings.ADMIN_ROLE_WEB)
+                .anyRequest()
+                    .authenticated();
         http.formLogin()
                 .loginPage("/login")
                 .permitAll()

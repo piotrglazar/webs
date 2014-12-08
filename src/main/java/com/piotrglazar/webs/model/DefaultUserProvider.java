@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 class DefaultUserProvider implements UserProvider {
 
@@ -40,12 +42,7 @@ class DefaultUserProvider implements UserProvider {
 
     @Override
     public WebsUser getUserByUsername(final String username) {
-        final WebsUser websUser = findUserByUsername(username);
-
-        if (websUser == null) {
-            throw new WebsUserNotFoundException(username);
-        }
-        return websUser;
+        return Optional.ofNullable(findUserByUsername(username)).orElseThrow(() -> new WebsUserNotFoundException(username));
     }
 
     @Override
@@ -68,5 +65,17 @@ class DefaultUserProvider implements UserProvider {
         final WebsUser websUser = getUserByUsername(username);
         final WebsUserDetails details = websUser.getDetails();
         return new UserDetailsDto(websUser.getUsername(), websUser.getEmail(), details.getAddress(), details.getMemberSince());
+    }
+
+    @Override
+    public WebsUser getUserById(final Long userId) {
+        return websUserRepository.getOne(userId);
+    }
+
+    @Override
+    @OperationLogging(operation = "updateUserPassword")
+    public void updateUserPassword(final WebsUser websUser, final String password) {
+        websUser.setPassword(passwordEncoder.encode(password));
+        websUserRepository.saveAndFlush(websUser);
     }
 }

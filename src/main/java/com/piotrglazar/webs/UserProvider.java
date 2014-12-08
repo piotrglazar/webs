@@ -18,4 +18,8 @@ public interface UserProvider {
     WebsUser findUserByAccountId(Long accountId);
 
     UserDetailsDto getUserDetails(String username);
+
+    WebsUser getUserById(Long userId);
+
+    void updateUserPassword(WebsUser websUser, String password);
 }

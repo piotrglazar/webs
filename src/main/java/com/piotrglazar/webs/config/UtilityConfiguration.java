@@ -10,6 +10,10 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class UtilityConfiguration {
 
+    public static final String PASSWORD_RESET_ROOT_URL = "resetPassword";
+    public static final String HOST = "localhost";
+    public static final int PORT = 8080;
+
     @Bean
     public PasswordEncoder websPasswordEncoder() {
         return new BCryptPasswordEncoder();

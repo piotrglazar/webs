@@ -1,10 +1,13 @@
 package com.piotrglazar.webs.business;
 
 import com.piotrglazar.webs.business.utils.Currency;
+import com.piotrglazar.webs.model.entities.WebsUser;
+import com.piotrglazar.webs.model.entities.WebsUserBuilder;
 import com.piotrglazar.webs.util.templates.WebsTemplates;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -12,14 +15,19 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static com.piotrglazar.webs.business.SimpleMailMessageAssert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 
 @RunWith(MockitoJUnitRunner.class)
 public class BusinessMailSenderTest {
+
+    @Captor
+    private ArgumentCaptor<SimpleMailMessage> captor;
 
     @Mock
     private WebsTemplates websTemplates;
@@ -34,9 +42,10 @@ public class BusinessMailSenderTest {
     private BusinessMailSender businessMailSender;
 
     @Test
-    public void shouldSendMessage() {
+    public void shouldSendMoneyTransferMessage() {
         // given
-        given(websTemplates.mailMessage("user", 1234L, 4321L, BigDecimal.valueOf(5555), "user2", Currency.GBP)).willReturn("mailmessage");
+        given(websTemplates.moneyTransferMailMessage("user", 1234L, 4321L, BigDecimal.valueOf(5555), "user2", Currency.GBP))
+                .willReturn("mailMessage");
         final MoneyTransferParams params = new MoneyTransferParamsBuilder()
                 .username("user")
                 .email("email")
@@ -52,9 +61,28 @@ public class BusinessMailSenderTest {
         businessMailSender.sendMoneyTransferMessage(params);
 
         // then
-        final ArgumentCaptor<SimpleMailMessage> captor = ArgumentCaptor.forClass(SimpleMailMessage.class);
         verify(mailSender).send(captor.capture());
-        final String messageText = captor.getValue().getText();
-        assertThat(messageText).contains("mailmessage");
+        assertThat(captor.getValue())
+            .hasMessageText("mailMessage")
+            .hasTo("email")
+            .hasSubject("Money transfer");
+    }
+
+    @Test
+    public void shouldSendPasswordResetMessage() throws MalformedURLException {
+        // given
+        final WebsUser websUser = new WebsUserBuilder().username("user").email("email").build();
+        final URL passwordResetUrl = new URL("http://localhost:8080/resetPassword");
+        given(websTemplates.passwordResetMailMessage("user", passwordResetUrl)).willReturn("mailMessage");
+
+        // when
+        businessMailSender.sendPasswordResetMessage(websUser, passwordResetUrl);
+
+        // then
+        verify(mailSender).send(captor.capture());
+        assertThat(captor.getValue())
+            .hasMessageText("mailMessage")
+            .hasSubject("Password reset")
+            .hasTo("email");
     }
 }

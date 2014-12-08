@@ -17,7 +17,7 @@ public class MailTestConfiguration {
         return mock(MailSender.class);
     }
 
-    @Bean(name = "moneyTransferMessage")
+    @Bean(name = "websMessageTemplate")
     public SimpleMailMessage testMailMessage() {
         return mock(SimpleMailMessage.class);
     }

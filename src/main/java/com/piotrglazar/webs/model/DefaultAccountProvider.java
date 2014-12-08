@@ -64,13 +64,7 @@ class DefaultAccountProvider implements AccountProvider {
 
     @Override
     public AccountDto getAccount(final String accountNumber) {
-        final Account account = accountRepository.findByNumber(accountNumber);
-
-        if (account != null) {
-            return new AccountDto(account);
-        } else {
-            return null;
-        }
+        return Optional.ofNullable(accountRepository.findByNumber(accountNumber)).map(AccountDto::new).orElse(null);
     }
 
     @Override
