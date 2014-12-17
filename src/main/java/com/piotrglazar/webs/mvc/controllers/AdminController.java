@@ -2,8 +2,8 @@ package com.piotrglazar.webs.mvc.controllers;
 
 import com.piotrglazar.webs.MoneyTransferAuditProvider;
 import com.piotrglazar.webs.NewsImporters;
-import com.piotrglazar.webs.business.InterestAccruer;
-import com.piotrglazar.webs.business.LoanRepays;
+import com.piotrglazar.webs.business.interest.InterestAccruer;
+import com.piotrglazar.webs.business.loans.LoanRepays;
 import com.piotrglazar.webs.dto.MoneyTransferAuditAdminDto;
 import com.piotrglazar.webs.util.OperationLogging;
 import org.springframework.beans.factory.annotation.Autowired;

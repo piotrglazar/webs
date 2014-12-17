@@ -1,6 +1,6 @@
 package com.piotrglazar.webs.mvc.controllers;
 
-import com.piotrglazar.webs.business.MoneyTransferException;
+import com.piotrglazar.webs.business.exceptions.MoneyTransferException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;

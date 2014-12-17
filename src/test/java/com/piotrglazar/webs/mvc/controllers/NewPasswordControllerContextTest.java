@@ -2,7 +2,7 @@ package com.piotrglazar.webs.mvc.controllers;
 
 import com.piotrglazar.webs.AbstractContextTest;
 import com.piotrglazar.webs.UserProvider;
-import com.piotrglazar.webs.business.PasswordResetTokenService;
+import com.piotrglazar.webs.business.passwordreset.PasswordResetTokenService;
 import com.piotrglazar.webs.config.Settings;
 import com.piotrglazar.webs.model.entities.PasswordResetToken;
 import com.piotrglazar.webs.model.entities.WebsUser;

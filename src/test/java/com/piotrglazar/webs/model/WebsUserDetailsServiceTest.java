@@ -11,8 +11,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import static com.googlecode.catchexception.CatchException.catchException;
-import static com.googlecode.catchexception.CatchException.caughtException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
@@ -25,15 +23,10 @@ public class WebsUserDetailsServiceTest {
     @InjectMocks
     private WebsUserDetailsService websUserDetailsService;
 
-    @Test
+    @Test(expected = UsernameNotFoundException.class)
     public void shouldThrowExceptionWhenNoSuchUserExist() {
-        // given
-
         // when
-        catchException(websUserDetailsService).loadUserByUsername("non existing user");
-
-        // then
-        assertThat((Throwable) caughtException()).isInstanceOf(UsernameNotFoundException.class);
+        websUserDetailsService.loadUserByUsername("non existing user");
     }
 
     @Test

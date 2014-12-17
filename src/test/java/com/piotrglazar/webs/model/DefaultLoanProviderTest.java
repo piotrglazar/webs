@@ -3,7 +3,7 @@ package com.piotrglazar.webs.model;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.piotrglazar.webs.UserProvider;
-import com.piotrglazar.webs.business.DefaultLoanBusinessLogic;
+import com.piotrglazar.webs.business.loans.DefaultLoanBusinessLogic;
 import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.dto.LoanDto;
 import com.piotrglazar.webs.model.entities.Account;

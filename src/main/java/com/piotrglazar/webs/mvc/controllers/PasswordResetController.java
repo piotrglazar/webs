@@ -1,6 +1,6 @@
 package com.piotrglazar.webs.mvc.controllers;
 
-import com.piotrglazar.webs.business.PasswordResetService;
+import com.piotrglazar.webs.business.passwordreset.PasswordResetService;
 import com.piotrglazar.webs.mvc.forms.PasswordResetForm;
 import com.piotrglazar.webs.mvc.validators.PasswordResetFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
