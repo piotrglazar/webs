@@ -1,9 +1,9 @@
 package com.piotrglazar.webs.mvc.controllers;
 
 import com.piotrglazar.webs.AccountProvider;
-import com.piotrglazar.webs.business.AccountMoneyTransfer;
+import com.piotrglazar.webs.business.moneytransfer.AccountMoneyTransfer;
 import com.piotrglazar.webs.business.MoneyTransferParams;
-import com.piotrglazar.webs.business.MoneyTransferParamsFactory;
+import com.piotrglazar.webs.business.moneytransfer.MoneyTransferParamsFactory;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
 import com.piotrglazar.webs.mvc.LoggedInUserProvider;
 import com.piotrglazar.webs.mvc.forms.TransferForm;

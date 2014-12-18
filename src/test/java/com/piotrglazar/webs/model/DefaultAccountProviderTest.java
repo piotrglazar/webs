@@ -24,8 +24,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
-import static com.googlecode.catchexception.CatchException.catchException;
-import static com.googlecode.catchexception.CatchException.caughtException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -106,16 +104,13 @@ public class DefaultAccountProviderTest {
         assertThat(dtos).isEmpty();
     }
 
-    @Test
+    @Test(expected = WebsUserNotFoundException.class)
     public void shouldFailWhileCreatingNewAccountForNonExistingUser() {
         // given
         given(userProvider.getUserByUsername("user")).willThrow(new WebsUserNotFoundException("user"));
 
         // when
-        catchException(accountProvider).newAccount("user", AccountType.SAVINGS, Currency.GBP);
-
-        // then
-        assertThat((Exception) caughtException()).isInstanceOf(WebsUserNotFoundException.class);
+        accountProvider.newAccount("user", AccountType.SAVINGS, Currency.GBP);
     }
 
     @Test

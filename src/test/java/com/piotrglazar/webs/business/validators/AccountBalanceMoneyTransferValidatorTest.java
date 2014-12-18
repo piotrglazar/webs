@@ -1,6 +1,6 @@
 package com.piotrglazar.webs.business.validators;
 
-import com.piotrglazar.webs.business.MoneyTransferDetails;
+import com.piotrglazar.webs.business.moneytransfer.MoneyTransferDetails;
 import org.junit.Test;
 
 import java.math.BigDecimal;

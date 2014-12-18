@@ -1,6 +1,6 @@
 package com.piotrglazar.webs.mvc.controllers;
 
-import com.piotrglazar.webs.business.PasswordResetService;
+import com.piotrglazar.webs.business.passwordreset.PasswordResetService;
 import com.piotrglazar.webs.mvc.forms.NewPasswordForm;
 import com.piotrglazar.webs.mvc.validators.NewPasswordFormFieldValidator;
 import org.junit.Test;

@@ -1,6 +1,6 @@
 package com.piotrglazar.webs.business.validators;
 
-import com.piotrglazar.webs.business.MoneyTransferDetails;
+import com.piotrglazar.webs.business.moneytransfer.MoneyTransferDetails;
 import com.piotrglazar.webs.business.utils.Currency;
 import org.junit.Test;
 
