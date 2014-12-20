@@ -83,7 +83,7 @@ public class IsolationSupportHibernateJpaDialectTest {
         verify(dataSourceUtilsWrapper).resetConnectionAfterTransaction(connection, previousIsolationLevel);
     }
 
-    private static interface SessionImplForTest extends Session {
+    private interface SessionImplForTest extends Session {
 
         Connection connection();
     }

@@ -47,8 +47,8 @@ public class DefaultLoanBusinessLogic implements LoanBusinessLogic {
         final LocalDateTime currentDate = dateSupplier.get();
 
         return loan.getPostpones().stream()
-                .map(postponeDate -> currentDate.getYear() == postponeDate.getYear() &&
-                        currentDate.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR) == postponeDate.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR))
+                .map(postponeDate -> currentDate.getYear() == postponeDate.getYear()
+                        && currentDate.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR) == postponeDate.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR))
                 .reduce(false, (a, b) -> a || b);
     }
 

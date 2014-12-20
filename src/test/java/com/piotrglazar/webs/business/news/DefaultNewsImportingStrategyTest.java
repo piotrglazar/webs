@@ -3,7 +3,6 @@ package com.piotrglazar.webs.business.news;
 import com.google.common.collect.Lists;
 import com.piotrglazar.webs.WebsNewsProvider;
 import com.piotrglazar.webs.business.NewsImporter;
-import com.piotrglazar.webs.business.news.DefaultNewsImportingStrategy;
 import com.piotrglazar.webs.model.TestWebsNews;
 import com.piotrglazar.webs.model.entities.InternalWebsNews;
 import com.piotrglazar.webs.model.entities.WebsNews;

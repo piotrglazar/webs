@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 public class LoggingAspectTest {
 
     // the same as in LoggingAspect
-    private Logger LOG = (Logger) LoggerFactory.getLogger("Operation");
+    private static final Logger LOG = (Logger) LoggerFactory.getLogger("Operation");
 
     private LoggingAspect aspect = new LoggingAspect();
 

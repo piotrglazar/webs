@@ -20,7 +20,7 @@ public class Utils {
 
     private static final HttpSessionCsrfTokenRepository TOKEN_REPOSITORY = new HttpSessionCsrfTokenRepository();
     private static final String TOKEN_NAME = "org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN";
-    private static final MockHttpServletRequest anyRequest = new MockHttpServletRequest();
+    private static final MockHttpServletRequest ANY_REQUEST = new MockHttpServletRequest();
     private static MockHttpSession authenticatedSession;
 
     public static MockHttpSession authenticate(final MockMvc mockMvc) {
@@ -61,7 +61,7 @@ public class Utils {
     }
 
     public static MockHttpServletRequestBuilder addCsrf(final MockHttpServletRequestBuilder requestBuilder) {
-        final CsrfToken token = TOKEN_REPOSITORY.generateToken(anyRequest);
+        final CsrfToken token = TOKEN_REPOSITORY.generateToken(ANY_REQUEST);
         return requestBuilder.param("_csrf", token.getToken())
                 .sessionAttr(TOKEN_NAME, token);
     }

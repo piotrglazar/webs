@@ -42,7 +42,7 @@ public class LoanRepays {
         loanRepository.save(loans);
     }
 
-    private static class LoanAndPayment {
+    private static final class LoanAndPayment {
         private final Loan loan;
         private final BigDecimal payment;
 

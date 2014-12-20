@@ -10,10 +10,10 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ScheduledInterestAccruerTest {
-    
+
     @Mock
     private InterestAccruer interestAccruer;
-    
+
     @InjectMocks
     private ScheduledInterestAccruer scheduledInterestAccruer;
 

@@ -3,7 +3,7 @@ package com.piotrglazar.webs.business;
 import org.assertj.core.api.Assertions;
 import org.springframework.mail.SimpleMailMessage;
 
-public class SimpleMailMessageAssert {
+public final class SimpleMailMessageAssert {
 
     private final SimpleMailMessage that;
 

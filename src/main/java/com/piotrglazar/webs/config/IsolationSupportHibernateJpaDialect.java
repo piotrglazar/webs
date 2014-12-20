@@ -25,10 +25,6 @@ public class IsolationSupportHibernateJpaDialect extends HibernateJpaDialect {
         this.dataSourceUtilsWrapper = dataSourceUtilsWrapper;
     }
 
-    /**
-     * This method is overridden to set custom isolation levels on the
-     * connection
-     */
     @SuppressWarnings("all")
     @Override
     public Object beginTransaction(final EntityManager entityManager, final TransactionDefinition definition) throws SQLException {
@@ -60,7 +56,7 @@ public class IsolationSupportHibernateJpaDialect extends HibernateJpaDialect {
 
     private Integer getPreviousIsolationLevel(final TransactionDefinition definition, final Connection connection) throws SQLException {
         final Integer previousIsolationLevel = dataSourceUtilsWrapper.prepareConnectionForTransaction(definition, connection);
-        if (LOG.isInfoEnabled()){
+        if (LOG.isInfoEnabled()) {
             LOG.info("The previous isolationLevel {}", previousIsolationLevel);
         }
         return previousIsolationLevel;
@@ -85,10 +81,6 @@ public class IsolationSupportHibernateJpaDialect extends HibernateJpaDialect {
         }
     }
 
-
-    /* (non-Javadoc)
-     * @see org.springframework.orm.jpa.vendor.HibernateJpaDialect#cleanupTransaction(java.lang.Object)
-     */
     @Override
     public void cleanupTransaction(Object transactionData) {
         super.cleanupTransaction(((IsolationSupportSessionTransactionData) transactionData)
@@ -123,7 +115,7 @@ public class IsolationSupportHibernateJpaDialect extends HibernateJpaDialect {
             }
         }
 
-        public Object getSessionTransactionDataFromHibernateTemplate(){
+        public Object getSessionTransactionDataFromHibernateTemplate() {
             return sessionTransactionDataFromHibernateJpaTemplate;
         }
     }

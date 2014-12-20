@@ -13,6 +13,8 @@ import com.piotrglazar.webs.model.entities.WebsUserDetails;
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 
+import static com.piotrglazar.webs.DatabaseTestConfiguration.ACCOUNT_BALANCES;
+
 class TestDatabasePopulator {
 
     private final UserProvider userProvider;
@@ -73,12 +75,12 @@ class TestDatabasePopulator {
         websUser.setEmail(email);
         websUser.setDetails(commonUserDetails);
 
-        final Account firstAccount = SavingsAccount.builder().number(firstAccountNo).balance(DatabaseTestConfiguration.ACCOUNT_BALANCES.get(0))
+        final Account firstAccount = SavingsAccount.builder().number(firstAccountNo).balance(ACCOUNT_BALANCES.get(0))
                 .currency(Currency.PLN).interest(DatabaseTestConfiguration.ACCOUNT_INTERESTS.get(0)).build();
         websUser.getAccounts().add(firstAccount);
         websUser = userProvider.update(websUser);
 
-        final Account secondAccount = SavingsAccount.builder().number(secondAccountNo).balance(DatabaseTestConfiguration.ACCOUNT_BALANCES.get(1))
+        final Account secondAccount = SavingsAccount.builder().number(secondAccountNo).balance(ACCOUNT_BALANCES.get(1))
                 .currency(Currency.PLN).interest(DatabaseTestConfiguration.ACCOUNT_INTERESTS.get(1)).build();
         websUser.getAccounts().add(secondAccount);
         websUser = userProvider.update(websUser);

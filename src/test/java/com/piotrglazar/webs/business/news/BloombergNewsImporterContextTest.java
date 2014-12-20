@@ -1,7 +1,6 @@
 package com.piotrglazar.webs.business.news;
 
 import com.piotrglazar.webs.AbstractContextTest;
-import com.piotrglazar.webs.business.news.BloombergNewsImporter;
 import com.piotrglazar.webs.model.entities.BloombergNews;
 import com.piotrglazar.webs.model.repositories.WebsNewsRepository;
 import org.junit.Test;

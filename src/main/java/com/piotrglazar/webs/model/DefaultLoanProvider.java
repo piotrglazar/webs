@@ -46,7 +46,7 @@ class DefaultLoanProvider implements LoanProvider {
     public List<LoanDto> getAllActiveLoans(String username) {
         return loanRepository.findByUsername(username).stream()
                 .filter(loan -> loan.getWeeksRemaining() > 0)
-                .map(loan -> {loan.setCanPostpone(loanBusinessLogic.canPostpone(loan)); return loan;})
+                .map(loan -> { loan.setCanPostpone(loanBusinessLogic.canPostpone(loan)); return loan; })
                 .map(LoanDtoBuilder::fromLoan)
                 .collect(MoreCollectors.toImmutableList());
     }

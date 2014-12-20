@@ -2,7 +2,6 @@ package com.piotrglazar.webs.business.interest;
 
 import com.piotrglazar.webs.AbstractContextTest;
 import com.piotrglazar.webs.DatabaseTestConfiguration;
-import com.piotrglazar.webs.business.interest.InterestAccruer;
 import com.piotrglazar.webs.model.entities.Account;
 import com.piotrglazar.webs.model.repositories.AccountRepository;
 import org.junit.Test;

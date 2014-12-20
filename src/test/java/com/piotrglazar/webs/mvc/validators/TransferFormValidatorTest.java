@@ -25,7 +25,7 @@ public class TransferFormValidatorTest {
 
     @Mock
     private Errors errors;
-    
+
     @InjectMocks
     private TransferFormValidator validator;
 

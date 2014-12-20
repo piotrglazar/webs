@@ -19,6 +19,9 @@ apply plugin: 'rebel'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
 apply plugin: 'sonar-runner'
+apply plugin: 'findbugs'
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
 
 jar {
     baseName = 'webs'
@@ -114,4 +117,19 @@ sonarRunner {
     sonarProperties {
         property "sonar.exclusions", "src/main/java/com/piotrglazar/webs/config/*.java"
     }
+}
+
+checkstyle {
+    toolVersion = '6.1'
+    ignoreFailures = true
+}
+
+pmd {
+    ignoreFailures = true
+}
+
+findbugs {
+    toolVersion = '3.0.0'
+    effort = 'max'
+    ignoreFailures = true
 }
