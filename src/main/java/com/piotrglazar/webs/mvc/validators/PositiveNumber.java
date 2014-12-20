@@ -12,6 +12,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+@SuppressWarnings("all")
 @ConstraintComposition
 @Min(0)
 @Digits(fraction = 0, integer = PositiveNumber.MAX_DIGITS)

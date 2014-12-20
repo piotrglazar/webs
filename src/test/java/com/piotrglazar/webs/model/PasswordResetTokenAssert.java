@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions;
 
 import java.time.LocalDateTime;
 
-public class PasswordResetTokenAssert {
+public final class PasswordResetTokenAssert {
 
     private final PasswordResetToken that;
 

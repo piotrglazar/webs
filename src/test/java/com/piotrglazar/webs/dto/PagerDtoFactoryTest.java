@@ -18,7 +18,7 @@ public class PagerDtoFactoryTest {
     @Parameters({
             "0 | [0;1;2;3;4]",
             "1 | [0;1;2;3;4]",
-            "2 | [0;1;2;3;4]",
+            "2 | [0;1;2;3;4]"
     })
     public void shouldConstructLeftBorderForPageCountGreaterThanPagerSize(int pageNumber,
                     @ConvertParam(IntegerListConverter.class) List<Integer> expectedPageIds) {
@@ -41,7 +41,7 @@ public class PagerDtoFactoryTest {
     @Parameters({
             "9 | [5;6;7;8;9]",
             "8 | [5;6;7;8;9]",
-            "7 | [5;6;7;8;9]",
+            "7 | [5;6;7;8;9]"
     })
     public void shouldConstructRightBorderForPageCountGreaterThanPagerSize(int pageNumber,
                    @ConvertParam(IntegerListConverter.class) List<Integer> expectedPageIds) {
@@ -87,7 +87,7 @@ public class PagerDtoFactoryTest {
     @Test
     @Parameters({
             "0 | [0;1]",
-            "1 | [0;1]",
+            "1 | [0;1]"
     })
     public void shouldConstructPagerForPageCountSmallerThanPagerSize(int pageNumber,
                   @ConvertParam(IntegerListConverter.class) List<Integer> expectedPageIds) {

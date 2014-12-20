@@ -95,8 +95,8 @@ public class AccountsController {
         final String loggedInUserUsername = loggedInUserProvider.getLoggedInUserUsername();
         final WebsPageable<MoneyTransferAuditUserDto> transferAuditData =
                 moneyTransferAuditProvider.findPageForUsername(loggedInUserUsername, pageNumber);
-        final PagersDto pagers = pagerDtoFactory.createPagers(transferAuditData.getPageNumber(), transferAuditData.getPageCount(), transferAuditData.isFirst(),
-                transferAuditData.isLast(), "/accountTransferHistory/");
+        final PagersDto pagers = pagerDtoFactory.createPagers(transferAuditData.getPageNumber(), transferAuditData.getPageCount(),
+                transferAuditData.isFirst(), transferAuditData.isLast(), "/accountTransferHistory/");
 
         model.addAttribute("moneyTransferAuditData", transferAuditData);
         model.addAttribute("pagers", pagers);

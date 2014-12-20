@@ -2,7 +2,6 @@ package com.piotrglazar.webs.business.news;
 
 import com.piotrglazar.webs.WebsNewsProvider;
 import com.piotrglazar.webs.business.NewsDtoAssert;
-import com.piotrglazar.webs.business.news.DefaultUiNewsProvider;
 import com.piotrglazar.webs.dto.NewsDto;
 import com.piotrglazar.webs.model.entities.InternalWebsNews;
 import org.junit.Test;

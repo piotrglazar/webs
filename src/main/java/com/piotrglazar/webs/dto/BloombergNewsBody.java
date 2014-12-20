@@ -37,9 +37,9 @@ public final class BloombergNewsBody {
             return false;
         }
         final BloombergNewsBody other = (BloombergNewsBody) obj;
-        return Objects.equals(this.name, other.name) &&
-                Objects.equals(this.growth, other.growth) &&
-                Objects.equals(this.up, other.up) &&
-                Objects.equals(this.price, other.price);
+        return Objects.equals(this.name, other.name)
+                && Objects.equals(this.growth, other.growth)
+                && Objects.equals(this.up, other.up)
+                && Objects.equals(this.price, other.price);
     }
 }

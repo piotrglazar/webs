@@ -11,9 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(indexes = {
-        @Index(unique = true, columnList = "tokenId"),
-})
+@Table(indexes = @Index(unique = true, columnList = "tokenId"))
 public final class PasswordResetToken {
 
     @Id

@@ -1,6 +1,5 @@
 package com.piotrglazar.webs.business.calculationstrategies;
 
-import com.piotrglazar.webs.business.calculationstrategies.DailyInterestCalculationStrategy;
 import com.piotrglazar.webs.business.utils.AmountConverter;
 import com.piotrglazar.webs.converters.BigDecimalConverter;
 import junitparams.JUnitParamsRunner;

@@ -71,7 +71,7 @@ public abstract class Account {
     public void setCurrency(final Currency currency) {
         this.currency = currency;
     }
-    
+
     public void setBalance(final BigDecimal balance) {
         this.balance = balance;
     }

@@ -3,7 +3,7 @@ package com.piotrglazar.webs.business;
 import com.piotrglazar.webs.dto.NewsDto;
 import org.assertj.core.api.Assertions;
 
-public class NewsDtoAssert {
+public final class NewsDtoAssert {
 
     private final NewsDto that;
 

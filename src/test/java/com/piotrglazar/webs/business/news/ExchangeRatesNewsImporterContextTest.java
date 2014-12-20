@@ -1,7 +1,6 @@
 package com.piotrglazar.webs.business.news;
 
 import com.piotrglazar.webs.AbstractContextTest;
-import com.piotrglazar.webs.business.news.ExchangeRatesNewsImporter;
 import com.piotrglazar.webs.dto.ExchangeRateDto;
 import com.piotrglazar.webs.model.entities.ExchangeRatesNews;
 import com.piotrglazar.webs.model.repositories.WebsNewsRepository;

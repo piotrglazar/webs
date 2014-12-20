@@ -3,7 +3,7 @@ package com.piotrglazar.webs.business;
 import com.piotrglazar.webs.business.utils.Currency;
 import org.assertj.core.api.Assertions;
 
-public class MoneyTransferParamsAssert {
+public final class MoneyTransferParamsAssert {
 
     private final MoneyTransferParams that;
 

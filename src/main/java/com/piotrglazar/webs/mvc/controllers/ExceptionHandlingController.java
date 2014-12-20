@@ -12,11 +12,11 @@ import java.lang.invoke.MethodHandles;
 @ControllerAdvice
 public class ExceptionHandlingController {
 
-    private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @ExceptionHandler(MoneyTransferException.class)
     public ModelAndView handleMoneyTransferException(final MoneyTransferException exception) {
-        log.error("Failed to transfer money", exception);
+        LOG.error("Failed to transfer money", exception);
 
         final ModelAndView modelAndView = new ModelAndView("verboseError");
 
@@ -27,7 +27,7 @@ public class ExceptionHandlingController {
 
     @ExceptionHandler(Exception.class)
     public String handleException(final Exception exception) {
-        log.error("Generic exception occurred", exception);
+        LOG.error("Generic exception occurred", exception);
 
         return "error";
     }

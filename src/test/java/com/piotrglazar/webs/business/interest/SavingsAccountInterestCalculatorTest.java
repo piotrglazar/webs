@@ -48,7 +48,7 @@ public class SavingsAccountInterestCalculatorTest {
     @Test
     public void shouldUseCalculationStrategyToCalculateInterest() {
         // given
-        final BigDecimal interestRate = new BigDecimal(5.0);
+        final BigDecimal interestRate = new BigDecimal("5.0");
         final BigDecimal balance = new BigDecimal(1000);
         final SavingsAccount savingsAccount = savingsAccountWithInterestRateAndBalance(interestRate, balance);
         given(strategy.interest(balance, interestRate)).willReturn(BigDecimal.TEN);

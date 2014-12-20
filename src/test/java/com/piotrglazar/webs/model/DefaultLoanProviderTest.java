@@ -64,7 +64,7 @@ public class DefaultLoanProviderTest {
         given(account.getNumber()).willReturn("account no");
         final Loan loan = new LoanBuilder()
                 .account(account)
-                .amountLoaned(new BigDecimal("10"))
+                .amountLoaned(new BigDecimal("15"))
                 .amountRemaining(new BigDecimal("5"))
                 .currency(Currency.GBP)
                 .postpones(Sets.newHashSet(LocalDate.of(2014, 8, 1)))
@@ -82,7 +82,7 @@ public class DefaultLoanProviderTest {
         final LoanDto dto = loans.get(0);
         assertThat(dto.getAccountId()).isEqualTo(1);
         assertThat(dto.getAccountNumber()).isEqualTo("account no");
-        assertThat(dto.getAmountLoaned()).isEqualByComparingTo("10");
+        assertThat(dto.getAmountLoaned()).isEqualByComparingTo("15");
         assertThat(dto.getAmountRemaining()).isEqualByComparingTo("5");
         assertThat(dto.getCurrency()).isEqualTo(Currency.GBP);
         assertThat(dto.getPostpones()).isEqualTo(Sets.newHashSet(LocalDate.of(2014, 8, 1)));
@@ -99,7 +99,7 @@ public class DefaultLoanProviderTest {
         given(account.getNumber()).willReturn("account no");
         final Loan loan = new LoanBuilder()
                 .account(account)
-                .amountLoaned(new BigDecimal("10"))
+                .amountLoaned(new BigDecimal("15"))
                 .amountRemaining(new BigDecimal("5"))
                 .currency(Currency.GBP)
                 .postpones(Sets.newHashSet(LocalDate.of(2014, 8, 1)))
@@ -117,7 +117,7 @@ public class DefaultLoanProviderTest {
         final LoanDto dto = loans.get(0);
         assertThat(dto.getAccountId()).isEqualTo(1);
         assertThat(dto.getAccountNumber()).isEqualTo("account no");
-        assertThat(dto.getAmountLoaned()).isEqualByComparingTo("10");
+        assertThat(dto.getAmountLoaned()).isEqualByComparingTo("15");
         assertThat(dto.getAmountRemaining()).isEqualByComparingTo("5");
         assertThat(dto.getCurrency()).isEqualTo(Currency.GBP);
         assertThat(dto.getPostpones()).isEqualTo(Sets.newHashSet(LocalDate.of(2014, 8, 1)));

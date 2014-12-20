@@ -1,6 +1,5 @@
 package com.piotrglazar.webs.business.calculationstrategies;
 
-import com.piotrglazar.webs.business.calculationstrategies.TimePeriodCalculationStrategy;
 import com.piotrglazar.webs.business.utils.AmountConverter;
 import com.piotrglazar.webs.converters.BigDecimalConverter;
 import junitparams.JUnitParamsRunner;
@@ -39,7 +38,7 @@ public class TimePeriodCalculationStrategyTest {
     @Parameters({
             "1000 | 5 | 12 | 50.00",
             "1000 | 5 | 6 | 25.00",
-            "1000 | 5 | 1 | 4.17",
+            "1000 | 5 | 1 | 4.17"
     })
     public void shouldCalculateInterestMonthly(@ConvertParam(BigDecimalConverter.class) BigDecimal initialAmount,
                                                @ConvertParam(BigDecimalConverter.class) BigDecimal interestRate, int months,
