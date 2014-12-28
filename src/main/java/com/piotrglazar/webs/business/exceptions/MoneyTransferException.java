@@ -9,10 +9,14 @@ import java.util.List;
 public class MoneyTransferException extends WebsRuntimeException {
 
     public MoneyTransferException(final List<String> message) {
-        super(Joiner.on('\n').join(message));
+        super(getExceptionMessage(message));
     }
 
     public MoneyTransferException(final ErrorGatherer errorGatherer) {
         this(errorGatherer.getErrorMessages());
+    }
+
+    private static String getExceptionMessage(final List<String> message) {
+        return Joiner.on('\n').join(message);
     }
 }

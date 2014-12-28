@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 class DefaultAccountProvider implements AccountProvider {
 
     private final AccountRepository accountRepository;

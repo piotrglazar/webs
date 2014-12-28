@@ -35,9 +35,7 @@ public class InterestAccruer {
     public void buildInterestCalculators() {
         // we take first found calculator for given account type
         Arrays.asList(AccountType.values()).stream()
-                .forEach(accountType ->
-                        interestCalculatorsCache.put(accountType,
-                                interestCalculators.stream().filter(calc -> calc.supports(accountType)).findFirst().get()));
+                .forEach(accountType -> interestCalculatorsCache.put(accountType, getInterestCalculator(accountType)));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
@@ -47,5 +45,9 @@ public class InterestAccruer {
                 .map(a -> a.addBalance(interestCalculatorsCache.get(a.accountType()).calculateInterest(a)))
                 .collect(Collectors.toList());
         accountRepository.save(processedAccounts);
+    }
+
+    private InterestCalculator getInterestCalculator(final AccountType accountType) {
+        return interestCalculators.stream().filter(calc -> calc.supports(accountType)).findFirst().get();
     }
 }
