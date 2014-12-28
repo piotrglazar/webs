@@ -2,7 +2,7 @@
 	<!-- Exclude model and in/out objects read/write through JSON or XML frameworks -->
 	<Match>
 		<OR>
-			<Package name="~pl\.allegro\..*"/>
+			<Package name="~com\.piotrglazar\..*"/>
 		</OR>
 
 		<Or>

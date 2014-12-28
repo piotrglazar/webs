@@ -25,7 +25,7 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("unchecked")
-public class MoneyTransferAspectTest {
+public class MoneyTransferAspectLogicTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -39,7 +39,7 @@ public class MoneyTransferAspectTest {
     private UserProvider userProvider;
 
     @InjectMocks
-    private MoneyTransferAspect aspect;
+    private MoneyTransferAspectLogic aspectLogic;
 
     @Mock
     private ProceedingJoinPoint proceedingJoinPoint;
@@ -55,10 +55,7 @@ public class MoneyTransferAspectTest {
         given(proceedingJoinPoint.getArgs()).willReturn(new Object[]{1L, "abc", new Object()});
 
         // when
-        aspect.aroundMoneyTransfer(proceedingJoinPoint);
-
-        // then exception
-//        assertThat((Exception) caughtException()).isInstanceOf(RuntimeException.class).hasMessageContaining("Long,String,Object");
+        aspectLogic.aroundMoneyTransfer(proceedingJoinPoint);
     }
 
     @Test
@@ -68,7 +65,7 @@ public class MoneyTransferAspectTest {
         given(proceedingJoinPoint.getArgs()).willReturn(new Object[]{params});
 
         // when
-        aspect.aroundMoneyTransfer(proceedingJoinPoint);
+        aspectLogic.aroundMoneyTransfer(proceedingJoinPoint);
 
         // then
         verify(auditProvider).auditMoneyTransfer(-1L, params.getFromAccount(), params.getToAccount(), params.getAmount(), true,
@@ -83,7 +80,7 @@ public class MoneyTransferAspectTest {
         given(userProvider.findUserByUsername("user")).willReturn(WebsUser.builder().id(555L).build());
 
         // when
-        aspect.aroundMoneyTransfer(proceedingJoinPoint);
+        aspectLogic.aroundMoneyTransfer(proceedingJoinPoint);
 
         // then
         verify(auditProvider).auditMoneyTransfer(555L, params.getFromAccount(), params.getToAccount(), params.getAmount(), true,
@@ -99,14 +96,14 @@ public class MoneyTransferAspectTest {
         given(proceedingJoinPoint.proceed()).willThrow(RuntimeException.class);
 
         // when
-        aroundMoneyTransferWrapper(aspect, proceedingJoinPoint);
+        aroundMoneyTransferWrapper(aspectLogic, proceedingJoinPoint);
 
         // then
         verify(auditProvider).auditMoneyTransfer(555L, params.getFromAccount(), params.getToAccount(), params.getAmount(), false,
                 localDateTimeSupplier.get(), params.getReceivingUserId(), Currency.GBP);
     }
 
-    private void aroundMoneyTransferWrapper(MoneyTransferAspect aspect, ProceedingJoinPoint proceedingJoinPoint) {
+    private void aroundMoneyTransferWrapper(MoneyTransferAspectLogic aspect, ProceedingJoinPoint proceedingJoinPoint) {
         try {
             aspect.aroundMoneyTransfer(proceedingJoinPoint);
         } catch (Throwable throwable) {
@@ -117,4 +114,5 @@ public class MoneyTransferAspectTest {
     private MoneyTransferParams moneyTransferParams() {
         return new MoneyTransferParams("user", "u@u.pl", 123L, 321L, new BigDecimal("15"), 1L, "user2", Currency.GBP);
     }
+
 }

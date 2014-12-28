@@ -17,12 +17,12 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LoggingAspectTest {
+public class LoggingAspectLogicTest {
 
     // the same as in LoggingAspect
     private static final Logger LOG = (Logger) LoggerFactory.getLogger("Operation");
 
-    private LoggingAspect aspect = new LoggingAspect();
+    private LoggingAspectLogic aspectLogic = new LoggingAspectLogic();
 
     @Mock
     private ProceedingJoinPoint proceedingJoinPoint;
@@ -41,7 +41,7 @@ public class LoggingAspectTest {
         given(signature.getMethod()).willReturn(Operation.class.getDeclaredMethod("someOperation"));
 
         // when
-        aspect.logOperation(proceedingJoinPoint);
+        aspectLogic.logOperation(proceedingJoinPoint);
 
         // then
         final ArgumentCaptor<ILoggingEvent> loggingEvent = ArgumentCaptor.forClass(ILoggingEvent.class);
@@ -49,7 +49,7 @@ public class LoggingAspectTest {
         assertThat(loggingEvent.getValue().getFormattedMessage()).isEqualTo("someOperation");
     }
 
-    private static class Operation {
+    private static final class Operation {
 
         @OperationLogging(operation = "someOperation")
         @SuppressWarnings("unused")

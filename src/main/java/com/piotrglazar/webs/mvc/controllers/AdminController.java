@@ -17,6 +17,7 @@ import java.util.List;
 @Controller
 public class AdminController {
 
+    public static final String UI_MESSAGE = "uiMessage";
     private final MoneyTransferAuditProvider auditProvider;
     private final NewsImporters newsImporters;
     private final InterestAccruer interestAccruer;
@@ -44,7 +45,7 @@ public class AdminController {
     @OperationLogging(operation = "admin import news")
     public String importNews(@PathVariable("newsImporterIndex") final int newsImporterIndex, final Model model) {
         newsImporters.fetchNews(newsImporterIndex);
-        model.addAttribute("uiMessage", "News successfully imported");
+        model.addAttribute(UI_MESSAGE, "News successfully imported");
         return showMoneyTransferAudit(model);
     }
 
@@ -52,7 +53,7 @@ public class AdminController {
     @OperationLogging(operation = "admin import all news")
     public String importAllNews(final Model model) {
         newsImporters.fetchAllNews();
-        model.addAttribute("uiMessage", "All news successfully imported");
+        model.addAttribute(UI_MESSAGE, "All news successfully imported");
         return showMoneyTransferAudit(model);
     }
 
@@ -60,7 +61,7 @@ public class AdminController {
     @OperationLogging(operation = "admin accrue interest")
     public String accrueInterest(final Model model) {
         interestAccruer.accrueInterest();
-        model.addAttribute("uiMessage", "Interest accrued successfully");
+        model.addAttribute(UI_MESSAGE, "Interest accrued successfully");
         return showMoneyTransferAudit(model);
     }
 
@@ -68,7 +69,7 @@ public class AdminController {
     @OperationLogging(operation = "admin repay loans")
     public String repayLoans(final Model model) {
         loanRepays.repayAllLoans();
-        model.addAttribute("uiMessage", "Loans repaid successfully");
+        model.addAttribute(UI_MESSAGE, "Loans repaid successfully");
         return showMoneyTransferAudit(model);
     }
 }

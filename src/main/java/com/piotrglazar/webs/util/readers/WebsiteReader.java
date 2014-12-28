@@ -25,7 +25,7 @@ public class WebsiteReader {
             return response.readEntity(String.class);
         } catch (ProcessingException | IllegalStateException e) {
             LOG.error("Failed to read web page", e);
-            throw new WebsiteReadingException(webTarget.getUri());
+            throw new WebsiteReadingException(webTarget.getUri(), e);
         }
     }
 }
