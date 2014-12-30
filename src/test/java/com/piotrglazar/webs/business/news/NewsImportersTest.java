@@ -6,11 +6,13 @@ import com.piotrglazar.webs.business.NewsImporter;
 import com.piotrglazar.webs.business.NewsImportingStrategy;
 import com.piotrglazar.webs.model.TestWebsNews;
 import com.piotrglazar.webs.model.entities.WebsNews;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 import rx.Observable;
 
 import java.util.List;
@@ -20,7 +22,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnitParamsRunner.class)
 public class NewsImportersTest {
 
     @Mock
@@ -36,6 +38,7 @@ public class NewsImportersTest {
 
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
         newsImporters = new DefaultNewsImporters(Lists.newArrayList(firstNewsImporter, secondNewsImporter), newsImportingStrategy);
     }
 
@@ -56,15 +59,13 @@ public class NewsImportersTest {
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void shouldFailWhenNegativeNewsImporterIndexProvided() {
+    @Parameters({
+            "-1",
+            "3"
+    })
+    public void shouldFailWhenInvalidNewsImporterIndexProvided(int i) {
         // expected
-        newsImporters.fetchNews(-1);
-    }
-
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void shouldFailWhenTooBigNewsImporterIndexProvided() {
-        // when
-        newsImporters.fetchNews(3);
+        newsImporters.fetchNews(i);
     }
 
     @Test
