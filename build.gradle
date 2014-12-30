@@ -12,6 +12,10 @@ buildscript {
     }
 }
 
+plugins {
+    id 'pl.allegro.tech.build.axion-release' version '1.0.0'
+}
+
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
@@ -22,11 +26,6 @@ apply plugin: 'sonar-runner'
 apply plugin: 'findbugs'
 apply plugin: 'checkstyle'
 apply plugin: 'pmd'
-
-jar {
-    baseName = 'webs'
-    version =  '0.7.0'
-}
 
 repositories {
     mavenCentral()
@@ -139,4 +138,18 @@ tasks.withType(FindBugs) {
         xml.enabled = false
         html.enabled = true
     }
+}
+
+scmVersion {
+    tag {
+        prefix = 'tag-prefix'
+    }
+}
+
+// make our version available to all
+project.version = scmVersion.version
+
+jar {
+    baseName = 'webs'
+    version =  project.version
 }
