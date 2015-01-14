@@ -2,7 +2,6 @@ package com.piotrglazar.webs.config;
 
 import com.piotrglazar.webs.UserProvider;
 import com.piotrglazar.webs.WebsNewsProvider;
-import org.hsqldb.jdbc.JDBCDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class DatabaseConfiguration {
     public DataSource dataSource() {
         final String currentDirectory = UtilityConfiguration.getCurrentDirectory();
         LOG.info("Using database {}/db/production", currentDirectory);
-        return new SimpleDriverDataSource(new JDBCDriver(), "jdbc:hsqldb:file:" + currentDirectory + "/db/production", "sa", "");
+        return new SimpleDriverDataSource(new WebsJdbcDriver(), "jdbc:hsqldb:file:" + currentDirectory + "/db/production", "sa", "");
     }
 
     @Bean
