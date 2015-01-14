@@ -27,7 +27,7 @@
                         <td class="col-md-2"><span th:text="${loan.amountLoaned}"></span></td>
                         <td class="col-md-2"><span th:text="${loan.amountRemaining}"></span></td>
                         <td class="col-md-1"><span th:text="${loan.currency}"></span></td>
-                        <td class="col-md-1"><span th:text="${loan.getPostpones().size()}" th:class="${loan.getPostpones().size() == T(com.piotrglazar.webs.business.LoanBusinessLogic).MAX_POSTPONES} ? '' : 'alert-warning'"></span></td>
+                        <td class="col-md-1"><span th:text="${loan.getPostpones().size()}" th:class="${loan.getPostpones().size() == T(com.piotrglazar.webs.business.loans.DefaultLoanBusinessLogic).MAX_POSTPONES} ? '' : 'alert-warning'"></span></td>
                         <td class="col-md-2"><span th:text="${loan.accountNumber}"></span></td>
                         <td class="col-md-1"><span th:text="${loan.weeks}"></span></td>
                         <td class="col-md-1"><span th:text="${loan.weeksRemaining}"></span></td>

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.piotrglazar.webs.config.IsolationSupportHibernateJpaDialect;
 import com.piotrglazar.webs.config.UtilityConfiguration;
-import org.hsqldb.jdbc.JDBCDriver;
+import com.piotrglazar.webs.config.WebsJdbcDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class DatabaseTestConfiguration {
     public DataSource dataSource() {
         final String currentDirectory = UtilityConfiguration.getCurrentDirectory();
         LOG.info("Creating test database in {}/db/test", currentDirectory);
-        return new SimpleDriverDataSource(new JDBCDriver(), "jdbc:hsqldb:file:" + currentDirectory + "/db/test", "sa", "");
+        return new SimpleDriverDataSource(new WebsJdbcDriver(), "jdbc:hsqldb:file:" + currentDirectory + "/db/test", "sa", "");
     }
 
     @Bean
