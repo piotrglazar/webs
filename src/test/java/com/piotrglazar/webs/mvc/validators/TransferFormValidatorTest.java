@@ -1,6 +1,7 @@
 package com.piotrglazar.webs.mvc.validators;
 
 import com.piotrglazar.webs.AccountProvider;
+import com.piotrglazar.webs.dto.AccountDto;
 import com.piotrglazar.webs.mvc.forms.TransferForm;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +10,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.validation.Errors;
 
+import java.util.Optional;
+
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
@@ -31,6 +35,9 @@ public class TransferFormValidatorTest {
 
     @Test
     public void shouldRejectWhenThereIsNoAccount() {
+        // given
+        given(accountProvider.getAccount(anyString())).willReturn(Optional.<AccountDto>empty());
+
         // when
         validator.validate(form, errors);
 
@@ -40,6 +47,9 @@ public class TransferFormValidatorTest {
 
     @Test
     public void shouldRejectWhenNoMoneyIsTransferred() {
+        // given
+        given(accountProvider.getAccount(anyString())).willReturn(Optional.<AccountDto>empty());
+
         // when
         validator.validate(form, errors);
 

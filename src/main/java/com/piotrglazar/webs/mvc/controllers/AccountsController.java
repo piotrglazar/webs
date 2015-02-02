@@ -11,10 +11,14 @@ import com.piotrglazar.webs.dto.PagerDtoFactory;
 import com.piotrglazar.webs.dto.PagersDto;
 import com.piotrglazar.webs.dto.PrintableMoneyTransferAudit;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
+import com.piotrglazar.webs.dto.SubaccountDto;
 import com.piotrglazar.webs.dto.UserDownloads;
 import com.piotrglazar.webs.dto.WebsPageable;
 import com.piotrglazar.webs.mvc.LoggedInUserProvider;
 import com.piotrglazar.webs.mvc.forms.AccountCreationForm;
+import com.piotrglazar.webs.mvc.forms.SubaccountCreationForm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -29,11 +33,14 @@ import rx.Observable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
 public class AccountsController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private final AccountProvider accountProvider;
     private final LoggedInUserProvider loggedInUserProvider;
@@ -65,6 +72,7 @@ public class AccountsController {
             model.addAttribute("accountDetails", account.get());
             return "accountDetails";
         } else {
+            LOG.info("No account with id {}", accountId);
             return "redirect:/accounts";
         }
     }
@@ -117,5 +125,42 @@ public class AccountsController {
                 .toBlocking()
                 .first();
         return new UserDownloads(loggedInUserUsername + ".txt", auditData);
+    }
+
+    @RequestMapping("/subaccounts/{accountId}/{subaccountName}/")
+    public ModelAndView subaccountDetails(@PathVariable("accountId") Long accountId, @PathVariable("subaccountName") String subaccName) {
+        final Optional<SubaccountDto> subaccount = accountProvider.getSubaccount(loggedInUserProvider.getLoggedInUserUsername(),
+                accountId, subaccName);
+        if (subaccount.isPresent()) {
+            return new ModelAndView("subaccounts").addObject("subaccountDetails", subaccount.get());
+        } else {
+            LOG.info("No subaccount {} for account with id {}", subaccName, accountId);
+            return new ModelAndView("redirect:/accounts/" + accountId + "/");
+        }
+    }
+
+    @RequestMapping(value = "/subaccountsCreate/{accountId}/", method = RequestMethod.GET)
+    public String newSubaccount(@PathVariable("accountId") final Long accountId, final SubaccountCreationForm subaccountCreationForm) {
+        final Optional<SavingsAccountDto> account = accountProvider.getUserSavingsAccount(loggedInUserProvider.getLoggedInUserUsername(),
+                accountId);
+        if (account.isPresent()) {
+            subaccountCreationForm.setAccountId(accountId);
+            return "newSubaccount";
+        } else {
+            return "redirect:/accounts";
+        }
+    }
+
+    @RequestMapping(value = "/subaccountsCreate/{accountId}/", method = RequestMethod.POST)
+    public String createSubaccount(@PathVariable("accountId") final Long accountId, final SubaccountCreationForm subaccountCreationForm) {
+        accountProvider.newSubaccount(loggedInUserProvider.getLoggedInUserUsername(), subaccountCreationForm.getAccountId(),
+                subaccountCreationForm.getSubaccountAmount(), subaccountCreationForm.getSubaccountName());
+        return "redirect:/accounts/" + accountId + "/";
+    }
+
+    @RequestMapping(value = "/subaccountsDelete/{accountId}/{subaccountName}/", method = RequestMethod.POST)
+    public String deleteSubaccount(@PathVariable("accountId") Long accountId, @PathVariable("subaccountName") String subaccountName) {
+        accountProvider.deleteSubaccount(loggedInUserProvider.getLoggedInUserUsername(), accountId, subaccountName);
+        return "redirect:/accounts/" + accountId + "/";
     }
 }

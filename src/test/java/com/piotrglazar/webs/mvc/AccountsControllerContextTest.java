@@ -1,6 +1,7 @@
 package com.piotrglazar.webs.mvc;
 
 import com.piotrglazar.webs.AbstractContextTest;
+import com.piotrglazar.webs.AccountProvider;
 import com.piotrglazar.webs.business.utils.AccountType;
 import com.piotrglazar.webs.business.utils.Currency;
 import com.piotrglazar.webs.commons.Utils;
@@ -16,10 +17,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.piotrglazar.webs.commons.Utils.addCsrf;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -36,6 +39,9 @@ public class AccountsControllerContextTest extends AbstractContextTest {
 
     @Autowired
     private MoneyTransferAuditRepository auditRepository;
+
+    @Autowired
+    private AccountProvider accountProvider;
 
     @Test
     public void shouldDisplayUserAccounts() throws Exception {
@@ -148,6 +154,55 @@ public class AccountsControllerContextTest extends AbstractContextTest {
             .andExpect(content().string(containsString("filename")))
             .andExpect(content().string(containsString(Settings.USERNAME)))
             .andExpect(content().string(containsString("content")));
+    }
+
+    @Test
+    public void shouldCreateSubaccount() throws Exception {
+        final Long accountId = getUsersAccountId(Settings.USERNAME);
+
+        // given
+        final MockHttpSession authenticate = Utils.authenticate(mockMvc);
+
+        // when
+        mockMvc.perform(addCsrf(post("/subaccountsCreate/" + accountId + "/").session(authenticate))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("accountId", accountId.toString())
+                .param("subaccountName", "subaccount")
+                .param("subaccountAmount", "10"))
+
+        // then
+            .andExpect(status().is(HttpStatus.FOUND.value()))
+            .andExpect(redirectedUrl("/accounts/" + accountId + "/"));
+
+        final Account account = accountRepository.findOne(accountId);
+        assertThat(account.getSubaccounts()).hasSize(1);
+
+        // cleanup
+        accountProvider.deleteSubaccount(Settings.USERNAME, accountId, "subaccount");
+    }
+
+    @Test
+    public void shouldDeleteSubaccount() throws Exception {
+        final Long accountId = getUsersAccountId(Settings.USERNAME);
+
+        // given
+        accountProvider.newSubaccount(Settings.USERNAME, accountId, BigDecimal.TEN, "subaccount");
+        final MockHttpSession authenticate = Utils.authenticate(mockMvc);
+
+        // when
+        mockMvc.perform(addCsrf(post("/subaccountsDelete/" + accountId + "/subaccount/").session(authenticate))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+
+        // then
+            .andExpect(status().is(HttpStatus.FOUND.value()))
+            .andExpect(redirectedUrl("/accounts/" + accountId + "/"));
+
+        final Account account = accountRepository.findOne(accountId);
+        assertThat(account.getSubaccounts()).isEmpty();
+    }
+
+    private Long getUsersAccountId(String username) {
+        return accountRepository.findByUsername(username).stream().map(Account::getId).findFirst().get();
     }
 
     private void removeMoneyTransferAudit(final MoneyTransferAudit audit) {
