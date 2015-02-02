@@ -27,23 +27,28 @@
                     <th></th>
                     <th>Account number</th>
                     <th>Currency</th>
+                    <th>Subaccounts</th>
                 </tr>
                 </thead>
                 <tbody>
                 <th:block th:each="account : ${accounts}">
                     <tr class="row">
-                        <td class="col-md-4"><a class="glyphicon glyphicon-chevron-down accordion-toggle" data-parent="#accountTable" data-toggle="collapse" th:href="'#detailsRow'+${accountStat.index}" title="Show details"/></td>
-                        <td class="col-md-4"><a th:href="@{/accounts/} + ${account.id} + '/'" th:text="${account.number}"></a></td>
-                        <td class="col-md-4" th:text="${account.currency}"></td>
+                        <td class="col-md-3"><a class="glyphicon glyphicon-chevron-down accordion-toggle" data-parent="#accountTable" data-toggle="collapse" th:href="'#detailsRow'+${accountStat.index}" title="Show details"/></td>
+                        <td class="col-md-3"><a th:href="@{/accounts/} + ${account.id} + '/'" th:text="${account.number}"></a></td>
+                        <td class="col-md-3" th:text="${account.currency}"></td>
+                        <td class="col-md-3" th:text="${account.subaccounts.size()}"></td>
                     </tr>
 
                     <tr th:id="'detailsRow'+${accountStat.index}" class="panel-collapse collapse row">
-                        <td class="col-md-4"><a th:href="@{/accountsTransfer/} + ${account.id} + '/'">Transfer money</a></td> <!--panel-heading-->
-                        <td class="col-md-4"> <!--panel-body-->
+                        <td class="col-md-3"><a th:href="@{/accountsTransfer/} + ${account.id} + '/'">Transfer money</a></td>
+                        <td class="col-md-3">
                             <p th:text="'Balance: ' + ${account.balance} + ${account.currency}"></p>
                         </td>
-                        <td class="col-md-4"> <!--panel-body-->
+                        <td class="col-md-3">
                             <p th:if="${account instanceof T(com.piotrglazar.webs.dto.SavingsAccountDto)}" th:text="'Interest: ' + ${account.interest} + '%'"></p>
+                        </td>
+                        <td class="col-md-3">
+                            <p th:text="'Total balance: ' + ${account.totalBalance}"></p>
                         </td>
                     </tr>
                 </th:block>

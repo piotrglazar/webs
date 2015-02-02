@@ -6,14 +6,25 @@
 <div th:replace="shards/navigation :: navigation"></div>
 <div class="jumbotron">
     <div class="container">
+        <h1 th:inline="text">[[${#httpServletRequest.remoteUser}]] account details!</h1>
+        <p><span th:text="'Account number: ' + ${accountDetails.number}"></span></p>
+        <p><span th:text="'Balance: ' + ${accountDetails.balance} + ' ' + ${accountDetails.currency}"></span></p>
+        <p><span th:text="'Interest rate: ' + ${accountDetails.interest}"></span>%</p>
+        <p><span>Subaccounts:</span></p>
+        <th:block th:each="subaccount : ${accountDetails.subaccounts}">
+            <p><a th:href="@{'/subaccounts/' + ${accountDetails.id} + '/' + ${subaccount.name} + '/'}" th:text="${subaccount.name}">
+
+            </a><span th:text="' ' + ${subaccount.balance} + ' ' + ${accountDetails.currency}"></span></p>
+        </th:block>
+    </div>
+    <div class="container">
         <div>
-            <h1 th:inline="text">[[${#httpServletRequest.remoteUser}]] account details!</h1>
-            <p><span>Account number: </span><span th:text="${accountDetails.number}"></span></p>
-            <p><span>Balance: </span><span th:text="${accountDetails.balance}"></span> <span th:text="${accountDetails.currency}"></span></p>
-            <p><span>Interest rate: </span><span th:text="${accountDetails.interest}"></span>%</p>
+            <a class="btn btn-primary" href="#" th:href="@{/accountsTransfer/} + ${accountDetails.id} + '/'">Transfer money</a>
+        </div>
+        <div>
+            <a class="btn btn-primary" href="#" th:href="@{/subaccountsCreate/} + ${accountDetails.id} + '/'">Create subaccount</a>
         </div>
     </div>
-    <div class="container"><a href="#" th:href="@{/accountsTransfer/} + ${accountDetails.id} + '/'">Transfer money</a></div>
 </div>
 </body>
 </html>

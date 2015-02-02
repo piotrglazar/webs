@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="shards/head :: head">
+</head>
+<body>
+<div th:replace="shards/navigation :: navigation"></div>
+<div class="jumbotron">
+    <div class="container">
+        <p><span th:text="'Subaccount name: ' + ${subaccountDetails.name}"></span></p>
+        <p><span th:text="'Balance: ' + ${subaccountDetails.balance} + ' ' + ${subaccountDetails.currency}"></span></p>
+        <p><form role="form" th:action="@{/subaccountsDelete/} + ${accountId} + '/' + ${subaccountDetails.name} + '/'" method="post">
+            <button class="btn btn-danger" type="submit">Delete</button>
+        </form></p>
+    </div>
+</div>
+</body>
+</html>

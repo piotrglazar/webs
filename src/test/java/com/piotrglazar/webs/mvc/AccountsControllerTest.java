@@ -12,12 +12,15 @@ import com.piotrglazar.webs.dto.PagerDto;
 import com.piotrglazar.webs.dto.PagerDtoFactory;
 import com.piotrglazar.webs.dto.PagersDto;
 import com.piotrglazar.webs.dto.SavingsAccountDto;
+import com.piotrglazar.webs.dto.SubaccountDto;
 import com.piotrglazar.webs.dto.UserDownloads;
 import com.piotrglazar.webs.dto.WebsPageable;
 import com.piotrglazar.webs.model.entities.Account;
 import com.piotrglazar.webs.model.entities.SavingsAccount;
+import com.piotrglazar.webs.model.entities.SavingsAccountBuilder;
 import com.piotrglazar.webs.mvc.controllers.AccountsController;
 import com.piotrglazar.webs.mvc.forms.AccountCreationForm;
+import com.piotrglazar.webs.mvc.forms.SubaccountCreationForm;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +30,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.ModelAndView;
 import rx.Observable;
 
 import java.math.BigDecimal;
@@ -40,6 +44,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -194,6 +199,93 @@ public class AccountsControllerTest {
         assertThat(auditData.getContent()).hasSize(1);
         assertThat(auditData.getContent().get(0)).contains(dto.getAccountId().toString(), dto.getAmount().toString(),
                 dto.getUserId().toString(), dto.getCurrency().toString());
+    }
+
+    @Test
+    public void shouldRedirectToAccountPageAfterDeletingSubaccount() {
+        // when
+        final String redirect = accountsController.deleteSubaccount(123L, "subaccount");
+
+        // then
+        assertThat(redirect).isEqualTo("redirect:/accounts/123/");
+    }
+
+    @Test
+    public void shouldRedirectToAccountPageAfterCreatingSubaccount() {
+        // when
+        final String redirect = accountsController.createSubaccount(123L, new SubaccountCreationForm());
+
+        // then
+        assertThat(redirect).isEqualTo("redirect:/accounts/123/");
+    }
+
+    @Test
+    public void shouldRedirectToAccountsPageWhenUserWantsToCreateSubaccountForAccountHeDoesNotOwn() {
+        // given
+        accountProviderReturnsEmptyAccountDto();
+
+        // when
+        final String redirect = accountsController.newSubaccount(123L, new SubaccountCreationForm());
+
+        // then
+        assertThat(redirect).isEqualTo("redirect:/accounts");
+    }
+
+    @Test
+    public void shouldFeedFormWithAccountIdAndForwardToCreationPage() {
+        // given
+        final SubaccountCreationForm form = new SubaccountCreationForm();
+        accountProviderReturnsAccountDto();
+
+        // when
+        final String viewName = accountsController.newSubaccount(123L, form);
+
+        // then
+        assertThat(viewName).isEqualTo("newSubaccount");
+        assertThat(form.getAccountId()).isEqualTo(123L);
+    }
+
+    @Test
+    public void shouldRedirectToAccountsPageWhenUserWantsToViewSubaccountForAccountHeDoesNotOwn() {
+        // given
+        accountProviderReturnsEmptySubaccountDto();
+
+        // when
+        final ModelAndView modelAndView = accountsController.subaccountDetails(123L, "subaccount");
+
+        // then
+        assertThat(modelAndView.getViewName()).isEqualTo("redirect:/accounts/123/");
+    }
+
+    @Test
+    public void shouldDisplaySubaccountDetails() {
+        // given
+        accountProviderReturnsSubaccountDto();
+
+        // when
+        final ModelAndView modelAndView = accountsController.subaccountDetails(123L, "subaccount");
+
+        // then
+        assertThat(modelAndView.getViewName()).isEqualTo("subaccounts");
+        assertThat(modelAndView.getModel()).containsKey("subaccountDetails");
+    }
+
+    private void accountProviderReturnsEmptyAccountDto() {
+        given(accountProvider.getUserSavingsAccount(anyString(), anyLong())).willReturn(Optional.<SavingsAccountDto>empty());
+    }
+
+    private void accountProviderReturnsEmptySubaccountDto() {
+        given(accountProvider.getSubaccount(anyString(), anyLong(), anyString())).willReturn(Optional.<SubaccountDto>empty());
+    }
+
+    private void accountProviderReturnsSubaccountDto() {
+        given(accountProvider.getSubaccount(anyString(), anyLong(), anyString()))
+                .willReturn(Optional.of(new SubaccountDto("subaccount", BigDecimal.ZERO, Currency.GBP)));
+    }
+
+    private void accountProviderReturnsAccountDto() {
+        given(accountProvider.getUserSavingsAccount(anyString(), anyLong()))
+                .willReturn(Optional.of(new SavingsAccountDto(new SavingsAccountBuilder().build())));
     }
 
     private MoneyTransferAuditUserDto arbitraryMoneyTransferAuditUserDto() {

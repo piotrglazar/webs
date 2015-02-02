@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="shards/head :: head">
+</head>
+<body>
+<div th:replace="shards/navigation :: navigation"></div>
+<div class="jumbotron">
+    <div class="container">
+        <div><p><strong>Create new subaccount!</strong></p></div>
+        <div>
+            <form role="form" th:action="@{/subaccountsCreate/} + ${accountId} + '/'" method="post" th:object="${subaccountCreationForm}">
+                <input type="hidden" th:field="*{accountId}"/>
+                <fieldset>
+                    <label class="control-label" th:if="${#fields.hasErrors('subaccountName')}" id="subaccountNameError" th:errors="*{subaccountName}">subaccountName errors</label>
+                    <input type="text" id="subaccountName" name="subaccountName" th:field="*{subaccountName}" class="form-control" placeholder="Subaccount name" th:errorclass="input-error"/>
+                </fieldset>
+                <fieldset>
+                    <label class="control-label" th:if="${#fields.hasErrors('subaccountAmount')}" id="subaccountAmount" th:errors="*{subaccountAmount}">subaccountAmount errors</label>
+                    <input type="number" id="subaccountAmount" name="subaccountAmount" th:field="*{subaccountAmount}" class="form-control" placeholder="Subaccount amount" th:errorclass="input-error"/>
+                </fieldset>
+                <fieldset>
+                    <button class="btn btn-success" type="submit">Create</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

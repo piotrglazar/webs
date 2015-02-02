@@ -26,7 +26,7 @@ public class TransferFormValidator implements Validator {
     public void validate(final Object target, final Errors errors) {
         final TransferForm transferForm = (TransferForm) target;
 
-        if (accountProvider.getAccount(transferForm.getAccountNumber()) == null) {
+        if (!accountProvider.getAccount(transferForm.getAccountNumber()).isPresent()) {
             errors.rejectValue("accountNumber", "transferForm.accountNumber", "Please provide valid account number");
         }
 

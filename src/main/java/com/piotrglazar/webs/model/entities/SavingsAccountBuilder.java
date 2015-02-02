@@ -1,15 +1,19 @@
 package com.piotrglazar.webs.model.entities;
 
+import com.google.common.collect.Lists;
 import com.piotrglazar.webs.business.utils.Currency;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class SavingsAccountBuilder {
 
+    private Long id;
     private String number;
-    private Currency currency;
-    private BigDecimal balance;
-    private BigDecimal interest;
+    private Currency currency = Currency.PLN;
+    private BigDecimal balance = BigDecimal.ZERO;
+    private BigDecimal interest = BigDecimal.ZERO;
+    private List<Subaccount> subaccounts = Lists.newLinkedList();
 
     public SavingsAccountBuilder number(final String number) {
         this.number = number;
@@ -31,7 +35,22 @@ public class SavingsAccountBuilder {
         return this;
     }
 
+    public SavingsAccountBuilder id(final long id) {
+        this.id = id;
+        return this;
+    }
+
+    public SavingsAccountBuilder subaccount(final Subaccount subaccount) {
+        this.subaccounts.add(subaccount);
+        return this;
+    }
+
     public SavingsAccount build() {
-        return new SavingsAccount(number, currency, balance, interest);
+        final SavingsAccount savingsAccount = new SavingsAccount(number, currency, balance, interest);
+        if (id != null) {
+            savingsAccount.setId(id);
+        }
+        subaccounts.forEach(savingsAccount::addSubaccount);
+        return savingsAccount;
     }
 }

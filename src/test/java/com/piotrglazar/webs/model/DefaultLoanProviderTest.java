@@ -71,7 +71,7 @@ public class DefaultLoanProviderTest {
                 .weeks((byte) 4)
                 .weeksRemaining((byte) 1)
                 .build();
-        given(loanRepository.findByUsername("user")).willReturn(Lists.newArrayList(loan));
+        given(loanRepository.findByUsername("user")).willReturn(Lists.newArrayList(loan, notActiveLoan()));
         given(loanBusinessLogic.canPostpone(loan)).willReturn(true);
 
         // when
@@ -106,7 +106,7 @@ public class DefaultLoanProviderTest {
                 .weeks((byte) 4)
                 .weeksRemaining((byte) 0)
                 .build();
-        given(loanRepository.findByUsername("user")).willReturn(Lists.newArrayList(loan));
+        given(loanRepository.findByUsername("user")).willReturn(Lists.newArrayList(loan, notArchiveLoan()));
         given(loanBusinessLogic.canPostpone(loan)).willReturn(true);
 
         // when
@@ -179,6 +179,14 @@ public class DefaultLoanProviderTest {
         // then
         assertThat(postponed).isTrue();
         assertThat(loans.get(0).getPostpones()).containsOnly(postponeDate.toLocalDate());
+    }
+
+    private Loan notActiveLoan() {
+        return new LoanBuilder().weeksRemaining((byte) 0).build();
+    }
+
+    private Loan notArchiveLoan() {
+        return new LoanBuilder().weeksRemaining((byte) 1).build();
     }
 
     private List<Loan> loans() {
