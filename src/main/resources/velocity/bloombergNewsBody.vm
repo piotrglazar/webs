@@ -1,9 +1,9 @@
 #foreach($ticker in $tickers)
     <p><span class="label label-info">$ticker.name</span>
         #if ($ticker.up)
-            <span class='label label-success'>$ticker.growth</span>
+            <span class='label label-success'>$ticker.priceChange</span>
         #else
-            <span class='label label-danger'>$ticker.growth</span>
+            <span class='label label-danger'>$ticker.priceChange</span>
         #end
     <span class='badge'>$ticker.price</span></p>
 #end

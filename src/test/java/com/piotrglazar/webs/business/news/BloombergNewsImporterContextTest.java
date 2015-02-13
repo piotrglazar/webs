@@ -3,7 +3,6 @@ package com.piotrglazar.webs.business.news;
 import com.piotrglazar.webs.AbstractContextTest;
 import com.piotrglazar.webs.model.entities.BloombergNews;
 import com.piotrglazar.webs.model.repositories.WebsNewsRepository;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import rx.Observable;
@@ -22,7 +21,6 @@ public class BloombergNewsImporterContextTest extends AbstractContextTest {
     private WebsNewsRepository websNewsRepository;
 
     @Test
-    @Ignore("Bloomberg main page has changed")
     public void shouldCreateBloombergNews() {
         // when
         final Observable<BloombergNews> news = bloombergNewsImporter.fetchNews();

@@ -10,19 +10,23 @@ import com.piotrglazar.webs.util.readers.WebsiteReaderFactory;
 import com.piotrglazar.webs.util.templates.WebsTemplates;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import rx.Observable;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class BloombergNewsImporter implements NewsImporter {
 
     public static final String BLOOMBERG = "http://www.bloomberg.com/";
+
+    private static final String OVERVIEW_NEWS_SELECTOR = "div.market-summary__securities.active > div";
+    private static final String INDEX_NAME_SELECTOR = ".market-summary__security__name";
+    private static final String INDEX_PRICE_CHANGE_SELECTOR = ".market-summary__security__price-change";
+    private static final String INDEX_PRICE_SELECTOR = ".market-summary__security__price";
+    private static final String INDEX_PERCENT_CHANGE_SELECTOR = ".market-summary__security__percent-change";
 
     private final WebsiteReader bloomberg;
     private final BloombergNewsBodyFactory bloombergNewsBodyFactory;
@@ -40,22 +44,27 @@ public class BloombergNewsImporter implements NewsImporter {
         return bloomberg.get();
     }
 
-    protected String extractTickers(final String pageContent) {
+    protected String bloombergNewsBodiesAsText(final String pageContent) {
+        final List<BloombergNewsBody> bloombergNewsBodies = bloombergNewsBodies(pageContent);
+        return websTemplates.bloombergNewsBody(bloombergNewsBodies);
+    }
+
+    protected List<BloombergNewsBody> bloombergNewsBodies(String pageContent) {
         final Document document = Jsoup.parse(pageContent);
-        final Elements tickers = document.select("#markets_snapshot > section > ul.tab.tickers > li");
-        final List<BloombergNewsBody> bloombergNewsBodyBodies = tickers.stream()
-                .map(e -> bloombergNewsBodyFactory.createNews(e.select(".name > a").text(),
-                        e.select(".day_change span").stream().map(Element::text).collect(Collectors.joining(" ")),
-                        e.select(".price").text()))
+        final Elements tickers = document.select(OVERVIEW_NEWS_SELECTOR);
+        return tickers.stream()
+                .map(e -> bloombergNewsBodyFactory.createNews(e.select(INDEX_NAME_SELECTOR).text(),
+                        e.select(INDEX_PRICE_CHANGE_SELECTOR).text(),
+                        e.select(INDEX_PRICE_SELECTOR).text(),
+                        e.select(INDEX_PERCENT_CHANGE_SELECTOR).text()))
                 .collect(MoreCollectors.toImmutableList());
-        return websTemplates.bloombergNewsBody(bloombergNewsBodyBodies);
     }
 
     @Override
     public Observable<BloombergNews> fetchNews() {
         return Observable.create((Observable.OnSubscribe<BloombergNews>) f -> {
             final String webPageContent = webPageContent();
-            final String tickers = extractTickers(webPageContent);
+            final String tickers = bloombergNewsBodiesAsText(webPageContent);
             f.onNext(bloombergNews(tickers));
             f.onCompleted();
         });
