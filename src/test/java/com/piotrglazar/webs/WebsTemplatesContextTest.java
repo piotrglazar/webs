@@ -73,6 +73,6 @@ public class WebsTemplatesContextTest extends AbstractContextTest {
     }
 
     private BloombergNewsBody createBloombergNewsBodyWithNameAndPrice(final String newsName, final String price) {
-        return new BloombergNewsBody(newsName, "+ 123", true, price);
+        return new BloombergNewsBody(newsName, "+ 123", true, price, "+ 0.2%");
     }
 }

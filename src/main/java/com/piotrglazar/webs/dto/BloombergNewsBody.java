@@ -2,30 +2,34 @@ package com.piotrglazar.webs.dto;
 
 import com.google.common.collect.ImmutableMap;
 
+import javax.annotation.concurrent.Immutable;
 import java.util.Map;
 import java.util.Objects;
 
+@Immutable
 public final class BloombergNewsBody {
 
     private final String name;
-    private final String growth;
+    private final String priceChange;
     private final boolean up;
     private final String price;
+    private final String percentChange;
 
-    public BloombergNewsBody(final String name, final String growth, final boolean up, final String price) {
+    public BloombergNewsBody(String name, String priceChange, boolean up, String price, String percentChange) {
         this.name = name;
-        this.growth = growth;
+        this.priceChange = priceChange;
         this.up = up;
         this.price = price;
+        this.percentChange = percentChange;
     }
 
     public Map<String, Object> asMap() {
-        return ImmutableMap.of("name", name, "growth", growth, "up", up, "price", price);
+        return ImmutableMap.of("name", name, "priceChange", priceChange, "up", up, "price", price, "percentChange", percentChange);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, growth, up, price);
+        return Objects.hash(name, priceChange, up, price, percentChange);
     }
 
     @Override
@@ -38,8 +42,9 @@ public final class BloombergNewsBody {
         }
         final BloombergNewsBody other = (BloombergNewsBody) obj;
         return Objects.equals(this.name, other.name)
-                && Objects.equals(this.growth, other.growth)
+                && Objects.equals(this.priceChange, other.priceChange)
                 && Objects.equals(this.up, other.up)
-                && Objects.equals(this.price, other.price);
+                && Objects.equals(this.price, other.price)
+                && Objects.equals(this.percentChange, other.percentChange);
     }
 }

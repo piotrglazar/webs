@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class BloombergNewsBodyFactory {
 
-    public BloombergNewsBody createNews(String name, String growth, String price) {
-        final boolean isUp = isUp(growth);
+    public BloombergNewsBody createNews(String name, String priceChange, String price, String percentChange) {
+        final boolean isUp = isUp(priceChange);
 
-        return new BloombergNewsBody(name, growth, isUp, price);
+        return new BloombergNewsBody(name, priceChange, isUp, price, percentChange);
     }
 
     private boolean isUp(final String growth) {
