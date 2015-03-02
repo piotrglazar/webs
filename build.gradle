@@ -6,14 +6,14 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.2.RELEASE")
         classpath("org.zeroturnaround:gradle-jrebel-plugin:1.1.2")
-        classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.0")
+        classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1")
     }
 }
 
 plugins {
-    id 'pl.allegro.tech.build.axion-release' version '1.0.0'
+    id 'pl.allegro.tech.build.axion-release' version '1.2.0'
 }
 
 apply plugin: 'java'
@@ -36,58 +36,58 @@ repositories {
 
 dependencies {
     // jetty
-    compile("org.springframework.boot:spring-boot-starter-web:1.2.1.RELEASE") {
+    compile("org.springframework.boot:spring-boot-starter-web:1.2.2.RELEASE") {
         exclude module: "spring-boot-starter-tomcat"
     }
-    compile("org.springframework.boot:spring-boot-starter-jetty:1.2.1.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-jetty:1.2.2.RELEASE")
     // actuator
-    compile("org.springframework.boot:spring-boot-starter-actuator:1.2.1.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-actuator:1.2.2.RELEASE")
     // thymeleaf
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf:1.2.1.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf:1.2.2.RELEASE")
     // security
-    compile("org.springframework.boot:spring-boot-starter-security:1.2.1.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-security:1.2.2.RELEASE")
     // data
-    compile("org.springframework.boot:spring-boot-starter-data-jpa:1.2.1.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa:1.2.2.RELEASE")
     // db
     compile("org.hsqldb:hsqldb:2.3.2")
     // guava
     compile("com.google.guava:guava:18.0")
     // validation
     compile("javax.validation:validation-api:1.1.0.Final")
-    compile("org.hibernate:hibernate-validator:5.1.2.Final")
+    compile("org.hibernate:hibernate-validator:5.1.3.Final")
     // context-support
-    compile("org.springframework:spring-context-support:4.1.4.RELEASE")
+    compile("org.springframework:spring-context-support:4.1.5.RELEASE")
     // mail
     compile("javax.mail:mail:1.4.7")
     // log
-    compile("org.slf4j:slf4j-api:1.7.8")
+    compile("org.slf4j:slf4j-api:1.7.10")
     // velocity
-    compile("org.springframework.boot:spring-boot-starter-velocity:1.2.1.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-velocity:1.2.2.RELEASE")
     // logback
     compile("ch.qos.logback:logback-classic:1.1.2")
     // rest
     compile("javax.ws.rs:javax.ws.rs-api:2.0.1")
-    compile("org.glassfish.jersey.core:jersey-client:2.14")
+    compile("org.glassfish.jersey.core:jersey-client:2.16")
     // html parsing
     compile("org.jsoup:jsoup:1.8.1")
     // annotations
     compile("com.google.code.findbugs:jsr305:3.0.0")
     // rx java
-    compile("io.reactivex:rxjava:1.0.2")
+    compile("io.reactivex:rxjava:1.0.7")
 
 
     testCompile("junit:junit:4.12")
-    testCompile("org.mockito:mockito-all:1.10.16")
-    testCompile("org.assertj:assertj-core:1.7.0")
-    testCompile("org.springframework.boot:spring-boot-starter-test:1.2.1.RELEASE")
-    testCompile("nl.jqno.equalsverifier:equalsverifier:1.5.1")
-    testCompile("pl.pragmatists:JUnitParams:1.0.3")
+    testCompile("org.mockito:mockito-all:1.10.19")
+    testCompile("org.assertj:assertj-core:1.7.1")
+    testCompile("org.springframework.boot:spring-boot-starter-test:1.2.2.RELEASE")
+    testCompile("nl.jqno.equalsverifier:equalsverifier:1.6")
+    testCompile("pl.pragmatists:JUnitParams:1.0.4")
 }
 
 jar.dependsOn(generateRebel)
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.2.1'
+    gradleVersion = '2.3'
 }
 
 idea {
@@ -98,7 +98,7 @@ idea {
 }
 
 jacoco {
-    toolVersion = '0.7.2.+'
+    toolVersion = '0.7.4.+'
 }
 
 jacocoTestReport {
@@ -119,7 +119,7 @@ sonarRunner {
 }
 
 checkstyle {
-    toolVersion = '6.1'
+    toolVersion = '6.4'
     ignoreFailures = true
 }
 
